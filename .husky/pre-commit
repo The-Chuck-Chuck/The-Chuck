@@ -1,0 +1,2 @@
+npx eslint . --ext .js,.jsx --no-error-on-unmatched-pattern || true;
+npm run format;
