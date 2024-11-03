@@ -3,8 +3,9 @@ module.exports = {
     "airbnb",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
   ],
-  plugins: ["react", "react-hooks"],
+  plugins: ["react", "react-hooks", "unused-imports", "prettier"],
   env: {
     browser: true,
     es2021: true,
@@ -24,8 +25,16 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "prefer-arrow-callback": "warn",
     "func-style": ["warn", "expression", { allowArrowFunctions: true }],
+    "react/function-component-definition": [
+      "error",
+      {
+        namedComponents: "arrow-function",
+        unnamedComponents: "arrow-function",
+      },
+    ],
     "no-console": "warn",
     "prettier/prettier": "warn",
+    quotes: [2, "double", { avoidEscape: false }],
   },
   overrides: [
     {
