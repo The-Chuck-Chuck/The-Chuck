@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-const Chuck = ({ position, color, rotation, meshRef }) => {
+const Chuck = ({ position, color, rotation }) => {
   const YVERTEX = Math.sqrt(3);
   // prettier-ignore
   const vertexArray = new Float32Array([
@@ -14,12 +14,14 @@ const Chuck = ({ position, color, rotation, meshRef }) => {
   // prettier-ignore
   const shapeFace = [
     0, 1, 2,
+    0, 2, 5,
+    0, 3, 5,
     3, 4, 5,
-    0, 1, 3,
-    1, 4, 5,
     1, 2, 5,
-    2, 3, 5,
-  ];
+    1, 4, 5,
+    0, 1, 3,
+    1, 3, 4,
+  ]
   const customGeometry = new THREE.BufferGeometry();
 
   customGeometry.setAttribute(
@@ -39,15 +41,11 @@ const Chuck = ({ position, color, rotation, meshRef }) => {
         ref={meshRef}
       >
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />
+        <axesHelper scale={10} />
+        <lineSegments geometry={shapeFaceEdgeLine}>
+          <lineBasicMaterial color="black" />
+        </lineSegments>
       </mesh>
-
-      <lineSegments
-        geometry={shapeFaceEdgeLine}
-        position={position}
-        rotation={rotation}
-      >
-        <lineBasicMaterial color="black" />
-      </lineSegments>
     </>
   );
 };
