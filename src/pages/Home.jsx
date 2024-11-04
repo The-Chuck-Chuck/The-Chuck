@@ -1,24 +1,24 @@
-import tempChukImage from "../asset/chuckmodel.jpeg";
+import { useNavigate } from "react-router-dom";
+import tempChcukImage from "../asset/chuckmodel.jpeg";
+import Button from "../components/Button";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleClickStart = () => {
+    navigate("/simulator");
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-[10px]">
-      <p className="text-[50px] font-bold">The Chuk Chuk</p>
+    <div className="flex flex-col justify-center items-center h-screen gap-[20px]">
+      <p className="text-white text-[50px] font-bold">The Chcuk-Chcuk</p>
       <div>
-        <img className="mt-5 w-[300px]" src={tempChukImage} alt="chukimage" />
+        <img className="mt-5 w-[300px]" src={tempChcukImage} alt="chukimage" />
       </div>
-      <button
-        type="button"
-        className="mt-10 w-[200px] text-[25px] bg-gray-500 rounded-full hover:bg-gray-700 p-2"
-      >
-        Start
-      </button>
-      <button
-        type="button"
-        className="w-[200px] text-[25px] bg-gray-500 rounded-full hover:bg-gray-700 p-2"
-      >
-        Tutorial!
-      </button>
+      <Button handler={handleClickStart} addClassName="w-[20%] text-[25px] p-2">
+        Start!
+      </Button>
+      <Button addClassName="w-[20%] text-[25px] p-2">Tutorial!</Button>
     </div>
   );
 };

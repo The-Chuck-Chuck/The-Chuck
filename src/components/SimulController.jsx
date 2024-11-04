@@ -1,48 +1,20 @@
+import Button from "./Button";
+
 const SimulController = () => {
   return (
     <div className="flex flex-col gap-3 fixed bottom-2 right-2 w-[250px] h-[250px] bg-slate-600 p-3 justify-center items-center">
-      <div className="flex gap-2 items-center">
-        <p className="grow bg-slate-600 text-center font-bold text-lg">Turn!</p>
-        <button
-          type="button"
-          className="h-10 border-2 hover:bg-white hover:text-black rounded-md p-1"
-        >
-          Left
-        </button>
-        <button
-          type="button"
-          className="h-10 border-2 hover:bg-white hover:text-black rounded-md p-1"
-        >
-          Right
-        </button>
+      <div className="w-[90%] flex gap-2 items-center">
+        <p className="grow text-center font-bold text-lg">Turn!</p>
+        <Button addClassName="h-10 p-1">Left</Button>
+        <Button addClassName="h-10 p-1">Right</Button>
       </div>
-      <div className="flex gap-3">
-        <p className="font-bold text-lg">length?</p>
-        <button
-          type="button"
-          className="h-8 border-2 hover:bg-white hover:text-black rounded-md p-1"
-        >
-          + 1
-        </button>
-        <button
-          type="button"
-          className="h-8 border-2 hover:bg-white hover:text-black rounded-md p-1"
-        >
-          - 1
-        </button>
+      <div className="w-[80%] flex gap-3">
+        <p className="grow font-bold text-lg">length?</p>
+        <Button addClassName="w-[40px] h-8 pl-1 pr-1">+ 1</Button>
+        <Button addClassName="w-[40px] h-8 pl-1 pr-1">- 1</Button>
       </div>
-      <button
-        type="button"
-        className="w-[90%] hover:bg-white hover:text-black font-bold border-4 p-2 rounded-md"
-      >
-        Reset!
-      </button>
-      <button
-        type="button"
-        className="w-[90%] hover:bg-white hover:text-black font-bold border-4 p-2 rounded-md"
-      >
-        Go Back!
-      </button>
+      <Button addClassName="w-[90%] p-2">Reset!</Button>
+      <Button addClassName="w-[90%] p-2">Go Back!</Button>
     </div>
   );
 };

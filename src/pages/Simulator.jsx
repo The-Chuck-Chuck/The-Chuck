@@ -4,11 +4,13 @@ import SimulController from "../components/SimulController";
 
 const Simulator = () => {
   return (
-    <main className="w-[100%] h-[100vh] text-white">
+    <div className="text-white">
       <Header />
-      <SimulCanvas />
-      <SimulController />
-    </main>
+      <main className="w-[100%] h-[100vh]">
+        <SimulCanvas />
+        <SimulController />
+      </main>
+    </div>
   );
 };
 
