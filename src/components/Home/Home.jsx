@@ -13,7 +13,10 @@ const Home = () => {
       >
         Start
       </button>
-      <button className="w-[200px] text-[25px] bg-gray-500 rounded-full hover:bg-gray-700 p-2">
+      <button
+        type="button"
+        className="w-[200px] text-[25px] bg-gray-500 rounded-full hover:bg-gray-700 p-2"
+      >
         Tutorial!
       </button>
     </div>
