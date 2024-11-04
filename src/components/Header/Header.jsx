@@ -15,7 +15,7 @@ const Header = () => {
       <Link to="/" className="grow font-bold text-xl">
         <h1>Chuck-Chuck! Simulator</h1>
       </Link>
-      <button className="w-16 h-10 border-2 border-white p-1 hover:border-4">
+      <button className="w-16 h-10 border-2 rounded-lg border-white p-1 hover:border-4">
         Login!
       </button>
       <button>

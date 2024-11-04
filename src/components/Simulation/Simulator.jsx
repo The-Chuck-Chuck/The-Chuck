@@ -1,10 +1,14 @@
 import Header from "../Header/Header";
+import SimulCanvas from "../Simulation/SimulCanvas";
+import SimulController from "./SimulController";
 
 const Simulator = () => {
   return (
-    <div className="bg-{#242424} w-[100%] h-[100vh] text-white">
+    <main className="w-[100%] h-[100vh] text-white">
       <Header />
-    </div>
+      <SimulCanvas />
+      <SimulController />
+    </main>
   );
 };
 
