@@ -29,7 +29,7 @@ const Chuck = ({ position, color, rotation, meshRef }) => {
       <mesh geometry={customGeometry} position={position} rotation={rotation} ref={meshRef}>
         <meshBasicMaterial color={color} side={THREE.DoubleSide}/>
       </mesh>
-      
+
       <lineSegments geometry={shapeFaceEdgeLine} position={position} rotation={rotation}>
         <lineBasicMaterial color="black"/>
       </lineSegments>
