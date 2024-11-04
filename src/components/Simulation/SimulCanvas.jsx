@@ -1,14 +1,12 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import Chuck from "./Chuck";
 
 const SimulCanvas = () => {
   return (
     <Canvas>
+      <Chuck position={[0, 0, 0]} color="green" />
       <OrbitControls />
-      <mesh>
-        <cylinderGeometry args={[0.3, 0.3, 0.5, 3]} />
-        <meshBasicMaterial color="#2e7e62" />
-      </mesh>
     </Canvas>
   );
 };
