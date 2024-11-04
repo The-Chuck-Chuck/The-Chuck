@@ -1,5 +1,5 @@
 import Header from "../Header/Header";
-import SimulCanvas from "../Simulation/SimulCanvas";
+import SimulCanvas from "./SimulCanvas";
 import SimulController from "./SimulController";
 
 const Simulator = () => {

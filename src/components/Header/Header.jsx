@@ -5,7 +5,7 @@ import searchIcon from "../../asset/search-2907.svg";
 const Header = () => {
   return (
     <div className="h-24 p-6 flex gap-7 items-center">
-      <button className="grow">
+      <button type="button" className="grow">
         <img
           src={saveIcon}
           alt="save"
@@ -15,10 +15,13 @@ const Header = () => {
       <Link to="/" className="grow font-bold text-xl">
         <h1>Chuck-Chuck! Simulator</h1>
       </Link>
-      <button className="w-16 h-10 border-2 rounded-lg border-white p-1 hover:border-4">
+      <button
+        type="button"
+        className="w-16 h-10 border-2 rounded-lg border-white p-1 hover:border-4"
+      >
         Login!
       </button>
-      <button>
+      <button type="button">
         <img
           src={searchIcon}
           alt="search"
