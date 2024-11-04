@@ -1,5 +1,15 @@
+import Header from "../Header/Header";
+import SimulCanvas from "./SimulCanvas";
+import SimulController from "./SimulController";
+
 const Simulator = () => {
-  return <div>Hello!</div>;
+  return (
+    <main className="w-[100%] h-[100vh] text-white">
+      <Header />
+      <SimulCanvas />
+      <SimulController />
+    </main>
+  );
 };
 
 export default Simulator;
