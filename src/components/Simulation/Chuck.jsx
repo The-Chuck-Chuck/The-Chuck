@@ -21,17 +21,29 @@ const Chuck = ({ position, color, rotation, meshRef }) => {
     2, 3, 5,
   ];
 
-  customGeometry.setAttribute("position", new THREE.BufferAttribute(vertexArray, 3));
+  customGeometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(vertexArray, 3)
+  );
   customGeometry.setIndex(shapeFace);
 
-  return(
+  return (
     <>
-      <mesh geometry={customGeometry} position={position} rotation={rotation} ref={meshRef}>
-        <meshBasicMaterial color={color} side={THREE.DoubleSide}/>
+      <mesh
+        geometry={customGeometry}
+        position={position}
+        rotation={rotation}
+        ref={meshRef}
+      >
+        <meshBasicMaterial color={color} side={THREE.DoubleSide} />
       </mesh>
 
-      <lineSegments geometry={shapeFaceEdgeLine} position={position} rotation={rotation}>
-        <lineBasicMaterial color="black"/>
+      <lineSegments
+        geometry={shapeFaceEdgeLine}
+        position={position}
+        rotation={rotation}
+      >
+        <lineBasicMaterial color="black" />
       </lineSegments>
     </>
   );

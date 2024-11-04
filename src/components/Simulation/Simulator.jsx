@@ -1,7 +1,5 @@
-const Simulator  = () => {
-  return (
-    <div>Hello!</div>
-  )
-}
+const Simulator = () => {
+  return <div>Hello!</div>;
+};
 
 export default Simulator;
