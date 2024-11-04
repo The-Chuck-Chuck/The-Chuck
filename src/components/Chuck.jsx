@@ -2,7 +2,8 @@ import * as THREE from "three";
 
 const Chuck = ({ position, color, rotation, meshRef }) => {
   const YVERTEX = Math.sqrt(3);
-
+  const customGeometry = new THREE.BufferGeometry();
+  const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
   const vertexArray = new Float32Array([
     0, 0, 0,
     2, 0, 0,
@@ -11,7 +12,6 @@ const Chuck = ({ position, color, rotation, meshRef }) => {
     2, 0, 2,
     1, YVERTEX, 2,
   ]);
-
   const shapeFace = [
     0, 1, 2,
     3, 4, 5,
@@ -21,11 +21,8 @@ const Chuck = ({ position, color, rotation, meshRef }) => {
     2, 3, 5,
   ];
 
-  const customGeometry = new THREE.BufferGeometry();
   customGeometry.setAttribute("position", new THREE.BufferAttribute(vertexArray, 3));
   customGeometry.setIndex(shapeFace);
-
-  const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   return(
     <>
