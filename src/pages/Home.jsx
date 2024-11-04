@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import tempChcukImage from "../asset/chuckmodel.jpeg";
+import tempChuckImage from "../asset/chuckmodel.jpeg";
 import Button from "../components/Button";
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
     <div className="flex flex-col justify-center items-center h-screen gap-[20px]">
       <p className="text-white text-[50px] font-bold">The Chuck-Chuck</p>
       <div>
-        <img className="mt-5 w-[300px]" src={tempChcukImage} alt="chukimage" />
+        <img className="mt-5 w-[300px]" src={tempChuckImage} alt="chuckimage" />
       </div>
       <Button handler={handleClickStart} addClassName="w-[20%] text-[25px] p-2">
         Start!
