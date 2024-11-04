@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/Home/Home";
-import Simulator from "./components/Simulation/Simulator";
+import Home from "./pages/Home";
+import Simulator from "./pages/Simulator";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/simulation" element={<Simulator />} />
+      <Route path="/simulator" element={<Simulator />} />
     </Routes>
   );
 };
