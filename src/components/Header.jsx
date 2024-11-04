@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import saveIcon from "../../asset/save-icon-silhouette-svgrepo-com.svg";
-import searchIcon from "../../asset/search-2907.svg";
+import saveIcon from "../asset/save-icon-silhouette-svgrepo-com.svg";
+import searchIcon from "../asset/search-2907.svg";
 
 const Header = () => {
   return (

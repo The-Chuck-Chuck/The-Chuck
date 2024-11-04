@@ -1,6 +1,6 @@
-import Header from "../Header/Header";
-import SimulCanvas from "./SimulCanvas";
-import SimulController from "./SimulController";
+import Header from "../components/Header";
+import SimulCanvas from "../components/SimulCanvas";
+import SimulController from "../components/SimulController";
 
 const Simulator = () => {
   return (

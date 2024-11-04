@@ -1,4 +1,4 @@
-import tempChukImage from "../../asset/chuckmodel.jpeg";
+import tempChukImage from "../asset/chuckmodel.jpeg";
 
 const Home = () => {
   return (
