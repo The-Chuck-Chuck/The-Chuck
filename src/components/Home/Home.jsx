@@ -9,7 +9,7 @@ const Home = () => {
       </div>
       <button
         type="button"
-        className="mt-10 w-[200px] text-[25px] bg- bg-gray-500 rounded-full hover:bg-gray-700 p-2"
+        className="mt-10 w-[200px] text-[25px] bg-gray-500 rounded-full hover:bg-gray-700 p-2"
       >
         Start
       </button>
