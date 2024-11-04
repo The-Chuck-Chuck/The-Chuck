@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-[20px]">
-      <p className="text-white text-[50px] font-bold">The Chcuk-Chcuk</p>
+      <p className="text-white text-[50px] font-bold">The Chuck-Chuck</p>
       <div>
         <img className="mt-5 w-[300px]" src={tempChcukImage} alt="chukimage" />
       </div>
