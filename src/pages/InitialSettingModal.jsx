@@ -5,7 +5,7 @@ import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
 
 const InitialSettingModal = () => {
-  const setIsOpenedModal = usePageStore((state) => state.setIsOpenedModal);
+  const setIsOpenedInitial = usePageStore((state) => state.setIsOpenedInitial);
   const [inputValue, setInputValue] = useState(25);
   const setChuckLength = useChuckStore((state) => state.setChuckLength);
 
@@ -14,7 +14,7 @@ const InitialSettingModal = () => {
   };
 
   const handleClick = () => {
-    setIsOpenedModal(false);
+    setIsOpenedInitial(false);
     setChuckLength(inputValue);
   };
 

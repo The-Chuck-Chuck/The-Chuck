@@ -5,13 +5,13 @@ import usePageStore from "../store/pageStore";
 import InitialSettingModal from "./InitialSettingModal";
 
 const Simulator = () => {
-  const isOpenedModal = usePageStore((state) => state.isOpenedModal);
+  const isOpenedInitial = usePageStore((state) => state.isOpenedModal);
 
   return (
     <div className="text-white">
       <Header />
       <main className="w-[90%] h-[100vh]">
-        {isOpenedModal && (
+        {isOpenedInitial && (
           <InitialSettingModal addClassName="top-[30%] left-[30%]" />
         )}
         <SimulCanvas />

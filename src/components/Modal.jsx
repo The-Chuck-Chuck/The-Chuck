@@ -1,15 +1,15 @@
 import useStore from "../store/pageStore";
 import Button from "./Button";
 
-const Modal = ({ drection, title, addClassName, children }) => {
-  const setIsOpenedModal = useStore((state) => state.setIsOpenedModal);
+const Modal = ({ drection, setIsOpened, title, addClassName, children }) => {
+  const setIsOpenedInitial = useStore((state) => state.setIsOpenedInitial);
   const modalDrection = {
     row: "w-[500px] h-[300px]",
     col: "w-[400px] h-[500px]",
   };
 
   const handleClickClose = () => {
-    setIsOpenedModal(false);
+    return setIsOpened ? setIsOpened(false) : setIsOpenedInitial(false);
   };
 
   return (
