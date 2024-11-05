@@ -42,6 +42,7 @@ const Chuck = ({ color, position, rotation, meshRef }) => {
       >
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />
       </mesh>
+
       <lineSegments
         geometry={shapeFaceEdgeLine}
         position={position}
