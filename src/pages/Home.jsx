@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import tempChuckImage from "../asset/chuckmodel.jpeg";
 import Button from "../components/Button";
+import usePageStore from "../store/pageStore";
 
 const Home = () => {
+  const setIsOpenedInitial = usePageStore((state) => state.setIsOpenedInitial);
   const navigate = useNavigate();
 
   const handleClickStart = () => {
     navigate("/simulator");
+    setIsOpenedInitial(true);
   };
 
   return (
