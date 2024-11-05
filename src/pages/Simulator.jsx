@@ -1,11 +1,11 @@
 import Header from "../components/Header";
 import SimulCanvas from "../components/SimulCanvas";
 import SimulController from "../components/SimulController";
-import useStore from "../store/pageStore";
+import usePageStore from "../store/pageStore";
 import InitialSettingModal from "./InitialSettingModal";
 
 const Simulator = () => {
-  const isOpenedModal = useStore((state) => state.isOpenedModal);
+  const isOpenedModal = usePageStore((state) => state.isOpenedModal);
 
   return (
     <div className="text-white">

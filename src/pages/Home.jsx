@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import tempChuckImage from "../asset/chuckmodel.jpeg";
 import Button from "../components/Button";
-import useStore from "../store/pageStore";
+import usePageStore from "../store/pageStore";
 
 const Home = () => {
-  const setIsOpenedModal = useStore((state) => state.setIsOpenedModal);
+  const setIsOpenedModal = usePageStore((state) => state.setIsOpenedModal);
   const navigate = useNavigate();
 
   const handleClickStart = () => {

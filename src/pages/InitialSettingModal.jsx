@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
-import useStore from "../store/pageStore";
+import usePageStore from "../store/pageStore";
 
 const InitialSettingModal = () => {
-  const setIsOpenedModal = useStore((state) => state.setIsOpenedModal);
+  const setIsOpenedModal = usePageStore((state) => state.setIsOpenedModal);
   const [inputValue, setInputValue] = useState(25);
 
   const handleChangedValue = (event) => {
