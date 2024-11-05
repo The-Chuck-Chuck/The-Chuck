@@ -1,14 +1,21 @@
 import { useState } from "react";
+import * as CONSTANTS from "../constants/constants";
 import ResetModal from "../pages/Modal/ResetModal";
 import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 
-const SimulController = () => {
+const SimulController = ({ setRotationAngle }) => {
   const chuckLength = useChuckStore((state) => state.chuckLength);
   const [isOpenedReset, setIsOpenedReset] = useState(false);
 
   const handleClickReset = () => {
     setIsOpenedReset(true);
+  };
+  const handleClickLeft = () => {
+    setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
+  };
+  const handleClickRight = () => {
+    setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
   };
 
   return (
@@ -16,8 +23,12 @@ const SimulController = () => {
       <div className="flex flex-col gap-3 fixed bottom-2 right-2 w-[250px] h-[250px] bg-slate-600 p-3 justify-center items-center">
         <div className="w-[90%] flex gap-2 items-center">
           <p className="grow text-center font-bold text-lg">Turn!</p>
-          <Button addClassName="h-10 p-1">Left</Button>
-          <Button addClassName="h-10 p-1">Right</Button>
+          <Button addClassName="h-10 p-1" handler={handleClickLeft}>
+            Left
+          </Button>
+          <Button addClassName="h-10 p-1" handler={handleClickRight}>
+            Right
+          </Button>
         </div>
         <div className="w-[80%] flex gap-3 items-center">
           <div className="grow font-bold text-lg">length?</div>
