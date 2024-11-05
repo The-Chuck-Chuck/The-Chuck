@@ -10,7 +10,7 @@ const ResetModal = ({ setIsOpened }) => {
     <Modal
       drection="row"
       title="초기화하시겠습니까?"
-      addClassName="top-[20%] left-[20%]"
+      addClassName="top-[30%] left-[30%]"
       setIsOpened={setIsOpened}
     >
       <div className="mt-8 flex flex-col gap-3 justify-center items-center">

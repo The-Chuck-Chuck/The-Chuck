@@ -19,30 +19,32 @@ const Header = () => {
   };
 
   return (
-    <div className="p-3 flex gap-7 items-center">
-      <button onClick={handleClickSave} type="button" className="grow">
-        <img
-          src={saveIcon}
-          alt="save"
-          className="w-8 h-8 hover:w-9 hover:h-9"
-        />
-      </button>
-      <Link to="/" className="grow font-bold text-xl">
-        <h1>Chuck-Chuck! Simulator</h1>
-      </Link>
-      <Button handler={handleClickLogin} addClassName="p-1">
-        Login!
-      </Button>
-      <button type="button" className="bg-saveIcon">
-        <img
-          src={searchIcon}
-          alt="search"
-          className="w-8 h-8 hover:w-9 hover:h-9"
-        />
-      </button>
+    <>
       {isOpenedLogin && <LoginModal setIsOpened={setIsOpenedLogin} />}
       {isOpenedSave && <SaveModal setIsOpened={setIsOpenedSave} />}
-    </div>
+      <div className="p-3 flex gap-7 items-center">
+        <button onClick={handleClickSave} type="button" className="grow">
+          <img
+            src={saveIcon}
+            alt="save"
+            className="w-8 h-8 hover:w-9 hover:h-9"
+          />
+        </button>
+        <Link to="/" className="grow font-bold text-xl">
+          <h1>Chuck-Chuck! Simulator</h1>
+        </Link>
+        <Button handler={handleClickLogin} addClassName="p-1">
+          Login!
+        </Button>
+        <button type="button" className="bg-saveIcon">
+          <img
+            src={searchIcon}
+            alt="search"
+            className="w-8 h-8 hover:w-9 hover:h-9"
+          />
+        </button>
+      </div>
+    </>
   );
 };
 

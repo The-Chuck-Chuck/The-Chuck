@@ -9,11 +9,9 @@ const Simulator = () => {
 
   return (
     <div className="text-white">
+      {isOpenedInitial && <InitialSettingModal />}
       <Header />
       <main className="w-[90%] h-[100vh]">
-        {isOpenedInitial && (
-          <InitialSettingModal addClassName="top-[30%] left-[30%]" />
-        )}
         <SimulCanvas />
         <SimulController />
       </main>
