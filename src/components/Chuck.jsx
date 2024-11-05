@@ -1,15 +1,15 @@
 import * as THREE from "three";
+import * as CONSTANTS from "../constants/constants.js";
 
-const Chuck = ({ position, color, rotation }) => {
-  const YVERTEX = Math.sqrt(3);
+const Chuck = ({ position, color }) => {
   // prettier-ignore
   const vertexArray = new Float32Array([
     0, 0, 0,
     2, 0, 0,
-    1, YVERTEX, 0,
+    1, CONSTANTS.YVERTEX, 0,
     0, 0, 2,
     2, 0, 2,
-    1, YVERTEX, 2,
+    1, CONSTANTS.YVERTEX, 2,
   ]);
   // prettier-ignore
   const shapeFace = [
@@ -34,14 +34,8 @@ const Chuck = ({ position, color, rotation }) => {
 
   return (
     <>
-      <mesh
-        geometry={customGeometry}
-        position={position}
-        rotation={rotation}
-        ref={meshRef}
-      >
+      <mesh geometry={customGeometry} position={position}>
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />
-        <axesHelper scale={10} />
         <lineSegments geometry={shapeFaceEdgeLine}>
           <lineBasicMaterial color="black" />
         </lineSegments>
