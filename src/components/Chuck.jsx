@@ -1,6 +1,6 @@
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import * as CONSTANTS from "../constants/constants.js";
+import * as CONSTANTS from "../constants/constants";
 
 const Chuck = ({ position, color }) => {
   // prettier-ignore
@@ -23,7 +23,6 @@ const Chuck = ({ position, color }) => {
     0, 1, 3,
     1, 3, 4,
   ]
-  const customGeometry = new THREE.BufferGeometry();
 
   const customGeometry = new THREE.BufferGeometry();
   customGeometry.setAttribute(
@@ -31,8 +30,6 @@ const Chuck = ({ position, color }) => {
     new THREE.BufferAttribute(vertexArray, 3)
   );
   customGeometry.setIndex(shapeFace);
-  const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
-
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   return (
