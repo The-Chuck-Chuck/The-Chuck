@@ -4,8 +4,8 @@ import Button from "./Button";
 const Modal = ({ drection, setIsOpened, title, addClassName, children }) => {
   const setIsOpenedInitial = useStore((state) => state.setIsOpenedInitial);
   const modalDrection = {
-    row: "w-[500px] h-[300px]",
-    col: "w-[400px] h-[500px]",
+    horizontal: "w-[500px] h-[300px]",
+    vertical: "w-[400px] h-[500px]",
   };
 
   const handleClickClose = () => {

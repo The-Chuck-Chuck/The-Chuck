@@ -10,7 +10,7 @@ const SaveModal = ({ setIsOpened }) => {
   };
 
   return (
-    <Modal drection="row" title="Save" setIsOpened={setIsOpened}>
+    <Modal drection="horizontal" title="Save" setIsOpened={setIsOpened}>
       <form
         action="submit"
         className="mt-8 flex flex-col gap-4 justify-center items-center"

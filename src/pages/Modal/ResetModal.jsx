@@ -8,7 +8,7 @@ const ResetModal = ({ setIsOpened }) => {
 
   return (
     <Modal
-      drection="row"
+      drection="horizontal"
       title="초기화하시겠습니까?"
       addClassName="top-[30%] left-[30%]"
       setIsOpened={setIsOpened}
