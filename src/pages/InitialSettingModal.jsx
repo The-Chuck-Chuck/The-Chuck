@@ -1,11 +1,13 @@
 import { useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
+import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
 
 const InitialSettingModal = () => {
   const setIsOpenedModal = usePageStore((state) => state.setIsOpenedModal);
   const [inputValue, setInputValue] = useState(25);
+  const setChuckLength = useChuckStore((state) => state.setChuckLength);
 
   const handleChangedValue = (event) => {
     setInputValue(event.target.value);
@@ -13,6 +15,7 @@ const InitialSettingModal = () => {
 
   const handleClick = () => {
     setIsOpenedModal(false);
+    setChuckLength(inputValue);
   };
 
   return (
