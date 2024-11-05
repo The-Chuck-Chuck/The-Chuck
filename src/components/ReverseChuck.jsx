@@ -51,12 +51,12 @@ const ReverseChuck = ({ position, color, rotationAngle }) => {
 
   return (
     <>
-        <mesh ref={chuckRef} geometry={customGeometry} position={position}>
-          <meshBasicMaterial color={color} side={THREE.DoubleSide} />
-          <lineSegments geometry={shapeFaceEdgeLine}>
-            <lineBasicMaterial color="black" />
-          </lineSegments>
-        </mesh>
+      <mesh ref={chuckRef} geometry={customGeometry} position={position}>
+        <meshBasicMaterial color={color} side={THREE.DoubleSide} />
+        <lineSegments geometry={shapeFaceEdgeLine}>
+          <lineBasicMaterial color="black" />
+        </lineSegments>
+      </mesh>
     </>
   );
 };
