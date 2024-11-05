@@ -11,12 +11,9 @@ const SimulCanvas = ({ rotationAngle }) => {
         fov: 100,
       }}
     >
-      <Chuck position={[0, 0, 0]} color="green" />
-      <ReverseChuck
-        position={[0, 0, 0]}
-        color="red"
-        rotationAngle={rotationAngle}
-      />
+      <Chuck position={[0, 0, 0]} color="green" rotationAngle={rotationAngle} />
+      <ReverseChuck position={[0, 0, 0]} color="red" rotationAngle={rotationAngle} />
+      <Chuck position={[2, 0, 0]} color="green" rotationAngle={rotationAngle} />
       <OrbitControls />
     </Canvas>
   );
