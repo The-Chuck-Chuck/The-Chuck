@@ -5,7 +5,7 @@ import Button from "./Button";
 
 const Header = () => {
   return (
-    <div className="h-24 p-6 flex gap-7 items-center">
+    <div className="p-3 flex gap-7 items-center">
       <button type="button" className="grow">
         <img
           src={saveIcon}
