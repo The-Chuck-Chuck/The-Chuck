@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Button from "../components/Button";
-import Modal from "../components/Modal";
-import useChuckStore from "../store/chuckStore";
-import usePageStore from "../store/pageStore";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import useChuckStore from "../../store/chuckStore";
+import usePageStore from "../../store/pageStore";
 
 const InitialSettingModal = () => {
   const setIsOpenedInitial = usePageStore((state) => state.setIsOpenedInitial);

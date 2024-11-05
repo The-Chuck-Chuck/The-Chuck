@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import saveIcon from "../asset/save-icon-silhouette-svgrepo-com.svg";
 import searchIcon from "../asset/search-2907.svg";
 import Button from "./Button";
-import LoginModal from "../pages/LoginModal";
+import LoginModal from "../pages/Modal/LoginModal";
 
 const Header = () => {
   const [isOpenedLogin, setIsOpenedLogin] = useState(false);

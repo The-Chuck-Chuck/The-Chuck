@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import SimulCanvas from "../components/SimulCanvas";
 import SimulController from "../components/SimulController";
 import usePageStore from "../store/pageStore";
-import InitialSettingModal from "./InitialSettingModal";
+import InitialSettingModal from "./Modal/InitialSettingModal";
 
 const Simulator = () => {
   const isOpenedInitial = usePageStore((state) => state.isOpenedModal);

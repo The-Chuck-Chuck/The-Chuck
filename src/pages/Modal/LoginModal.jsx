@@ -1,6 +1,6 @@
-import Modal from "../components/Modal";
-import kakaoLogin from "../asset/kakao_login_large_wide.png";
-import googleLogin from "../asset/web_light_sq_SU.svg";
+import Modal from "../../components/Modal";
+import kakaoLogin from "../../asset/kakao_login_large_wide.png";
+import googleLogin from "../../asset/web_light_sq_SU.svg";
 
 const LoginModal = ({ setIsOpened }) => {
   return (
