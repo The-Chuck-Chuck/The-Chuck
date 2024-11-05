@@ -4,8 +4,6 @@ import * as CONSTANTS from "../constants/constants.js";
 
 const ReverseChuck = ({ position, color, rotationAngle }) => {
   const chuckRef = useRef();
-  const pivotRef = useRef();
-  const axisShow = useRef();
   // prettier-ignore
   const vertexArray = new Float32Array([
     1, CONSTANTS.YVERTEX, -1,
@@ -37,7 +35,7 @@ const ReverseChuck = ({ position, color, rotationAngle }) => {
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   useEffect(() => {
-    if (chuckRef.current && pivotRef.current) {
+    if (chuckRef.current) {
       const customAxis = new THREE.Vector3(
         1,
         CONSTANTS.YVERTEX / 3,
@@ -47,30 +45,18 @@ const ReverseChuck = ({ position, color, rotationAngle }) => {
         customAxis,
         rotationAngle
       );
-      pivotRef.current.quaternion.copy(customRotation);
-
-      if (!axisShow.current) {
-        axisShow.current = new THREE.ArrowHelper(
-          customAxis,
-          new THREE.Vector3(0, 0, 0),
-          5,
-          0xffff00
-        );
-        chuckRef.current.add(axisShow.current);
-      }
+      chuckRef.current.quaternion.copy(customRotation);
     }
   }, [rotationAngle]);
 
   return (
     <>
-      <group ref={pivotRef} position={[0, 0, 0]}>
         <mesh ref={chuckRef} geometry={customGeometry} position={position}>
           <meshBasicMaterial color={color} side={THREE.DoubleSide} />
           <lineSegments geometry={shapeFaceEdgeLine}>
             <lineBasicMaterial color="black" />
           </lineSegments>
         </mesh>
-      </group>
     </>
   );
 };
