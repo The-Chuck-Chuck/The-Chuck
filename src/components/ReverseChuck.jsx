@@ -8,12 +8,12 @@ const ReverseChuck = ({ position, color, rotationAngle }) => {
   const axisShow = useRef();
   // prettier-ignore
   const vertexArray = new Float32Array([
-    1, CONSTANTS.YVERTEX, 0,
-    3, CONSTANTS.YVERTEX, 0,
-    2, 0, 0,
-    1, CONSTANTS.YVERTEX, 2,
-    3, CONSTANTS.YVERTEX, 2,
-    2, 0, 2,
+    1, CONSTANTS.YVERTEX, -1,
+    3, CONSTANTS.YVERTEX, -1,
+    2, 0, -1,
+    1, CONSTANTS.YVERTEX, 1,
+    3, CONSTANTS.YVERTEX, 1,
+    2, 0, 1,
   ]);
   // prettier-ignore
   const shapeFace = [

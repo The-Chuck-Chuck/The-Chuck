@@ -4,12 +4,12 @@ import * as CONSTANTS from "../constants/constants.js";
 const Chuck = ({ position, color }) => {
   // prettier-ignore
   const vertexArray = new Float32Array([
-    0, 0, 0,
-    2, 0, 0,
-    1, CONSTANTS.YVERTEX, 0,
-    0, 0, 2,
-    2, 0, 2,
-    1, CONSTANTS.YVERTEX, 2,
+    0, 0, -1,
+    2, 0, -1,
+    1, CONSTANTS.YVERTEX, -1,
+    0, 0, 1,
+    2, 0, 1,
+    1, CONSTANTS.YVERTEX, 1,
   ]);
   // prettier-ignore
   const shapeFace = [
