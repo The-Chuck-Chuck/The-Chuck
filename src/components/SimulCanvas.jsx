@@ -10,7 +10,7 @@ const SimulCanvas = ({ chuckPositions, rotationAngle }) => {
   const chuckItems = chuckPositions.map((position, index) => {
     return (
       <React.Fragment key={index}>
-        {index === 0 || index % 2 === 0 ? (
+        {index % 2 === 0 ? (
           <Chuck color="red" position={position} />
         ) : (
           <ReverseChuck
