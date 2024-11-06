@@ -1,13 +1,11 @@
 import { useState } from "react";
 import * as CONSTANTS from "../constants/constants";
 import ResetModal from "../pages/Modal/ResetModal";
+import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 
-const SimulController = ({
-  chuckPositions,
-  setChuckPositions,
-  setRotationAngle,
-}) => {
+const SimulController = ({ setRotationAngle }) => {
+  const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
   const [isOpenedReset, setIsOpenedReset] = useState(false);
 
   const handleClickReset = () => {
@@ -19,29 +17,34 @@ const SimulController = ({
   };
 
   const handleClickAdd = () => {
-    if (chuckPositions.length >= 50) {
+    if (chuckPositionsList.length >= 50) {
       alert("최대 개수는 50개입니다.");
+
       return;
     } else {
-      const copiedChuckPositions = JSON.parse(JSON.stringify(chuckPositions));
-      const addPosition = copiedChuckPositions[copiedChuckPositions.length - 2];
+      const copiedChuckPositionsList = JSON.parse(
+        JSON.stringify(chuckPositionsList)
+      );
+      const addPosition =
+        copiedChuckPositionsList[copiedChuckPositionsList.length - 2];
 
       addPosition[0] += 2;
 
-      setChuckPositions([...chuckPositions, addPosition]);
+      setChuckPositionsList([...chuckPositionsList, addPosition]);
     }
   };
 
-  const handleClickDec = () => {
-    if (chuckPositions.length <= 2) {
+  const handleClickDelete = () => {
+    if (chuckPositionsList.length <= 2) {
       alert("최소 개수는 2개입니다.");
+
       return;
     } else {
-      const copiedChuckPositions = [...chuckPositions];
+      const copiedChuckPositionsList = [...chuckPositionsList];
 
-      copiedChuckPositions.pop();
+      copiedChuckPositionsList.pop();
 
-      setChuckPositions(copiedChuckPositions);
+      setChuckPositionsList(copiedChuckPositionsList);
     }
   };
 
@@ -57,7 +60,7 @@ const SimulController = ({
         </div>
         <div className="w-[80%] flex gap-3 items-center">
           <div className="grow font-bold text-lg">length?</div>
-          <div className="font-semibold">{chuckPositions.length}</div>
+          <div className="font-semibold">{chuckPositionsList.length}</div>
           <div className="flex gap-2">
             <Button
               clickHandler={handleClickAdd}
@@ -66,7 +69,7 @@ const SimulController = ({
               + 1
             </Button>
             <Button
-              clickHandler={handleClickDec}
+              clickHandler={handleClickDelete}
               className="w-[38px] text-sm h-8 pl-1 pr-1"
             >
               - 1

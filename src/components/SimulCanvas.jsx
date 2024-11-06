@@ -1,13 +1,15 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { useRef } from "react";
+import useChuckStore from "../store/chuckStore";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
-const SimulCanvas = ({ chuckPositions, rotationAngle }) => {
+const SimulCanvas = ({ rotationAngle }) => {
+  const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const groupRef = useRef();
 
-  const chuckItems = chuckPositions.map((position, index) => {
+  const chuckItems = chuckPositionsList.map((position, index) => {
     return (
       <React.Fragment key={index}>
         {index % 2 === 0 ? (
