@@ -1,7 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { useEffect, useState, useRef } from "react";
-import * as CONSTANTS from "../constants/constants";
+import { useRef, useState } from "react";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
@@ -9,13 +8,6 @@ const SimulCanvas = () => {
   const [rotationAngle, setRotationAngle] = useState(0);
   const [groupRotation, setGroupRotation] = useState([]);
   const groupRef1 = useRef();
-
-  useEffect(() => {
-    const testInterval = setInterval(() => {
-      setRotationAngle((preAngle) => preAngle + 90 * CONSTANTS.DEGREE);
-    }, 3000);
-    return () => clearInterval(testInterval);
-  }, []);
 
   return (
     <Canvas
