@@ -1,9 +1,9 @@
-const Button = ({ choiceButtonOrSubmit, children, handler, addClassName }) => {
+const Button = ({ isSubmit = false, children, clickHandler, className }) => {
   return (
     <button
-      type={choiceButtonOrSubmit === undefined ? "button" : "submit"}
-      onClick={handler}
-      className={`text-white border-4 font-bold hover:bg-white hover:text-black rounded-md ${addClassName}`}
+      type={isSubmit === false ? "button" : "submit"}
+      onClick={clickHandler}
+      className={`text-white border-4 font-bold hover:bg-white hover:text-black rounded-md ${className}`}
     >
       {children}
     </button>

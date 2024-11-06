@@ -1,4 +1,3 @@
-import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import * as CONSTANTS from "../constants/constants";
 
@@ -25,22 +24,22 @@ const Chuck = ({ position, color }) => {
   ]
 
   const customGeometry = new THREE.BufferGeometry();
+
   customGeometry.setAttribute(
     "position",
     new THREE.BufferAttribute(vertexArray, 3)
   );
   customGeometry.setIndex(shapeFace);
+
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   return (
-    <>
-      <mesh geometry={customGeometry} position={position}>
-        <meshBasicMaterial color={color} side={THREE.DoubleSide} />
-        <lineSegments geometry={shapeFaceEdgeLine}>
-          <lineBasicMaterial color="black" />
-        </lineSegments>
-      </mesh>
-    </>
+    <mesh geometry={customGeometry} position={position}>
+      <meshBasicMaterial color={color} side={THREE.DoubleSide} />
+      <lineSegments geometry={shapeFaceEdgeLine}>
+        <lineBasicMaterial color="black" />
+      </lineSegments>
+    </mesh>
   );
 };
 
