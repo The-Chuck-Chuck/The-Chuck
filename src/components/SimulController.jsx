@@ -1,13 +1,11 @@
 import { useState } from "react";
 import * as CONSTANTS from "../constants/constants";
 import ResetModal from "../pages/Modal/ResetModal";
+import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 
-const SimulController = ({
-  chuckPositions,
-  setChuckPositions,
-  setRotationAngle,
-}) => {
+const SimulController = ({ setRotationAngle }) => {
+  const { chuckPositions, setChuckPositions } = useChuckStore();
   const [isOpenedReset, setIsOpenedReset] = useState(false);
 
   const handleClickReset = () => {
