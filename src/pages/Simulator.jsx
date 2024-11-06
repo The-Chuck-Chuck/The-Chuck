@@ -1,3 +1,4 @@
+import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
 import Header from "../components/Header";
 import SimulCanvas from "../components/SimulCanvas";
@@ -14,7 +15,14 @@ const Simulator = () => {
       {isOpenedInitial && <InitialSettingModal />}
       <Header />
       <main className="w-[90%] h-[100vh]">
-        <SimulCanvas rotationAngle={rotationAngle} />
+        <Canvas
+          camera={{
+            position: [2, 5, 5],
+            fov: 100,
+          }}
+        >
+          <SimulCanvas rotationAngle={rotationAngle} />
+        </Canvas>
         <SimulController setRotationAngle={setRotationAngle} />
       </main>
     </div>

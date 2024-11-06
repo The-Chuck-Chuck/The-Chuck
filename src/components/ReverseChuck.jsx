@@ -1,7 +1,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
-import * as CONSTANTS from "../constants/constants.js";
+import * as CONSTANTS from "../constants/constants";
 
 const ReverseChuck = ({ position, color, rotationAngle }) => {
   const chuckRef = useRef();
@@ -34,7 +34,8 @@ const ReverseChuck = ({ position, color, rotationAngle }) => {
     new THREE.BufferAttribute(vertexArray, 3)
   );
   customGeometry.setIndex(shapeFace);
-
+  customGeometry.computeBoundingBox();
+  customGeometry.computeBoundingSphere();
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   useFrame(() => {
@@ -52,7 +53,12 @@ const ReverseChuck = ({ position, color, rotationAngle }) => {
 
   return (
     <>
-      <mesh ref={chuckRef} geometry={customGeometry} position={position}>
+      <mesh
+        ref={chuckRef}
+        geometry={customGeometry}
+        position={position}
+        userData={{ position, color }}
+      >
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />
         <lineSegments geometry={shapeFaceEdgeLine}>
           <lineBasicMaterial color="black" />

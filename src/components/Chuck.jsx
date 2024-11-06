@@ -34,6 +34,8 @@ const Chuck = ({ position, color, rotationAngle }) => {
     new THREE.BufferAttribute(vertexArray, 3)
   );
   customGeometry.setIndex(shapeFace);
+  customGeometry.computeBoundingBox();
+  customGeometry.computeBoundingSphere();
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   useFrame(() => {
@@ -51,7 +53,12 @@ const Chuck = ({ position, color, rotationAngle }) => {
 
   return (
     <>
-      <mesh ref={chuckRef} geometry={customGeometry} position={position}>
+      <mesh
+        ref={chuckRef}
+        geometry={customGeometry}
+        position={position}
+        userData={{ position, color }}
+      >
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />
         <lineSegments geometry={shapeFaceEdgeLine}>
           <lineBasicMaterial color="black" />
