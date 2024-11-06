@@ -30,8 +30,8 @@ const InitialSettingModal = () => {
         />
         <div className="text-lg font-bold">{inputValue}</div>
         <Button
-          handler={handleClick}
-          addClassName="w-[80%] text-lg pl-7 pr-7 pt-2 pb-2"
+          clickHandler={handleClick}
+          className="w-[80%] text-lg pl-7 pr-7 pt-2 pb-2"
         >
           Start Simulation
         </Button>

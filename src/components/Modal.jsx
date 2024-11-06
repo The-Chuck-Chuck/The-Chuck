@@ -19,7 +19,7 @@ const Modal = ({ drection, setIsOpened, title, addClassName, children }) => {
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">{title}</h2>
-          <Button handler={handleClickClose} addClassName="border-2 w-8">
+          <Button clickHandler={handleClickClose} className="border-2 w-8">
             X
           </Button>
         </div>

@@ -25,7 +25,7 @@ const SaveModal = ({ setIsOpened }) => {
         {!inputValue && (
           <div className="text-red-500">제목이 필수로 입력되어야 합니다.</div>
         )}
-        <Button addClassName="w-[80%] h-10">save</Button>
+        <Button className="w-[80%] h-10">save</Button>
       </form>
     </Modal>
   );

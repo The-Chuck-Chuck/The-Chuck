@@ -33,7 +33,7 @@ const Header = () => {
         <Link to="/" className="grow font-bold text-xl">
           <h1>Chuck-Chuck! Simulator</h1>
         </Link>
-        <Button handler={handleClickLogin} addClassName="p-1">
+        <Button clickHandler={handleClickLogin} className="p-1">
           Login!
         </Button>
         <button type="button" className="bg-saveIcon">
