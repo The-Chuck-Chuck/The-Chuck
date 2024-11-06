@@ -9,8 +9,8 @@ const ResetModal = ({ setIsOpened }) => {
   return (
     <Modal
       drection="horizontal"
-      title="초기화하시겠습니까?"
-      addClassName="top-[30%] left-[30%]"
+      modalTitle="초기화하시겠습니까?"
+      className="top-[30%] left-[30%]"
       setIsOpened={setIsOpened}
     >
       <div className="mt-8 flex flex-col gap-3 justify-center items-center">

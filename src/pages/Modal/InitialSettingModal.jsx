@@ -16,7 +16,7 @@ const InitialSettingModal = () => {
   };
 
   return (
-    <Modal drection="horizontal" title="Initial Setting">
+    <Modal drection="horizontal" modalTitle="Initial Setting">
       <form className="mt-[5%] flex flex-col gap-5 justify-center items-center">
         <input
           type="range"
