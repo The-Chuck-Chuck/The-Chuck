@@ -15,18 +15,16 @@ const InitialSettingModal = () => {
     setInputValue(event.target.value);
   };
 
-  const handleClick = () => {
+  const handleClickStartButton = () => {
     const initialPositionArray = [];
-    let positionCount = inputValue;
     let positionX = 0;
 
-    while (positionCount > 0) {
+    while (initialPositionArray.length < inputValue) {
       const positionArray = [positionX, 0, 0];
 
       for (let i = 0; i < 2; i++) {
-        positionCount--;
-
-        positionCount >= 0 && initialPositionArray.push(positionArray);
+        initialPositionArray.length < inputValue &&
+          initialPositionArray.push(positionArray);
       }
 
       positionX += 2;
@@ -51,7 +49,7 @@ const InitialSettingModal = () => {
         />
         <div className="text-lg font-bold">{inputValue}</div>
         <Button
-          clickHandler={handleClick}
+          clickHandler={handleClickStartButton}
           className="w-[80%] text-lg pl-7 pr-7 pt-2 pb-2"
         >
           Start Simulation
