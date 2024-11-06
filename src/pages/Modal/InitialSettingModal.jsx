@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import useChuckStore from "../../store/chuckStore";
 import usePageStore from "../../store/pageStore";
 
 const InitialSettingModal = () => {
   const setIsOpenedInitial = usePageStore((state) => state.setIsOpenedInitial);
+  const setChuckPositions = useChuckStore((state) => state.setChuckPositions);
   const [inputValue, setInputValue] = useState(25);
 
   const handleChangedValue = (event) => {
@@ -12,7 +14,24 @@ const InitialSettingModal = () => {
   };
 
   const handleClick = () => {
+    const initialPositionArray = [];
+    let positionCount = inputValue;
+    let positionX = 0;
+
+    while (positionCount > 0) {
+      const positionArray = [positionX, 0, 0];
+
+      for (let i = 0; i < 2; i++) {
+        positionCount--;
+
+        positionCount >= 0 && initialPositionArray.push(positionArray);
+      }
+
+      positionX += 2;
+    }
+
     setIsOpenedInitial(false);
+    setChuckPositions(initialPositionArray);
   };
 
   return (
