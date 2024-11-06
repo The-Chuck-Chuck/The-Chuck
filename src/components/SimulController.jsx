@@ -1,14 +1,48 @@
 import { useState } from "react";
+import * as CONSTANTS from "../constants/constants";
 import ResetModal from "../pages/Modal/ResetModal";
-import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 
-const SimulController = () => {
-  const chuckLength = useChuckStore((state) => state.chuckLength);
+const SimulController = ({
+  chuckPositions,
+  setChuckPositions,
+  setRotationAngle,
+}) => {
   const [isOpenedReset, setIsOpenedReset] = useState(false);
 
   const handleClickReset = () => {
     setIsOpenedReset(true);
+  };
+
+  const handleClickRotateRight = () => {
+    setRotationAngle((preAngle) => preAngle + 90 * CONSTANTS.DEGREE);
+  };
+
+  const handleClickAdd = () => {
+    if (chuckPositions.length >= 50) {
+      alert("최대 개수는 50개입니다.");
+      return;
+    } else {
+      const copiedChuckPositions = JSON.parse(JSON.stringify(chuckPositions));
+      const addPosition = copiedChuckPositions[copiedChuckPositions.length - 2];
+
+      addPosition[0] += 2;
+
+      setChuckPositions([...chuckPositions, addPosition]);
+    }
+  };
+
+  const handleClickDec = () => {
+    if (chuckPositions.length <= 2) {
+      alert("최소 개수는 2개입니다.");
+      return;
+    } else {
+      const copiedChuckPositions = [...chuckPositions];
+
+      copiedChuckPositions.pop();
+
+      setChuckPositions(copiedChuckPositions);
+    }
   };
 
   return (
@@ -17,14 +51,26 @@ const SimulController = () => {
         <div className="w-[90%] flex gap-2 items-center">
           <p className="grow text-center font-bold text-lg">Turn!</p>
           <Button addClassName="h-10 p-1">Left</Button>
-          <Button addClassName="h-10 p-1">Right</Button>
+          <Button handler={handleClickRotateRight} addClassName="h-10 p-1">
+            Right
+          </Button>
         </div>
         <div className="w-[80%] flex gap-3 items-center">
           <div className="grow font-bold text-lg">length?</div>
-          <div className="font-semibold">{chuckLength}</div>
+          <div className="font-semibold">{chuckPositions.length}</div>
           <div className="flex gap-2">
-            <Button addClassName="w-[38px] text-sm h-8 pl-1 pr-1">+ 1</Button>
-            <Button addClassName="w-[38px] text-sm h-8 pl-1 pr-1">- 1</Button>
+            <Button
+              handler={handleClickAdd}
+              addClassName="w-[38px] text-sm h-8 pl-1 pr-1"
+            >
+              + 1
+            </Button>
+            <Button
+              handler={handleClickDec}
+              addClassName="w-[38px] text-sm h-8 pl-1 pr-1"
+            >
+              - 1
+            </Button>
           </div>
         </div>
         <Button handler={handleClickReset} addClassName="w-[90%] p-2">

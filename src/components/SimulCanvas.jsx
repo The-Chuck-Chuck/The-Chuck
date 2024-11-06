@@ -1,13 +1,28 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { useRef, useState } from "react";
+import React, { useRef } from "react";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
-const SimulCanvas = () => {
-  const [rotationAngle, setRotationAngle] = useState(0);
-  const [groupRotation, setGroupRotation] = useState([]);
-  const groupRef1 = useRef();
+const SimulCanvas = ({ chuckPositions, rotationAngle }) => {
+  const groupRef = useRef();
+
+  const chuckItems = chuckPositions.map((position, index) => {
+    return (
+      <React.Fragment key={index}>
+        {chuckPositions.indexOf(position) === 0 ||
+        chuckPositions.indexOf(position) % 2 === 0 ? (
+          <Chuck color="red" position={position} />
+        ) : (
+          <ReverseChuck
+            color="green"
+            position={position}
+            rotationAngle={rotationAngle}
+          />
+        )}
+      </React.Fragment>
+    );
+  });
 
   return (
     <Canvas
@@ -16,17 +31,7 @@ const SimulCanvas = () => {
         fov: 100,
       }}
     >
-      <Chuck position={[0, 0, 0]} color="green" />
-      <ReverseChuck
-        position={[0, 0, 0]}
-        color="red"
-        rotationAngle={rotationAngle}
-      />
-      <group ref={groupRef1}>
-        <Chuck position={[0, -1, -1]} color="green" />
-        <Chuck position={[2, -1, -1]} color="red" rotation={[0, 0, 1.05]} />
-        <Chuck position={[2, -1, -1]} color="green" />
-      </group>
+      <group ref={groupRef}>{chuckItems}</group>
       <OrbitControls />
     </Canvas>
   );
