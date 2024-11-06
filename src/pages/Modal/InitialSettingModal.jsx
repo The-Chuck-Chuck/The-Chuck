@@ -6,7 +6,9 @@ import usePageStore from "../../store/pageStore";
 
 const InitialSettingModal = () => {
   const setIsOpenedInitial = usePageStore((state) => state.setIsOpenedInitial);
-  const setChuckPositions = useChuckStore((state) => state.setChuckPositions);
+  const setChuckPositionsList = useChuckStore(
+    (state) => state.setChuckPositionsList
+  );
   const [inputValue, setInputValue] = useState(25);
 
   const handleChangedValue = (event) => {
@@ -31,7 +33,7 @@ const InitialSettingModal = () => {
     }
 
     setIsOpenedInitial(false);
-    setChuckPositions(initialPositionArray);
+    setChuckPositionsList(initialPositionArray);
   };
 
   return (

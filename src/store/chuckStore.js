@@ -3,8 +3,8 @@ import { persist } from "zustand/middleware";
 
 const useChuckStore = create(
   persist((set) => ({
-    chuckPositions: [],
-    setChuckPositions: (state) => set({ chuckPositions: state }),
+    chuckPositionsList: [],
+    setChuckPositionsList: (state) => set({ chuckPositionsList: state }),
   }))
 );
 

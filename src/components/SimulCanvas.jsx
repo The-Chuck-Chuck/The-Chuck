@@ -6,10 +6,10 @@ import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
 const SimulCanvas = ({ rotationAngle }) => {
-  const chuckPositions = useChuckStore((state) => state.chuckPositions);
+  const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const groupRef = useRef();
 
-  const chuckItems = chuckPositions.map((position, index) => {
+  const chuckItems = chuckPositionsList.map((position, index) => {
     return (
       <React.Fragment key={index}>
         {index % 2 === 0 ? (
