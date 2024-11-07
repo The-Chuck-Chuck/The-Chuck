@@ -1,6 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import * as THREE from "three";
 import { Raycaster } from "three";
 import Chuck from "./Chuck";
@@ -17,7 +17,11 @@ const CanvasPainter = ({ rotationAngle }) => {
     return (
       <React.Fragment key={index}>
         {index % 2 === 0 ? (
-          <Chuck color="red" position={position} />
+          <Chuck
+            color="red"
+            position={position}
+            rotationAngle={rotationAngle}
+          />
         ) : (
           <ReverseChuck
             color="green"
