@@ -5,15 +5,49 @@ import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 
 const SimulController = ({ setRotationAngle }) => {
-  const chuckLength = useChuckStore((state) => state.chuckLength);
+  const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
   const [isOpenedReset, setIsOpenedReset] = useState(false);
 
   const handleClickReset = () => {
     setIsOpenedReset(true);
   };
+
+  const handleClickAdd = () => {
+    if (chuckPositionsList.length >= 50) {
+      alert("최대 개수는 50개입니다.");
+
+      return;
+    } else {
+      const copiedChuckPositionsList = JSON.parse(
+        JSON.stringify(chuckPositionsList)
+      );
+      const addPosition =
+        copiedChuckPositionsList[copiedChuckPositionsList.length - 2];
+
+      addPosition[0] += 2;
+
+      setChuckPositionsList([...chuckPositionsList, addPosition]);
+    }
+  };
+
+  const handleClickDelete = () => {
+    if (chuckPositionsList.length <= 2) {
+      alert("최소 개수는 2개입니다.");
+
+      return;
+    } else {
+      const copiedChuckPositionsList = [...chuckPositionsList];
+
+      copiedChuckPositionsList.pop();
+
+      setChuckPositionsList(copiedChuckPositionsList);
+    }
+  };
+
   const handleClickLeft = () => {
     setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
   };
+
   const handleClickRight = () => {
     setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
   };
@@ -32,16 +66,26 @@ const SimulController = ({ setRotationAngle }) => {
         </div>
         <div className="w-[80%] flex gap-3 items-center">
           <div className="grow font-bold text-lg">length?</div>
-          <div className="font-semibold">{chuckLength}</div>
+          <div className="font-semibold">{chuckPositionsList.length}</div>
           <div className="flex gap-2">
-            <Button addClassName="w-[38px] text-sm h-8 pl-1 pr-1">+ 1</Button>
-            <Button addClassName="w-[38px] text-sm h-8 pl-1 pr-1">- 1</Button>
+            <Button
+              clickHandler={handleClickAdd}
+              className="w-[38px] text-sm h-8 pl-1 pr-1"
+            >
+              + 1
+            </Button>
+            <Button
+              clickHandler={handleClickDelete}
+              className="w-[38px] text-sm h-8 pl-1 pr-1"
+            >
+              - 1
+            </Button>
           </div>
         </div>
-        <Button handler={handleClickReset} addClassName="w-[90%] p-2">
+        <Button clickHandler={handleClickReset} className="w-[90%] p-2">
           Reset!
         </Button>
-        <Button addClassName="w-[90%] p-2">Go Back!</Button>
+        <Button className="w-[90%] p-2">Go Back!</Button>
       </div>
       {isOpenedReset && <ResetModal setIsOpened={setIsOpenedReset} />}
     </>

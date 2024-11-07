@@ -29,6 +29,7 @@ const Chuck = ({ position, color, rotationAngle }) => {
   ]
 
   const customGeometry = new THREE.BufferGeometry();
+
   customGeometry.setAttribute(
     "position",
     new THREE.BufferAttribute(vertexArray, 3)

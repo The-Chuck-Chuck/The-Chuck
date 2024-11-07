@@ -18,10 +18,13 @@ const Home = () => {
       <div>
         <img className="mt-5 w-[300px]" src={tempChuckImage} alt="chuckimage" />
       </div>
-      <Button handler={handleClickStart} addClassName="w-[20%] text-[25px] p-2">
+      <Button
+        clickHandler={handleClickStart}
+        className="w-[20%] text-[25px] p-2"
+      >
         Start!
       </Button>
-      <Button addClassName="w-[20%] text-[25px] p-2">Tutorial!</Button>
+      <Button className="w-[20%] text-[25px] p-2">Tutorial!</Button>
     </div>
   );
 };

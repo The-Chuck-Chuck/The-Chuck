@@ -1,8 +1,11 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useChuckStore = create((set) => ({
-  chuckLength: 25,
-  setChuckLength: (state) => set({ chuckLength: state }),
-}));
+const useChuckStore = create(
+  persist((set) => ({
+    chuckPositionsList: [],
+    setChuckPositionsList: (state) => set({ chuckPositionsList: state }),
+  }))
+);
 
 export default useChuckStore;

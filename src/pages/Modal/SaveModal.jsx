@@ -10,7 +10,7 @@ const SaveModal = ({ setIsOpened }) => {
   };
 
   return (
-    <Modal drection="horizontal" title="Save" setIsOpened={setIsOpened}>
+    <Modal drection="horizontal" modalTitle="Save" setIsOpened={setIsOpened}>
       <form
         action="submit"
         className="mt-8 flex flex-col gap-4 justify-center items-center"
@@ -25,7 +25,7 @@ const SaveModal = ({ setIsOpened }) => {
         {!inputValue && (
           <div className="text-red-500">제목이 필수로 입력되어야 합니다.</div>
         )}
-        <Button addClassName="w-[80%] h-10">save</Button>
+        <Button className="w-[80%] h-10">save</Button>
       </form>
     </Modal>
   );

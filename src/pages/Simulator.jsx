@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
-import Header from "../components/Header";
 import CanvasPainter from "../components/CanvasPainter";
+import Header from "../components/Header";
 import SimulController from "../components/SimulController";
 import usePageStore from "../store/pageStore";
 import InitialSettingModal from "./Modal/InitialSettingModal";

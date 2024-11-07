@@ -5,10 +5,29 @@ import * as THREE from "three";
 import { Raycaster } from "three";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
+import useChuckStore from "../store/chuckStore";
 
 const CanvasPainter = ({ rotationAngle }) => {
+  const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const raycastingRef = useRef(new Raycaster());
+  const groupRef = useRef();
   const { camera, gl, scene } = useThree();
+
+  const chuckItems = chuckPositionsList.map((position, index) => {
+    return (
+      <React.Fragment key={index}>
+        {index % 2 === 0 ? (
+          <Chuck color="red" position={position} />
+        ) : (
+          <ReverseChuck
+            color="green"
+            position={position}
+            rotationAngle={rotationAngle}
+          />
+        )}
+      </React.Fragment>
+    );
+  });
 
   const handleClickChuck = (event) => {
     event.stopPropagation();
@@ -33,14 +52,8 @@ const CanvasPainter = ({ rotationAngle }) => {
   };
 
   return (
-    <group onPointerDown={handleClickChuck}>
-      <Chuck position={[0, 0, 0]} color="green" rotationAngle={rotationAngle} />
-      <ReverseChuck
-        position={[0, 0, 0]}
-        color="red"
-        rotationAngle={rotationAngle}
-      />
-      <Chuck position={[2, 0, 0]} color="green" rotationAngle={rotationAngle} />
+    <group onPointerDown={handleClickChuck} ref={groupRef}>
+      {chuckItems}
       <OrbitControls />
     </group>
   );
