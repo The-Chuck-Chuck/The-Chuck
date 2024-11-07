@@ -6,17 +6,18 @@ import { Raycaster } from "three";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
-const SimulCanvas = ({ rotationAngle }) => {
+const CanvasPainter = ({ rotationAngle }) => {
   const raycastingRef = useRef(new Raycaster());
   const { camera, gl, scene } = useThree();
 
   const handleClickChuck = (event) => {
     event.stopPropagation();
-    const mouseClick = new THREE.Vector2(
+
+    const syncCordinater = new THREE.Vector2(
       (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
       -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
     );
-    raycastingRef.current.setFromCamera(mouseClick, camera);
+    raycastingRef.current.setFromCamera(syncCordinater, camera);
     raycastingRef.current.precision = 0.000001;
 
     let intersects = raycastingRef.current.intersectObjects(
@@ -45,4 +46,4 @@ const SimulCanvas = ({ rotationAngle }) => {
   );
 };
 
-export default SimulCanvas;
+export default CanvasPainter;

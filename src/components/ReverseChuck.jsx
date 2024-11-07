@@ -45,6 +45,7 @@ const ReverseChuck = ({ position, color, rotationAngle }) => {
         rotationAngle,
         0.02
       );
+
       const customRotation = new THREE.Quaternion();
       customRotation.setFromAxisAngle(customAxis, currentRotatoinAngle.current);
       chuckRef.current.quaternion.copy(customRotation);

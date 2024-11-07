@@ -7,7 +7,6 @@ import Button from "./Button";
 const SimulController = ({ setRotationAngle }) => {
   const chuckLength = useChuckStore((state) => state.chuckLength);
   const [isOpenedReset, setIsOpenedReset] = useState(false);
-  const [clickState, setClickState] = useState([false, false]);
 
   const handleClickReset = () => {
     setIsOpenedReset(true);
