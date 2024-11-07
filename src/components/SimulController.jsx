@@ -12,10 +12,6 @@ const SimulController = ({ setRotationAngle }) => {
     setIsOpenedReset(true);
   };
 
-  const handleClickRotateRight = () => {
-    setRotationAngle((preAngle) => preAngle + 90 * CONSTANTS.DEGREE);
-  };
-
   const handleClickAdd = () => {
     if (chuckPositionsList.length >= 50) {
       alert("최대 개수는 50개입니다.");
@@ -48,13 +44,23 @@ const SimulController = ({ setRotationAngle }) => {
     }
   };
 
+  const handleClickLeft = () => {
+    setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
+  };
+
+  const handleClickRight = () => {
+    setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
+  };
+
   return (
     <>
       <div className="flex flex-col gap-3 fixed bottom-2 right-2 w-[250px] h-[250px] bg-slate-600 p-3 justify-center items-center">
         <div className="w-[90%] flex gap-2 items-center">
           <p className="grow text-center font-bold text-lg">Turn!</p>
-          <Button className="h-10 p-1">Left</Button>
-          <Button clickHandler={handleClickRotateRight} className="h-10 p-1">
+          <Button addClassName="h-10 p-1" handler={handleClickLeft}>
+            Left
+          </Button>
+          <Button addClassName="h-10 p-1" handler={handleClickRight}>
             Right
           </Button>
         </div>
