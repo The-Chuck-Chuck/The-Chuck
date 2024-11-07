@@ -9,6 +9,8 @@ import InitialSettingModal from "./Modal/InitialSettingModal";
 const Simulator = () => {
   const isOpenedInitial = usePageStore((state) => state.isOpenedModal);
   const [rotationAngle, setRotationAngle] = useState(0);
+  const [clickedChuckInfo, setClickedChuckInfo] = useState([]);
+  const [selectRotateChuck, setSelectRotateChuck] = useState(null);
 
   return (
     <div className="text-white">
@@ -21,9 +23,18 @@ const Simulator = () => {
             fov: 100,
           }}
         >
-          <CanvasPainter rotationAngle={rotationAngle} />
+          <CanvasPainter
+            rotationAngle={rotationAngle}
+            setClickedChuckInfo={setClickedChuckInfo}
+            setSelectRotateChuck={setSelectRotateChuck}
+          />
         </Canvas>
-        <SimulController setRotationAngle={setRotationAngle} />
+        <SimulController
+          setRotationAngle={setRotationAngle}
+          clickedChuckInfo={clickedChuckInfo}
+          selectRotateChuck={selectRotateChuck}
+          setSelectRotateChuck={setSelectRotateChuck}
+        />
       </main>
     </div>
   );

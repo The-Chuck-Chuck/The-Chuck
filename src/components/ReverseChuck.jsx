@@ -3,7 +3,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import * as CONSTANTS from "../constants/constants";
 
-const ReverseChuck = ({ position, color, rotationAngle }) => {
+const ReverseChuck = ({ position, color, rotationAngle, name }) => {
   const chuckRef = useRef();
   const currentRotatoinAngle = useRef(0);
   const customAxis = new THREE.Vector3(1, CONSTANTS.YVERTEX / 3, 0).normalize();
@@ -58,7 +58,7 @@ const ReverseChuck = ({ position, color, rotationAngle }) => {
         ref={chuckRef}
         geometry={customGeometry}
         position={position}
-        userData={{ position, color }}
+        userData={{ position, name }}
       >
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />
         <lineSegments geometry={shapeFaceEdgeLine}>

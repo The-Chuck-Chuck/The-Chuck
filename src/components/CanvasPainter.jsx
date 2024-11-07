@@ -3,11 +3,15 @@ import { useThree } from "@react-three/fiber";
 import React, { useRef } from "react";
 import * as THREE from "three";
 import { Raycaster } from "three";
+import useChuckStore from "../store/chuckStore";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
-import useChuckStore from "../store/chuckStore";
 
-const CanvasPainter = ({ rotationAngle }) => {
+const CanvasPainter = ({
+  rotationAngle,
+  setClickedChuckInfo,
+  setSelectRotateChuck,
+}) => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const raycastingRef = useRef(new Raycaster());
   const groupRef = useRef();
@@ -21,12 +25,14 @@ const CanvasPainter = ({ rotationAngle }) => {
             color="red"
             position={position}
             rotationAngle={rotationAngle}
+            name="stand"
           />
         ) : (
           <ReverseChuck
             color="green"
             position={position}
             rotationAngle={rotationAngle}
+            name="reverse"
           />
         )}
       </React.Fragment>
@@ -51,7 +57,13 @@ const CanvasPainter = ({ rotationAngle }) => {
 
     if (intersects.length > 0) {
       const clickedObject = intersects[0].object;
-      const { position, color } = clickedObject.userData;
+      const { position, name } = clickedObject.userData;
+
+      setClickedChuckInfo({
+        position: position,
+        name: name,
+      });
+      setSelectRotateChuck(null);
     }
   };
 
