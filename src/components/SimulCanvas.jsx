@@ -13,15 +13,8 @@ const SimulCanvas = ({ rotationAngle }) => {
   const handleClickChuck = (event) => {
     event.stopPropagation();
     const mouseClick = new THREE.Vector2(
-      ((event.clientX - gl.domElement.offsetLeft) / gl.domElement.clientWidth) *
-        2 -
-        1,
-      -(
-        (event.clientY - gl.domElement.offsetTop) /
-        gl.domElement.clientHeight
-      ) *
-        2 +
-        1
+      (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
+      -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
     );
     raycastingRef.current.setFromCamera(mouseClick, camera);
     raycastingRef.current.precision = 0.000001;
