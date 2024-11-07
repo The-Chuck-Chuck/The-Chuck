@@ -9,6 +9,8 @@ import ReverseChuck from "./ReverseChuck";
 
 const CanvasPainter = ({
   rotationAngle,
+  clickedChuckInfo,
+  chuckPositionByCalculating,
   setClickedChuckInfo,
   setSelectRotateChuck,
 }) => {
@@ -18,20 +20,27 @@ const CanvasPainter = ({
   const { camera, gl, scene } = useThree();
 
   const chuckItems = chuckPositionsList.map((position, index) => {
+    const name = index % 2 === 0 ? "stand" : "reverse";
+    const applyRotationAngle =
+      JSON.stringify(position) === JSON.stringify(chuckPositionByCalculating) &&
+      name !== clickedChuckInfo.name
+        ? rotationAngle
+        : null;
+
     return (
       <React.Fragment key={index}>
-        {index % 2 === 0 ? (
+        {name === "stand" ? (
           <Chuck
             color="red"
             position={position}
-            rotationAngle={rotationAngle}
+            rotationAngle={applyRotationAngle}
             name="stand"
           />
         ) : (
           <ReverseChuck
             color="green"
             position={position}
-            rotationAngle={rotationAngle}
+            rotationAngle={applyRotationAngle}
             name="reverse"
           />
         )}
