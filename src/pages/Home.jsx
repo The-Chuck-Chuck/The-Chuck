@@ -9,6 +9,7 @@ const Home = () => {
 
   const handleClickStart = () => {
     navigate("/simulator");
+
     setIsOpenedInitial(true);
   };
 

@@ -37,6 +37,7 @@ const Chuck = ({ position, color, rotationAngle }) => {
   customGeometry.setIndex(shapeFace);
   customGeometry.computeBoundingBox();
   customGeometry.computeBoundingSphere();
+
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   useFrame(() => {
@@ -48,6 +49,7 @@ const Chuck = ({ position, color, rotationAngle }) => {
       );
 
       const customRotation = new THREE.Quaternion();
+
       customRotation.setFromAxisAngle(customAxis, currentRotatoinAngle.current);
       chuckRef.current.quaternion.copy(customRotation);
     }
