@@ -5,7 +5,7 @@ import * as CONSTANTS from "../constants/constants";
 
 const Chuck = ({ position, color, rotationAngle }) => {
   const chuckRef = useRef();
-  const currentRotatoinAngle = useRef(0);
+  const currentRotationAngle = useRef(0);
   const customAxis = new THREE.Vector3(1, CONSTANTS.YVERTEX / 3, 0).normalize();
   // prettier-ignore
   const vertexArray = new Float32Array([
@@ -37,18 +37,20 @@ const Chuck = ({ position, color, rotationAngle }) => {
   customGeometry.setIndex(shapeFace);
   customGeometry.computeBoundingBox();
   customGeometry.computeBoundingSphere();
+
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   useFrame(() => {
-    if (currentRotatoinAngle !== rotationAngle) {
-      currentRotatoinAngle.current = THREE.MathUtils.lerp(
-        currentRotatoinAngle.current,
+    if (currentRotationAngle !== rotationAngle) {
+      currentRotationAngle.current = THREE.MathUtils.lerp(
+        currentRotationAngle.current,
         rotationAngle,
         0.02
       );
 
       const customRotation = new THREE.Quaternion();
-      customRotation.setFromAxisAngle(customAxis, currentRotatoinAngle.current);
+
+      customRotation.setFromAxisAngle(customAxis, currentRotationAngle.current);
       chuckRef.current.quaternion.copy(customRotation);
     }
   });
