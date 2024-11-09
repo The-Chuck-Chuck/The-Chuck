@@ -1,11 +1,12 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import CanvasPainter from "../components/CanvasPainter";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
+import { findLeftRightPosition } from "../utils/function";
 import InitialSettingModal from "./Modal/InitialSettingModal";
-import { Link } from "react-router-dom";
 
 const Simulator = () => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
@@ -16,36 +17,8 @@ const Simulator = () => {
   const [chuckPositionByCalculating, setChuckPositionByCalculating] =
     useState();
 
-  const findLeftRightPosition = (
-    everyChuckPosition,
-    mouseClickInfo,
-    btnClickInfo
-  ) => {
-    let targetPosition = null;
-
-    everyChuckPosition.forEach((value, index) => {
-      if (JSON.stringify(value) === JSON.stringify(mouseClickInfo.position)) {
-        if (mouseClickInfo.name === "reverse") {
-          if (btnClickInfo === "left") {
-            targetPosition = everyChuckPosition[index];
-          } else if (btnClickInfo === "right") {
-            targetPosition = everyChuckPosition[index + 1] || null;
-          }
-        } else if (mouseClickInfo.name === "stand") {
-          if (btnClickInfo === "left") {
-            targetPosition = everyChuckPosition[index - 1] || null;
-          } else if (btnClickInfo === "right") {
-            targetPosition = everyChuckPosition[index];
-          }
-        }
-      }
-    });
-
-    return targetPosition;
-  };
-
   useEffect(() => {
-    const testProcessing = (
+    const calculateRotatePosition = (
       everyChuckPosition,
       mouseClickInfo,
       btnClickInfo
@@ -60,7 +33,11 @@ const Simulator = () => {
       }
     };
 
-    testProcessing(chuckPositionsList, clickedChuckInfo, selectRotateChuck);
+    calculateRotatePosition(
+      chuckPositionsList,
+      clickedChuckInfo,
+      selectRotateChuck
+    );
   }, [selectRotateChuck]);
 
   return (
@@ -77,7 +54,7 @@ const Simulator = () => {
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{
-            position: [2, 5, 5],
+            position: [0, 15, 15],
             fov: 100,
           }}
         >
@@ -85,6 +62,7 @@ const Simulator = () => {
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
             chuckPositionByCalculating={chuckPositionByCalculating}
+            selectRotateChuck={selectRotateChuck}
             setClickedChuckInfo={setClickedChuckInfo}
             setSelectRotateChuck={setSelectRotateChuck}
           />

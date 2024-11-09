@@ -1,10 +1,9 @@
 import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import React, { useRef } from "react";
-import React, { useRef } from "react";
-import * as THREE from "three";
+import React, { useEffect, useRef, useState } from "react";
 import { Raycaster } from "three";
 import useChuckStore from "../store/chuckStore";
+import { makeCustomAxis, handleClickChuck } from "../utils/function";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
@@ -12,6 +11,7 @@ const CanvasPainter = ({
   rotationAngle,
   clickedChuckInfo,
   chuckPositionByCalculating,
+  selectRotateChuck,
   setClickedChuckInfo,
   setSelectRotateChuck,
 }) => {
@@ -19,12 +19,19 @@ const CanvasPainter = ({
   const raycastingRef = useRef(new Raycaster());
   const groupRef = useRef();
   const { camera, gl, scene } = useThree();
+  const [customAxis, setCustomAxis] = useState(null);
+
+  useEffect(() => {
+    if (clickedChuckInfo && selectRotateChuck) {
+      const axistoss = makeCustomAxis(clickedChuckInfo, selectRotateChuck);
+      setCustomAxis(axistoss);
+    }
+  }, [clickedChuckInfo, selectRotateChuck]);
 
   const chuckItems = chuckPositionsList.map((position, index) => {
     const name = index % 2 === 0 ? "stand" : "reverse";
     const applyRotationAngle =
-      JSON.stringify(position) === JSON.stringify(chuckPositionByCalculating) &&
-      name !== clickedChuckInfo.name
+      JSON.stringify(position) === JSON.stringify(chuckPositionByCalculating)
         ? rotationAngle
         : null;
 
@@ -36,6 +43,7 @@ const CanvasPainter = ({
             position={position}
             rotationAngle={applyRotationAngle}
             name="stand"
+            customAxis={customAxis}
           />
         ) : (
           <ReverseChuck
@@ -43,44 +51,28 @@ const CanvasPainter = ({
             position={position}
             rotationAngle={applyRotationAngle}
             name="reverse"
+            customAxis={customAxis}
           />
         )}
       </React.Fragment>
     );
   });
 
-  const handleClickChuck = (event) => {
-    event.stopPropagation();
-
-    const syncCordinater = new THREE.Vector2(
-      (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
-      -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
-    );
-
-    raycastingRef.current.setFromCamera(syncCordinater, camera);
-    raycastingRef.current.precision = 0.000001;
-
-    let intersects = raycastingRef.current.intersectObjects(
-      scene.children,
-      true
-    );
-
-    intersects = intersects.filter((intersect) => intersect.object.isMesh);
-
-    if (intersects.length > 0) {
-      const clickedObject = intersects[0].object;
-      const { position, name } = clickedObject.userData;
-
-      setClickedChuckInfo({
-        position: position,
-        name: name,
-      });
-      setSelectRotateChuck(null);
-    }
-  };
-
   return (
-    <group onPointerDown={handleClickChuck} ref={groupRef}>
+    <group
+      onPointerDown={(event) => {
+        handleClickChuck(
+          event,
+          gl,
+          camera,
+          scene,
+          raycastingRef,
+          setClickedChuckInfo,
+          setSelectRotateChuck
+        );
+      }}
+      ref={groupRef}
+    >
       {chuckItems}
       <OrbitControls />
     </group>

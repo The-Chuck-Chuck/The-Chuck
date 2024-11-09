@@ -1,20 +1,18 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
-import * as CONSTANTS from "../constants/constants";
 
-const ReverseChuck = ({ position, color, rotationAngle, name }) => {
+const ReverseChuck = ({ position, color, rotationAngle, name, customAxis }) => {
   const chuckRef = useRef();
   const currentRotationAngle = useRef(0);
-  const customAxis = new THREE.Vector3(1, CONSTANTS.YVERTEX / 3, 0).normalize();
   // prettier-ignore
   const vertexArray = new Float32Array([
-    1, CONSTANTS.YVERTEX, -1,
-    3, CONSTANTS.YVERTEX, -1,
-    2, 0, -1,
-    1, CONSTANTS.YVERTEX, 1,
-    3, CONSTANTS.YVERTEX, 1,
-    2, 0, 1,
+    -2.5, 0, -1.75,
+    0, -2.5, -1.75,
+    2.5, 0, -1.75,
+    -2.5, 0, 1.75,
+    0, -2.5, 1.75,
+    2.5, 0, 1.75,
   ]);
   // prettier-ignore
   const shapeFace = [
@@ -40,7 +38,7 @@ const ReverseChuck = ({ position, color, rotationAngle, name }) => {
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
   useFrame(() => {
-    if (currentRotationAngle !== rotationAngle) {
+    if (customAxis && currentRotationAngle !== rotationAngle) {
       currentRotationAngle.current = THREE.MathUtils.lerp(
         currentRotationAngle.current,
         rotationAngle,

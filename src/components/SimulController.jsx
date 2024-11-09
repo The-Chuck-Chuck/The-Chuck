@@ -53,7 +53,7 @@ const SimulController = ({
       const addPosition =
         copiedChuckPositionsList[copiedChuckPositionsList.length - 2];
 
-      addPosition[0] += 2;
+      addPosition[0] += 5;
 
       setChuckPositionsList([...chuckPositionsList, addPosition]);
     }
