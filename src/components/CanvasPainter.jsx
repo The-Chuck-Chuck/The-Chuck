@@ -1,6 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import * as THREE from "three";
 import { Raycaster } from "three";
 import Chuck from "./Chuck";
@@ -17,7 +17,11 @@ const CanvasPainter = ({ rotationAngle }) => {
     return (
       <React.Fragment key={index}>
         {index % 2 === 0 ? (
-          <Chuck color="red" position={position} />
+          <Chuck
+            color="red"
+            position={position}
+            rotationAngle={rotationAngle}
+          />
         ) : (
           <ReverseChuck
             color="green"
@@ -36,6 +40,7 @@ const CanvasPainter = ({ rotationAngle }) => {
       (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
       -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
     );
+
     raycastingRef.current.setFromCamera(syncCordinater, camera);
     raycastingRef.current.precision = 0.000001;
 
@@ -43,6 +48,7 @@ const CanvasPainter = ({ rotationAngle }) => {
       scene.children,
       true
     );
+
     intersects = intersects.filter((intersect) => intersect.object.isMesh);
 
     if (intersects.length > 0) {
