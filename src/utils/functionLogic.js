@@ -21,18 +21,21 @@ const findLeftRightPosition = (
 };
 
 const makeCustomAxis = (mouseClickInfo, btnClickInfo) => {
-  if ((mouseClickInfo.position[1] === 0) && (btnClickInfo === "left")) {
-    return new THREE.Vector3(2.5, -2.5, 0).normalize();
-  } else if ((mouseClickInfo.position[1] === 0) && (btnClickInfo === "right")) {
-    return new THREE.Vector3(-2.5, -2.5, 0).normalize();
-  } else if ((mouseClickInfo.position[1] !== 0) && (btnClickInfo === "left")) {
-    return new THREE.Vector3(2.5, 2.5, 0).normalize();
-  } else if ((mouseClickInfo.position[1] !== 0) && (btnClickInfo === "right")) {
-    return new THREE.Vector3(-2.5, 2.5, 0).normalize();
-  }
+  const positionX = mouseClickInfo.position[1] === 0 ? -2.5 : 2.5;
+  const positionY = btnClickInfo === "left" ? 2.5 : -2.5;
+
+  return new THREE.Vector3(positionX, positionY, 0).normalize();
 };
 
-const handleClickChuck = (event, gl, camera, scene, raycastingRef, setClickedChuckInfo, setSelectRotateChuck) => {
+const handleClickChuck = (
+  event,
+  gl,
+  camera,
+  scene,
+  raycastingRef,
+  setClickedChuckInfo,
+  setSelectRotateChuck
+) => {
   event.stopPropagation();
 
   const syncCordinater = new THREE.Vector2(
@@ -43,10 +46,7 @@ const handleClickChuck = (event, gl, camera, scene, raycastingRef, setClickedChu
   raycastingRef.current.setFromCamera(syncCordinater, camera);
   raycastingRef.current.precision = 0.000001;
 
-  let intersects = raycastingRef.current.intersectObjects(
-    scene.children,
-    true
-  );
+  let intersects = raycastingRef.current.intersectObjects(scene.children, true);
 
   intersects = intersects.filter((intersect) => intersect.object.isMesh);
 

@@ -3,7 +3,7 @@ import { useThree } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import { Raycaster } from "three";
 import useChuckStore from "../store/chuckStore";
-import { makeCustomAxis, handleClickChuck } from "../utils/function";
+import { makeCustomAxis, handleClickChuck } from "../utils/functionLogic";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
