@@ -1,6 +1,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import React, { useRef } from "react";
+import React, { useRef } from "react";
 import * as THREE from "three";
 import { Raycaster } from "three";
 import useChuckStore from "../store/chuckStore";
@@ -55,6 +56,7 @@ const CanvasPainter = ({
       (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
       -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
     );
+
     raycastingRef.current.setFromCamera(syncCordinater, camera);
     raycastingRef.current.precision = 0.000001;
 
@@ -62,6 +64,7 @@ const CanvasPainter = ({
       scene.children,
       true
     );
+
     intersects = intersects.filter((intersect) => intersect.object.isMesh);
 
     if (intersects.length > 0) {

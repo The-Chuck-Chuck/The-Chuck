@@ -78,10 +78,10 @@ const SimulController = ({
       <div className="flex flex-col gap-3 fixed bottom-2 right-2 w-[250px] h-[250px] bg-slate-600 p-3 justify-center items-center">
         <div className="w-[90%] flex gap-2 items-center">
           <p className="grow text-center font-bold text-lg">Turn!</p>
-          <Button addClassName="h-10 p-1" clickHandler={handleClickLeft}>
+          <Button className="h-10 p-1" clickHandler={handleClickLeft}>
             Left
           </Button>
-          <Button addClassName="h-10 p-1" clickHandler={handleClickRight}>
+          <Button className="h-10 p-1" clickHandler={handleClickRight}>
             Right
           </Button>
         </div>
