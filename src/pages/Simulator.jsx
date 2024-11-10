@@ -5,7 +5,7 @@ import CanvasPainter from "../components/CanvasPainter";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
-import { findLeftRightPosition } from "../utils/functionLogic";
+import { findLeftRightPosition } from "../utils/chuckUtils";
 import InitialSettingModal from "./Modal/InitialSettingModal";
 
 const Simulator = () => {

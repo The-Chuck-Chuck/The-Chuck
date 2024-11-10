@@ -1,9 +1,10 @@
 import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
 import { Raycaster } from "three";
 import useChuckStore from "../store/chuckStore";
-import { makeCustomAxis, handleClickChuck } from "../utils/functionLogic";
+import { makeCustomAxis } from "../utils/chuckUtils";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
@@ -58,21 +59,38 @@ const CanvasPainter = ({
     );
   });
 
+  const handleClickChuck = (evnet) => {
+    evnet.stopPropagation();
+
+    const syncCordinater = new THREE.Vector2(
+      (evnet.offsetX / gl.domElement.clientWidth) * 2 - 1,
+      -(evnet.offsetY / gl.domElement.clientHeight) * 2 + 1
+    );
+
+    raycastingRef.current.setFromCamera(syncCordinater, camera);
+    raycastingRef.current.precision = 0.000001;
+
+    let intersects = raycastingRef.current.intersectObjects(
+      scene.children,
+      true
+    );
+
+    intersects = intersects.filter((intersect) => intersect.object.isMesh);
+
+    if (intersects.length > 0) {
+      const clickedObject = intersects[0].object;
+      const { position, name } = clickedObject.userData;
+
+      setClickedChuckInfo({
+        position: position,
+        name: name,
+      });
+      setSelectRotateChuck(null);
+    }
+  };
+
   return (
-    <group
-      onPointerDown={(event) => {
-        handleClickChuck(
-          event,
-          gl,
-          camera,
-          scene,
-          raycastingRef,
-          setClickedChuckInfo,
-          setSelectRotateChuck
-        );
-      }}
-      ref={groupRef}
-    >
+    <group onPointerDown={handleClickChuck} ref={groupRef}>
       {chuckItems}
       <OrbitControls />
     </group>
