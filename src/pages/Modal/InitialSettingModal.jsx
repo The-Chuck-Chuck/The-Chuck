@@ -20,14 +20,10 @@ const InitialSettingModal = () => {
     let positionX = 0;
 
     while (initialPositionArray.length < inputValue) {
-      const positionArray = [positionX, 0, 0];
-
-      for (let i = 0; i < 2; i++) {
-        initialPositionArray.length < inputValue &&
-          initialPositionArray.push(positionArray);
-      }
-
-      positionX += 2;
+      const positionY = initialPositionArray.length % 2 === 0 ? 0 : 2.5;
+      const positionArray = [positionX, positionY, 0];
+      initialPositionArray.push(positionArray);
+      positionX += 2.5;
     }
 
     setIsOpenedInitial(false);
