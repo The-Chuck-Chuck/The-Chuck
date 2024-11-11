@@ -1,10 +1,13 @@
 import { useState } from "react";
+import * as THREE from "three";
 import * as CONSTANTS from "../constants/constants";
 import ResetModal from "../pages/Modal/ResetModal";
 import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 
 const SimulController = ({
+  groupRef,
+  selectGroupRef,
   clickedChuckInfo,
   setRotationAngle,
   selectRotateChuck,
@@ -14,9 +17,28 @@ const SimulController = ({
   const [isOpenedReset, setIsOpenedReset] = useState(false);
 
   const handleClickLeft = () => {
-    if (clickedChuckInfo.length !== 0) {
+    let selectedIndex = 0;
+
+    if (
+      clickedChuckInfo.userData &&
+      groupRef.current &&
+      selectGroupRef.current
+    ) {
+      groupRef.current.children.forEach((mesh, index) => {
+        if (mesh.uuid === clickedChuckInfo.uuid) {
+          selectedIndex = index;
+        }
+      });
+
       if (selectRotateChuck === null) {
         setSelectRotateChuck("left");
+
+        groupRef.current.children.slice(0, selectedIndex).forEach((mesh) => {
+          groupRef.current.remove(mesh);
+          selectGroupRef.current.add(mesh);
+        });
+
+        groupRef.current.add(selectGroupRef.current);
       } else {
         setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
       }
@@ -26,9 +48,28 @@ const SimulController = ({
   };
 
   const handleClickRight = () => {
-    if (clickedChuckInfo.length !== 0) {
+    let selectedIndex = 0;
+
+    groupRef.current.children.forEach((mesh, index) => {
+      if (mesh.uuid === clickedChuckInfo.uuid) {
+        selectedIndex = index;
+      }
+    });
+
+    if (clickedChuckInfo.userData) {
       if (selectRotateChuck === null) {
         setSelectRotateChuck("right");
+
+        groupRef.current.children
+          .slice(selectedIndex)
+          .forEach((mesh, index) => {
+            if (index !== 0) {
+              groupRef.current.remove(mesh);
+              selectGroupRef.current.add(mesh);
+            }
+          });
+
+        groupRef.current.add(selectGroupRef.current);
       } else {
         setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
       }

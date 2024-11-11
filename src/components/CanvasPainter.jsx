@@ -1,5 +1,5 @@
 import { OrbitControls } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Raycaster } from "three";
@@ -9,6 +9,8 @@ import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
 const CanvasPainter = ({
+  groupRef,
+  selectGroupRef,
   rotationAngle,
   clickedChuckInfo,
   chuckPositionByCalculating,
@@ -18,16 +20,11 @@ const CanvasPainter = ({
 }) => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const raycastingRef = useRef(new Raycaster());
-  const groupRef = useRef();
   const { camera, gl, scene } = useThree();
   const [customAxis, setCustomAxis] = useState(null);
-
-  useEffect(() => {
-    if (clickedChuckInfo && selectRotateChuck) {
-      const axistoss = makeCustomAxis(clickedChuckInfo, selectRotateChuck);
-      setCustomAxis(axistoss);
-    }
-  }, [clickedChuckInfo, selectRotateChuck]);
+  const currentRotationAngle = useRef(0);
+  const worldPosition = new THREE.Vector3();
+  const worldRotation = new THREE.Quaternion();
 
   const chuckItems = chuckPositionsList.map((position, index) => {
     const name = index % 2 === 0 ? "stand" : "reverse";
@@ -59,12 +56,12 @@ const CanvasPainter = ({
     );
   });
 
-  const handleClickChuck = (evnet) => {
-    evnet.stopPropagation();
+  const handleClickChuck = (event) => {
+    event.stopPropagation();
 
     const syncCordinater = new THREE.Vector2(
-      (evnet.offsetX / gl.domElement.clientWidth) * 2 - 1,
-      -(evnet.offsetY / gl.domElement.clientHeight) * 2 + 1
+      (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
+      -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
     );
 
     raycastingRef.current.setFromCamera(syncCordinater, camera);
@@ -79,15 +76,52 @@ const CanvasPainter = ({
 
     if (intersects.length > 0) {
       const clickedObject = intersects[0].object;
-      const { position, name } = clickedObject.userData;
-
-      setClickedChuckInfo({
-        position: position,
-        name: name,
-      });
+      setClickedChuckInfo(clickedObject);
       setSelectRotateChuck(null);
     }
+
+    if (selectGroupRef.current.children.length) {
+      const copiedSelectGroupRef = Array.from(selectGroupRef.current.children);
+
+      copiedSelectGroupRef.forEach((mesh) => {
+        mesh.getWorldPosition(worldPosition);
+        mesh.getWorldQuaternion(worldRotation);
+
+        mesh.position.copy(worldPosition);
+        mesh.quaternion.copy(worldRotation);
+
+        selectGroupRef.current.remove(mesh);
+        groupRef.current.add(mesh);
+      });
+
+      groupRef.current.remove(selectGroupRef.current);
+    }
   };
+
+  useFrame(() => {
+    if (customAxis && currentRotationAngle !== rotationAngle) {
+      currentRotationAngle.current = THREE.MathUtils.lerp(
+        currentRotationAngle.current,
+        rotationAngle,
+        0.02
+      );
+
+      const customRotation = new THREE.Quaternion();
+
+      customRotation.setFromAxisAngle(customAxis, currentRotationAngle.current);
+      selectGroupRef.current.quaternion.copy(customRotation);
+    }
+  });
+
+  useEffect(() => {
+    if (clickedChuckInfo.userData && selectRotateChuck) {
+      const axistoss = makeCustomAxis(
+        clickedChuckInfo.userData,
+        selectRotateChuck
+      );
+      setCustomAxis(axistoss);
+    }
+  }, [clickedChuckInfo.userData, selectRotateChuck]);
 
   return (
     <group onPointerDown={handleClickChuck} ref={groupRef}>
