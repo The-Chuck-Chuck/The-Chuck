@@ -103,11 +103,10 @@ const CanvasPainter = ({
       currentRotationAngle.current = THREE.MathUtils.lerp(
         currentRotationAngle.current,
         rotationAngle,
-        0.02
+        0.1
       );
 
       const customRotation = new THREE.Quaternion();
-
       customRotation.setFromAxisAngle(customAxis, currentRotationAngle.current);
       selectGroupRef.current.quaternion.copy(customRotation);
     }
@@ -115,13 +114,26 @@ const CanvasPainter = ({
 
   useEffect(() => {
     if (clickedChuckInfo.userData && selectRotateChuck) {
-      const axistoss = makeCustomAxis(
-        clickedChuckInfo.userData,
-        selectRotateChuck
-      );
-      setCustomAxis(axistoss);
+      const centerCoordinate = new THREE.Vector3();
+      clickedChuckInfo.geometry.computeBoundingBox();
+      clickedChuckInfo.geometry.boundingBox.getCenter(centerCoordinate);
+      clickedChuckInfo.localToWorld(centerCoordinate);
+
+      const vectorControl = new THREE.Vector3(0, 0, 0);
+      const centerAxis = new THREE.Vector3()
+        .copy(centerCoordinate)
+        .add(vectorControl);
+      setCustomAxis(centerAxis.normalize());
     }
-  }, [clickedChuckInfo.userData, selectRotateChuck]);
+  }, [clickedChuckInfo, selectRotateChuck]);
+  //     const axistoss = makeCustomAxis(
+  //       clickedChuckInfo.userData,
+  //       selectRotateChuck
+  //     );
+  //     console.log("유저데이터", clickedChuckInfo.userData);
+  //     setCustomAxis(axistoss);
+  //   }
+  // }, [clickedChuckInfo.userData, selectRotateChuck]);
 
   return (
     <group onPointerDown={handleClickChuck} ref={groupRef}>
