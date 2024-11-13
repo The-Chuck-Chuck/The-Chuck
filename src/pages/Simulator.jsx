@@ -63,6 +63,7 @@ const Simulator = () => {
         >
           <CanvasPainter
             groupRef={groupRef}
+            subGroupRef={subGroupRef}
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
             chuckPositionByCalculating={chuckPositionByCalculating}

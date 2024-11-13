@@ -1,5 +1,5 @@
 import { OrbitControls } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
+import { useThree, useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Raycaster } from "three";
@@ -10,6 +10,7 @@ import ReverseChuck from "./ReverseChuck";
 
 const CanvasPainter = ({
   groupRef,
+  subGroupRef,
   rotationAngle,
   clickedChuckInfo,
   chuckPositionByCalculating,
@@ -18,6 +19,7 @@ const CanvasPainter = ({
   setSelectRotateChuck,
 }) => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
+  const currentRotationAngle = useRef(0);
   const raycastingRef = useRef(new Raycaster());
   const { camera, gl, scene } = useThree();
   const [customAxis, setCustomAxis] = useState(null);
@@ -29,31 +31,30 @@ const CanvasPainter = ({
     }
   }, [clickedChuckInfo, selectRotateChuck]);
 
+  useFrame(() => {
+    if (customAxis && currentRotationAngle !== rotationAngle) {
+      currentRotationAngle.current = THREE.MathUtils.lerp(
+        currentRotationAngle.current,
+        rotationAngle,
+        0.02
+      );
+
+      const customRotation = new THREE.Quaternion();
+
+      customRotation.setFromAxisAngle(customAxis, currentRotationAngle.current);
+      subGroupRef.current.quaternion.copy(customRotation);
+    }
+  });
+
   const chuckItems = chuckPositionsList.map((position, index) => {
     const name = index % 2 === 0 ? "stand" : "reverse";
-    const applyRotationAngle =
-      JSON.stringify(position) === JSON.stringify(chuckPositionByCalculating)
-        ? rotationAngle
-        : null;
 
     return (
       <React.Fragment key={index}>
         {name === "stand" ? (
-          <Chuck
-            color="red"
-            position={position}
-            rotationAngle={applyRotationAngle}
-            name="stand"
-            customAxis={customAxis}
-          />
+          <Chuck color="red" position={position} name="stand" />
         ) : (
-          <ReverseChuck
-            color="green"
-            position={position}
-            rotationAngle={applyRotationAngle}
-            name="reverse"
-            customAxis={customAxis}
-          />
+          <ReverseChuck color="green" position={position} name="reverse" />
         )}
       </React.Fragment>
     );
