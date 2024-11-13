@@ -5,6 +5,8 @@ import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 
 const SimulController = ({
+  groupRef,
+  subGroupRef,
   clickedChuckInfo,
   setRotationAngle,
   selectRotateChuck,
@@ -14,9 +16,26 @@ const SimulController = ({
   const [isOpenedReset, setIsOpenedReset] = useState(false);
 
   const handleClickLeft = () => {
+    let startedIndex = 0;
+
+    groupRef.current.children.forEach((mesh, index) => {
+      if (clickedChuckInfo.uuid === mesh.uuid) {
+        startedIndex = index;
+      }
+    });
+
     if (clickedChuckInfo.length !== 0) {
       if (selectRotateChuck === null) {
+        const allGroup = Array.from(groupRef.current.children);
+
         setSelectRotateChuck("left");
+
+        allGroup.slice(0, startedIndex).forEach((mesh) => {
+          subGroupRef.current.add(mesh);
+          groupRef.current.remove(mesh);
+        });
+
+        groupRef.current.children.splice(0, 0, subGroupRef.current);
       } else {
         setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
       }
@@ -26,9 +45,26 @@ const SimulController = ({
   };
 
   const handleClickRight = () => {
+    let startedIndex = 0;
+
+    groupRef.current.children.forEach((mesh, index) => {
+      if (clickedChuckInfo.uuid === mesh.uuid) {
+        startedIndex = index + 1;
+      }
+    });
+
     if (clickedChuckInfo.length !== 0) {
       if (selectRotateChuck === null) {
+        const allGroup = Array.from(groupRef.current.children);
+
         setSelectRotateChuck("right");
+
+        allGroup.slice(startedIndex).forEach((mesh) => {
+          subGroupRef.current.add(mesh);
+          groupRef.current.remove(mesh);
+        });
+
+        groupRef.current.children.splice(startedIndex, 0, subGroupRef.current);
       } else {
         setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
       }

@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import * as THREE from "three";
 import CanvasPainter from "../components/CanvasPainter";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
@@ -11,6 +12,8 @@ import InitialSettingModal from "./Modal/InitialSettingModal";
 const Simulator = () => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const isOpenedInitial = usePageStore((state) => state.isOpenedModal);
+  const groupRef = useRef();
+  const subGroupRef = useRef(new THREE.Group());
   const [rotationAngle, setRotationAngle] = useState(0);
   const [clickedChuckInfo, setClickedChuckInfo] = useState([]);
   const [selectRotateChuck, setSelectRotateChuck] = useState(null);
@@ -59,6 +62,7 @@ const Simulator = () => {
           }}
         >
           <CanvasPainter
+            groupRef={groupRef}
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
             chuckPositionByCalculating={chuckPositionByCalculating}
@@ -68,6 +72,8 @@ const Simulator = () => {
           />
         </Canvas>
         <SimulController
+          groupRef={groupRef}
+          subGroupRef={subGroupRef}
           clickedChuckInfo={clickedChuckInfo}
           selectRotateChuck={selectRotateChuck}
           setRotationAngle={setRotationAngle}

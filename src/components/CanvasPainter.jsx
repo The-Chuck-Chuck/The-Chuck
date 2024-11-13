@@ -9,6 +9,7 @@ import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
 const CanvasPainter = ({
+  groupRef,
   rotationAngle,
   clickedChuckInfo,
   chuckPositionByCalculating,
@@ -18,7 +19,6 @@ const CanvasPainter = ({
 }) => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const raycastingRef = useRef(new Raycaster());
-  const groupRef = useRef();
   const { camera, gl, scene } = useThree();
   const [customAxis, setCustomAxis] = useState(null);
 
@@ -79,12 +79,8 @@ const CanvasPainter = ({
 
     if (intersects.length > 0) {
       const clickedObject = intersects[0].object;
-      const { position, name } = clickedObject.userData;
 
-      setClickedChuckInfo({
-        position: position,
-        name: name,
-      });
+      setClickedChuckInfo(clickedObject);
       setSelectRotateChuck(null);
     }
   };
