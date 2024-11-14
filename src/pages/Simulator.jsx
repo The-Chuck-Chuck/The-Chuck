@@ -5,40 +5,32 @@ import CanvasPainter from "../components/CanvasPainter";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
-import { findLeftRightPosition } from "../utils/chuckUtils";
 import InitialSettingModal from "./Modal/InitialSettingModal";
 
 const Simulator = () => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const isOpenedInitial = usePageStore((state) => state.isOpenedModal);
   const [rotationAngle, setRotationAngle] = useState(0);
-  const [clickedChuckInfo, setClickedChuckInfo] = useState([]);
-  const [selectRotateChuck, setSelectRotateChuck] = useState(null);
-  const [chuckPositionByCalculating, setChuckPositionByCalculating] =
-    useState();
+  const [clickedChuckInfo, setClickedChuckInfo] = useState(null);
+  const [targetIndex, setTargetIndex] = useState(null);
 
   useEffect(() => {
-    const calculateRotatePosition = (
-      everyChuckPosition,
-      mouseClickInfo,
-      btnClickInfo
-    ) => {
-      if (btnClickInfo) {
-        const rotatePosition = findLeftRightPosition(
-          everyChuckPosition,
-          mouseClickInfo,
-          btnClickInfo
-        );
-        setChuckPositionByCalculating(rotatePosition);
-      }
-    };
+    let positionMatch = [];
 
-    calculateRotatePosition(
-      chuckPositionsList,
-      clickedChuckInfo,
-      selectRotateChuck
-    );
-  }, [selectRotateChuck]);
+    if (clickedChuckInfo) {
+      positionMatch.push(
+        clickedChuckInfo.position.x,
+        clickedChuckInfo.position.y,
+        clickedChuckInfo.position.y
+      );
+
+      chuckPositionsList.forEach((position, index) => {
+        if (JSON.stringify(position[0]) === JSON.stringify(positionMatch[0])) {
+          setTargetIndex(index);
+        }
+      });
+    }
+  }, [clickedChuckInfo]);
 
   return (
     <div className="text-white">
@@ -61,17 +53,13 @@ const Simulator = () => {
           <CanvasPainter
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
-            chuckPositionByCalculating={chuckPositionByCalculating}
-            selectRotateChuck={selectRotateChuck}
+            targetIndex={targetIndex}
             setClickedChuckInfo={setClickedChuckInfo}
-            setSelectRotateChuck={setSelectRotateChuck}
           />
         </Canvas>
         <SimulController
           clickedChuckInfo={clickedChuckInfo}
-          selectRotateChuck={selectRotateChuck}
           setRotationAngle={setRotationAngle}
-          setSelectRotateChuck={setSelectRotateChuck}
         />
       </main>
     </div>

@@ -4,36 +4,19 @@ import ResetModal from "../pages/Modal/ResetModal";
 import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 
-const SimulController = ({
-  clickedChuckInfo,
-  setRotationAngle,
-  selectRotateChuck,
-  setSelectRotateChuck,
-}) => {
+const SimulController = ({ clickedChuckInfo, setRotationAngle }) => {
   const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
   const [isOpenedReset, setIsOpenedReset] = useState(false);
 
   const handleClickLeft = () => {
-    if (clickedChuckInfo.length !== 0) {
-      if (selectRotateChuck === null) {
-        setSelectRotateChuck("left");
-      } else {
-        setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
-      }
-    } else {
-      alert("회전할 도형을 클릭해주세요");
+    if (clickedChuckInfo) {
+      setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
     }
   };
 
   const handleClickRight = () => {
-    if (clickedChuckInfo.length !== 0) {
-      if (selectRotateChuck === null) {
-        setSelectRotateChuck("right");
-      } else {
-        setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
-      }
-    } else {
-      alert("회전할 도형을 클릭해주세요");
+    if (clickedChuckInfo) {
+      setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
     }
   };
 

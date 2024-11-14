@@ -1,10 +1,6 @@
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
 import * as THREE from "three";
 
-const Chuck = ({ position, color, rotationAngle, name, customAxis }) => {
-  const chuckRef = useRef();
-  const currentRotationAngle = useRef(0);
+const Chuck = ({ position, color, onPointerDown }) => {
   // prettier-ignore
   const vertexArray = new Float32Array([
     -2.5, 0, -1.75,
@@ -38,28 +34,12 @@ const Chuck = ({ position, color, rotationAngle, name, customAxis }) => {
 
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
-  useFrame(() => {
-    if (customAxis && currentRotationAngle !== rotationAngle) {
-      currentRotationAngle.current = THREE.MathUtils.lerp(
-        currentRotationAngle.current,
-        rotationAngle,
-        0.02
-      );
-
-      const customRotation = new THREE.Quaternion();
-
-      customRotation.setFromAxisAngle(customAxis, currentRotationAngle.current);
-      chuckRef.current.quaternion.copy(customRotation);
-    }
-  });
-
   return (
     <>
       <mesh
-        ref={chuckRef}
         geometry={customGeometry}
         position={position}
-        userData={{ position, name }}
+        onPointerDown={onPointerDown}
       >
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />
         <lineSegments geometry={shapeFaceEdgeLine}>
