@@ -12,12 +12,14 @@ import InitialSettingModal from "./Modal/InitialSettingModal";
 const Simulator = () => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const isOpenedInitial = usePageStore((state) => state.isOpenedModal);
-  const groupRef = useRef(new THREE.Group());
+  const groupRef = useRef();
+  const selectedGroupRef = useRef(new THREE.Group());
   const [rotationAngle, setRotationAngle] = useState(0);
   const [clickedChuckInfo, setClickedChuckInfo] = useState([]);
   const [selectRotateChuck, setSelectRotateChuck] = useState(null);
   const [chuckPositionByCalculating, setChuckPositionByCalculating] =
     useState();
+  const [newPosition, setNewPosition] = useState([]);
 
   useEffect(() => {
     const calculateRotatePosition = (
@@ -62,18 +64,24 @@ const Simulator = () => {
         >
           <CanvasPainter
             groupRef={groupRef}
+            selectedGroupRef={selectedGroupRef}
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
             chuckPositionByCalculating={chuckPositionByCalculating}
             selectRotateChuck={selectRotateChuck}
+            newPosition={newPosition}
+            setNewPosition={setNewPosition}
             setClickedChuckInfo={setClickedChuckInfo}
             setSelectRotateChuck={setSelectRotateChuck}
           />
+          <axesHelper scale={10} />
         </Canvas>
         <SimulController
           groupRef={groupRef}
+          selectedGroupRef={selectedGroupRef}
           clickedChuckInfo={clickedChuckInfo}
           selectRotateChuck={selectRotateChuck}
+          newPosition={newPosition}
           setRotationAngle={setRotationAngle}
           setSelectRotateChuck={setSelectRotateChuck}
         />

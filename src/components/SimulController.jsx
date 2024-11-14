@@ -7,6 +7,8 @@ import * as THREE from "three";
 
 const SimulController = ({
   groupRef,
+  selectedGroupRef,
+  newPosition,
   clickedChuckInfo,
   setRotationAngle,
   selectRotateChuck,
@@ -17,11 +19,10 @@ const SimulController = ({
 
   const handleClickLeft = () => {
     let startedIndex = 0;
-    const clickChuck = Array.from(clickedChuckInfo.position);
-    const allPositionList = Array.from(chuckPositionsList);
+    const allGroup = Array.from(groupRef.current.children);
 
-    allPositionList.forEach((mesh, index) => {
-      if (JSON.stringify(clickChuck) === JSON.stringify(mesh)) {
+    groupRef.current.children.forEach((mesh, index) => {
+      if (clickedChuckInfo.uuid === mesh.uuid) {
         startedIndex = index;
       }
     });
@@ -30,14 +31,10 @@ const SimulController = ({
       if (selectRotateChuck === null) {
         setSelectRotateChuck("left");
 
-        allPositionList.slice(0, startedIndex).forEach((mesh) => {
-          const test = new THREE.Mesh();
-
-          test.position.x = mesh[0];
-          test.position.y = mesh[1];
-          test.position.z = mesh[2];
-
-          groupRef.current.add(test);
+        allGroup.slice(0, startedIndex).forEach((mesh) => {
+          selectedGroupRef.current.add(mesh);
+          groupRef.current.remove(mesh);
+          groupRef.current.children.splice(0, 0, selectedGroupRef.current);
         });
       } else {
         setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
@@ -49,11 +46,10 @@ const SimulController = ({
 
   const handleClickRight = () => {
     let startedIndex = 0;
-    const clickChuck = Array.from(clickedChuckInfo.position);
-    const allPositionList = Array.from(chuckPositionsList);
+    const allGroup = Array.from(groupRef.current.children);
 
-    allPositionList.forEach((mesh, index) => {
-      if (JSON.stringify(clickChuck) === JSON.stringify(mesh)) {
+    groupRef.current.children.forEach((mesh, index) => {
+      if (clickedChuckInfo.uuid === mesh.uuid) {
         startedIndex = index;
       }
     });
@@ -62,15 +58,20 @@ const SimulController = ({
       if (selectRotateChuck === null) {
         setSelectRotateChuck("right");
 
-        allPositionList.slice(startedIndex).forEach((mesh) => {
-          const test = new THREE.Mesh();
-
-          test.position.x = mesh[0];
-          test.position.y = mesh[1];
-          test.position.z = mesh[2];
-
-          groupRef.current.add(test);
+        allGroup.slice(startedIndex).forEach((mesh) => {
+          selectedGroupRef.current.add(mesh);
+          groupRef.current.remove(mesh);
+          groupRef.current.children.splice(
+            startedIndex,
+            0,
+            selectedGroupRef.current
+          );
         });
+        selectedGroupRef.current.position.set(
+          newPosition[0],
+          newPosition[1],
+          newPosition[2]
+        );
       } else {
         setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
       }
