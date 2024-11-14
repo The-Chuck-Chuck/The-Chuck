@@ -3,10 +3,10 @@ import * as CONSTANTS from "../constants/constants";
 import ResetModal from "../pages/Modal/ResetModal";
 import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
+import * as THREE from "three";
 
 const SimulController = ({
   groupRef,
-  subGroupRef,
   clickedChuckInfo,
   setRotationAngle,
   selectRotateChuck,
@@ -17,25 +17,28 @@ const SimulController = ({
 
   const handleClickLeft = () => {
     let startedIndex = 0;
+    const clickChuck = Array.from(clickedChuckInfo.position);
+    const allPositionList = Array.from(chuckPositionsList);
 
-    groupRef.current.children.forEach((mesh, index) => {
-      if (clickedChuckInfo.uuid === mesh.uuid) {
+    allPositionList.forEach((mesh, index) => {
+      if (JSON.stringify(clickChuck) === JSON.stringify(mesh)) {
         startedIndex = index;
       }
     });
 
     if (clickedChuckInfo.length !== 0) {
       if (selectRotateChuck === null) {
-        const allGroup = Array.from(groupRef.current.children);
-
         setSelectRotateChuck("left");
 
-        allGroup.slice(0, startedIndex).forEach((mesh) => {
-          subGroupRef.current.add(mesh);
-          groupRef.current.remove(mesh);
-        });
+        allPositionList.slice(0, startedIndex).forEach((mesh) => {
+          const test = new THREE.Mesh();
 
-        groupRef.current.children.splice(0, 0, subGroupRef.current);
+          test.position.x = mesh[0];
+          test.position.y = mesh[1];
+          test.position.z = mesh[2];
+
+          groupRef.current.add(test);
+        });
       } else {
         setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
       }
@@ -46,25 +49,28 @@ const SimulController = ({
 
   const handleClickRight = () => {
     let startedIndex = 0;
+    const clickChuck = Array.from(clickedChuckInfo.position);
+    const allPositionList = Array.from(chuckPositionsList);
 
-    groupRef.current.children.forEach((mesh, index) => {
-      if (clickedChuckInfo.uuid === mesh.uuid) {
-        startedIndex = index + 1;
+    allPositionList.forEach((mesh, index) => {
+      if (JSON.stringify(clickChuck) === JSON.stringify(mesh)) {
+        startedIndex = index;
       }
     });
 
     if (clickedChuckInfo.length !== 0) {
       if (selectRotateChuck === null) {
-        const allGroup = Array.from(groupRef.current.children);
-
         setSelectRotateChuck("right");
 
-        allGroup.slice(startedIndex).forEach((mesh) => {
-          subGroupRef.current.add(mesh);
-          groupRef.current.remove(mesh);
-        });
+        allPositionList.slice(startedIndex).forEach((mesh) => {
+          const test = new THREE.Mesh();
 
-        groupRef.current.children.splice(startedIndex, 0, subGroupRef.current);
+          test.position.x = mesh[0];
+          test.position.y = mesh[1];
+          test.position.z = mesh[2];
+
+          groupRef.current.add(test);
+        });
       } else {
         setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
       }

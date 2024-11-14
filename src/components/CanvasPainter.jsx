@@ -10,10 +10,8 @@ import ReverseChuck from "./ReverseChuck";
 
 const CanvasPainter = ({
   groupRef,
-  subGroupRef,
   rotationAngle,
   clickedChuckInfo,
-  chuckPositionByCalculating,
   selectRotateChuck,
   setClickedChuckInfo,
   setSelectRotateChuck,
@@ -23,6 +21,7 @@ const CanvasPainter = ({
   const raycastingRef = useRef(new Raycaster());
   const { camera, gl, scene } = useThree();
   const [customAxis, setCustomAxis] = useState(null);
+  const [newPosition, setNewPosition] = useState([]);
 
   useEffect(() => {
     if (clickedChuckInfo && selectRotateChuck) {
@@ -42,9 +41,18 @@ const CanvasPainter = ({
       const customRotation = new THREE.Quaternion();
 
       customRotation.setFromAxisAngle(customAxis, currentRotationAngle.current);
-      subGroupRef.current.quaternion.copy(customRotation);
+      groupRef.current.quaternion.copy(customRotation);
     }
   });
+
+  useEffect(() => {
+    const test = clickedChuckInfo.position;
+    let array = [];
+    if (test) {
+      array.push(-test.x, -test.y, test.z);
+    }
+    setNewPosition(array);
+  }, [clickedChuckInfo]);
 
   const chuckItems = chuckPositionsList.map((position, index) => {
     const name = index % 2 === 0 ? "stand" : "reverse";
@@ -87,10 +95,15 @@ const CanvasPainter = ({
   };
 
   return (
-    <group onPointerDown={handleClickChuck} ref={groupRef}>
-      {chuckItems}
+    <>
+      <mesh
+        onPointerDown={handleClickChuck}
+        position={newPosition.length !== 0 ? newPosition : [0, 0, 0]}
+      >
+        {chuckItems}
+      </mesh>
       <OrbitControls />
-    </group>
+    </>
   );
 };
 
