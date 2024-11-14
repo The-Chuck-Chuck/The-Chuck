@@ -91,11 +91,11 @@ const CanvasPainter = ({
 
   if (targetIndex !== null) {
     groupedChuckItems = chuckPositionsList
-      .slice(targetIndex)
+      .slice(0, targetIndex + 1)
       .map((position, index) => {
         return (
           <React.Fragment key={index}>
-            {(targetIndex + index) % 2 === 0 ? (
+            {index % 2 === 0 ? (
               <Chuck
                 color="red"
                 position={position}
@@ -113,11 +113,11 @@ const CanvasPainter = ({
       });
 
     ungroupedChuckItems = chuckPositionsList
-      .slice(0, targetIndex)
+      .slice(targetIndex + 1)
       .map((position, index) => {
         return (
           <React.Fragment key={index}>
-            {index % 2 === 0 ? (
+            {(targetIndex + 1 + index) % 2 === 0 ? (
               <Chuck
                 color="red"
                 position={position}
@@ -148,7 +148,6 @@ const CanvasPainter = ({
         chuckItems
       )}
       <OrbitControls />
-      <axesHelper scale={10} />
     </>
   );
 };
