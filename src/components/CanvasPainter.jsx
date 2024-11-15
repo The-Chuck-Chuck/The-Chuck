@@ -54,12 +54,12 @@ const CanvasPainter = ({
     }
   });
 
-  const handleClickChuck = (evnet) => {
-    evnet.stopPropagation();
+  const handleClickChuck = (event) => {
+    event.stopPropagation();
 
     const syncCordinater = new THREE.Vector2(
-      (evnet.offsetX / gl.domElement.clientWidth) * 2 - 1,
-      -(evnet.offsetY / gl.domElement.clientHeight) * 2 + 1
+      (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
+      -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
     );
 
     raycastingRef.current.setFromCamera(syncCordinater, camera);
@@ -109,12 +109,14 @@ const CanvasPainter = ({
                 color="red"
                 position={position}
                 onPointerDown={handleClickChuck}
+                rotationAngle={rotationAngle}
               />
             ) : (
               <ReverseChuck
                 color="green"
                 position={position}
                 onPointerDown={handleClickChuck}
+                rotationAngle={rotationAngle}
               />
             )}
           </React.Fragment>

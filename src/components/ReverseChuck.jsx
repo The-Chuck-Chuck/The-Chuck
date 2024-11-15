@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import * as THREE from "three";
 
-const ReverseChuck = ({ position, color, onPointerDown }) => {
+const ReverseChuck = ({ position, color, onPointerDown, rotationAngle }) => {
+  const [lineColor, setLineColor] = useState("black");
   // prettier-ignore
   const vertexArray = new Float32Array([
     -2.5, 0, -1.75,
@@ -21,6 +23,13 @@ const ReverseChuck = ({ position, color, onPointerDown }) => {
     0, 1, 3,
     1, 3, 4,
   ]
+
+  useEffect(() => {
+    if (rotationAngle) {
+      setLineColor("white");
+    }
+  }, [rotationAngle]);
+
   const customGeometry = new THREE.BufferGeometry();
 
   customGeometry.setAttribute(
@@ -42,7 +51,7 @@ const ReverseChuck = ({ position, color, onPointerDown }) => {
       >
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />
         <lineSegments geometry={shapeFaceEdgeLine}>
-          <lineBasicMaterial color="black" />
+          <lineBasicMaterial color={lineColor} />
         </lineSegments>
       </mesh>
     </>
