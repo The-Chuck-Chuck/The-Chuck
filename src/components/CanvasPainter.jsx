@@ -18,6 +18,7 @@ const CanvasPainter = ({
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
   const raycastingRef = useRef(new Raycaster());
   const groupRef = useRef(new THREE.Group());
+  const pivotRef = useRef(new THREE.Group());
   const currentRotationAngle = useRef(0);
   const [customAxis, setCustomAxis] = useState(null);
   let groupedChuckItems = null;
@@ -27,6 +28,14 @@ const CanvasPainter = ({
     if (clickedChuckInfo && targetIndex) {
       const axistoss = makeCustomAxis(targetIndex);
       setCustomAxis(axistoss);
+
+      pivotRef.current.position.copy(clickedChuckInfo.position);
+
+      groupRef.current.position.set(
+        -clickedChuckInfo.position.x,
+        -clickedChuckInfo.position.y,
+        -clickedChuckInfo.position.z
+      );
     }
   }, [targetIndex]);
 
@@ -41,7 +50,7 @@ const CanvasPainter = ({
       const customRotation = new THREE.Quaternion();
 
       customRotation.setFromAxisAngle(customAxis, currentRotationAngle.current);
-      groupRef.current.quaternion.copy(customRotation);
+      pivotRef.current.quaternion.copy(customRotation);
     }
   });
 
@@ -139,8 +148,8 @@ const CanvasPainter = ({
     <>
       {targetIndex !== null ? (
         <>
-          <group ref={groupRef} position={chuckPositionsList[targetIndex]}>
-            {groupedChuckItems}
+          <group ref={pivotRef}>
+            <group ref={groupRef}>{groupedChuckItems}</group>
           </group>
           <group>{ungroupedChuckItems}</group>
         </>
@@ -148,6 +157,7 @@ const CanvasPainter = ({
         chuckItems
       )}
       <OrbitControls />
+      <axesHelper scale={10} />
     </>
   );
 };
