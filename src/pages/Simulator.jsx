@@ -21,7 +21,7 @@ const Simulator = () => {
       positionMatch.push(
         clickedChuckInfo.position.x,
         clickedChuckInfo.position.y,
-        clickedChuckInfo.position.y
+        clickedChuckInfo.position.z
       );
 
       chuckPositionsList.forEach((position, index) => {

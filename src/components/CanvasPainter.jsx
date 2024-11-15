@@ -19,10 +19,10 @@ const CanvasPainter = ({
   const raycastingRef = useRef(new Raycaster());
   const groupRef = useRef(new THREE.Group());
   const pivotRef = useRef(new THREE.Group());
-  const currentRotationAngle = useRef(0);
+  const currentRotationAngleRef = useRef(0);
   const [customAxis, setCustomAxis] = useState(null);
-  let groupedChuckItems = null;
-  let ungroupedChuckItems = null;
+  let rotateGroupItems = null;
+  let nonRotateGroupItems = null;
 
   useEffect(() => {
     if (clickedChuckInfo && targetIndex) {
@@ -40,16 +40,19 @@ const CanvasPainter = ({
   }, [targetIndex]);
 
   useFrame(() => {
-    if (customAxis && currentRotationAngle !== rotationAngle) {
-      currentRotationAngle.current = THREE.MathUtils.lerp(
-        currentRotationAngle.current,
+    if (customAxis && currentRotationAngleRef !== rotationAngle) {
+      currentRotationAngleRef.current = THREE.MathUtils.lerp(
+        currentRotationAngleRef.current,
         rotationAngle,
         0.02
       );
 
       const customRotation = new THREE.Quaternion();
 
-      customRotation.setFromAxisAngle(customAxis, currentRotationAngle.current);
+      customRotation.setFromAxisAngle(
+        customAxis,
+        currentRotationAngleRef.current
+      );
       pivotRef.current.quaternion.copy(customRotation);
     }
   });
@@ -99,7 +102,7 @@ const CanvasPainter = ({
   });
 
   if (targetIndex !== null) {
-    groupedChuckItems = chuckPositionsList
+    rotateGroupItems = chuckPositionsList
       .slice(0, targetIndex + 1)
       .map((position, index) => {
         return (
@@ -123,7 +126,7 @@ const CanvasPainter = ({
         );
       });
 
-    ungroupedChuckItems = chuckPositionsList
+    nonRotateGroupItems = chuckPositionsList
       .slice(targetIndex + 1)
       .map((position, index) => {
         return (
@@ -151,9 +154,9 @@ const CanvasPainter = ({
       {targetIndex !== null ? (
         <>
           <group ref={pivotRef}>
-            <group ref={groupRef}>{groupedChuckItems}</group>
+            <group ref={groupRef}>{rotateGroupItems}</group>
           </group>
-          <group>{ungroupedChuckItems}</group>
+          <group>{nonRotateGroupItems}</group>
         </>
       ) : (
         chuckItems
