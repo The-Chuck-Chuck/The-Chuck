@@ -58,9 +58,11 @@ const SimulController = ({ clickedChuckInfo, setRotationAngle }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-3 fixed bottom-2 right-2 w-[250px] h-[250px] bg-slate-600 p-3 justify-center items-center">
+      <div className="flex flex-col gap-4 fixed bottom-2 right-2 w-[230px] h-[230px] bg-slate-600 p-3 justify-center items-center">
         <div className="w-[90%] flex gap-2 items-center">
-          <p className="grow text-center font-bold text-lg">Turn!</p>
+          <p className="pl-[20px] pr-[30px] text-center font-bold text-xl">
+            Turn!
+          </p>
           <Button className="h-10 p-1" clickHandler={handleClickLeft}>
             Left
           </Button>
@@ -69,18 +71,20 @@ const SimulController = ({ clickedChuckInfo, setRotationAngle }) => {
           </Button>
         </div>
         <div className="w-[80%] flex gap-3 items-center">
-          <div className="grow font-bold text-lg">length?</div>
-          <div className="font-semibold">{chuckPositionsList.length}</div>
+          <div className="grow font-bold text-xl">length?</div>
+          <div className="font-semibold text-lg">
+            {chuckPositionsList.length}
+          </div>
           <div className="flex gap-2">
             <Button
               clickHandler={handleClickAdd}
-              className="w-[38px] text-sm h-8 pl-1 pr-1"
+              className="w-[38px] text-sm h-10 pl-1 pr-1"
             >
               + 1
             </Button>
             <Button
               clickHandler={handleClickDelete}
-              className="w-[38px] text-sm h-8 pl-1 pr-1"
+              className="w-[38px] text-sm h-10 pl-1 pr-1"
             >
               - 1
             </Button>
