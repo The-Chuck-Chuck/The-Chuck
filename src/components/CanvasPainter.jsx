@@ -21,6 +21,7 @@ const CanvasPainter = ({
   const pivotRef = useRef(new THREE.Group());
   const currentRotationAngleRef = useRef(0);
   const [customAxis, setCustomAxis] = useState(null);
+  const [updateTirigger, setUpdateTrigger] = useState(false);
   let rotateGroupItems = null;
   let nonRotateGroupItems = null;
 
@@ -44,6 +45,8 @@ const CanvasPainter = ({
       customAxis &&
       Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01
     ) {
+      setUpdateTrigger(false);
+
       currentRotationAngleRef.current = THREE.MathUtils.lerp(
         currentRotationAngleRef.current,
         rotationAngle,
@@ -57,6 +60,12 @@ const CanvasPainter = ({
         currentRotationAngleRef.current
       );
       pivotRef.current.quaternion.copy(customRotation);
+    }
+    if (
+      customAxis &&
+      Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01
+    ) {
+      setUpdateTrigger(true);
     }
   });
 
@@ -84,19 +93,23 @@ const CanvasPainter = ({
     }
   };
 
-  const chuckItems = chuckPositionsList.map((position, index) => {
+  const chuckItems = chuckPositionsList.map((state, index) => {
+    const { position, quaternion } = state;
+
     return (
       <React.Fragment key={index}>
         {index % 2 === 0 ? (
           <Chuck
             color="red"
             position={position}
+            quaternion={quaternion}
             onPointerDown={handleClickChuck}
           />
         ) : (
           <ReverseChuck
             color="green"
             position={position}
+            quaternion={quaternion}
             onPointerDown={handleClickChuck}
           />
         )}
@@ -107,13 +120,16 @@ const CanvasPainter = ({
   if (targetIndex !== null) {
     rotateGroupItems = chuckPositionsList
       .slice(0, targetIndex + 1)
-      .map((position, index) => {
+      .map((state, index) => {
+        const { position, quaternion } = state;
+
         return (
           <React.Fragment key={index}>
             {index % 2 === 0 ? (
               <Chuck
                 color="red"
                 position={position}
+                quaternion={quaternion}
                 onPointerDown={handleClickChuck}
                 rotationAngle={rotationAngle}
               />
@@ -121,6 +137,7 @@ const CanvasPainter = ({
               <ReverseChuck
                 color="green"
                 position={position}
+                quaternion={quaternion}
                 onPointerDown={handleClickChuck}
                 rotationAngle={rotationAngle}
               />
@@ -131,19 +148,23 @@ const CanvasPainter = ({
 
     nonRotateGroupItems = chuckPositionsList
       .slice(targetIndex + 1)
-      .map((position, index) => {
+      .map((state, index) => {
+        const { position, quaternion } = state;
+
         return (
           <React.Fragment key={index}>
             {(targetIndex + 1 + index) % 2 === 0 ? (
               <Chuck
                 color="red"
                 position={position}
+                quaternion={quaternion}
                 onPointerDown={handleClickChuck}
               />
             ) : (
               <ReverseChuck
                 color="green"
                 position={position}
+                quaternion={quaternion}
                 onPointerDown={handleClickChuck}
               />
             )}
