@@ -11,7 +11,7 @@ const InitialSettingModal = () => {
 
   const handleClickStartButton = () => {
     const initialPositionArray = [];
-    const initialValue = 20;
+    const initialValue = 10;
     let positionX = 0;
 
     while (initialPositionArray.length < initialValue) {
