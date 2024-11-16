@@ -40,7 +40,10 @@ const CanvasPainter = ({
   }, [targetIndex]);
 
   useFrame(() => {
-    if (customAxis && currentRotationAngleRef !== rotationAngle) {
+    if (
+      customAxis &&
+      Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01
+    ) {
       currentRotationAngleRef.current = THREE.MathUtils.lerp(
         currentRotationAngleRef.current,
         rotationAngle,
