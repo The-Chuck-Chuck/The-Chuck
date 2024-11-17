@@ -6,4 +6,19 @@ const makeCustomAxis = (index) => {
   return new THREE.Vector3(2.5, positionY, 0).normalize();
 };
 
-export { makeCustomAxis };
+const updateChuckData = (ref) => {
+  return Array.from(ref.current.children).map((mesh) => {
+    const position = new THREE.Vector3();
+    const quaternion = new THREE.Quaternion();
+
+    mesh.getWorldPosition(position);
+    mesh.getWorldQuaternion(quaternion);
+
+    return {
+      position: [position.x, position.y, position.z],
+      quaternion: [quaternion.x, quaternion.y, quaternion.z, quaternion.w],
+    };
+  });
+};
+
+export { makeCustomAxis, updateChuckData };

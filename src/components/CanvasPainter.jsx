@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Raycaster } from "three";
 import useChuckStore from "../store/chuckStore";
-import { makeCustomAxis } from "../utils/chuckUtils";
+import { makeCustomAxis, updateChuckData } from "../utils/chuckUtils";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
@@ -84,39 +84,15 @@ const CanvasPainter = ({
 
   useEffect(() => {
     if (updateTrigger) {
-      const updatedRotateStates = Array.from(
-        rotateGroupRef.current.children
-      ).map((mesh) => {
-        const position = new THREE.Vector3();
-        const quaternion = new THREE.Quaternion();
+      const updatedRotateStates = updateChuckData(rotateGroupRef);
+      const updatedNonRotateStates = updateChuckData(nonRotateGroupRef);
 
-        mesh.getWorldPosition(position);
-        mesh.getWorldQuaternion(quaternion);
+      const updateTotalChuckData = [
+        ...updatedRotateStates,
+        ...updatedNonRotateStates,
+      ];
 
-        return {
-          position: [position.x, position.y, position.z],
-          quaternion: [quaternion.x, quaternion.y, quaternion.z, quaternion.w],
-        };
-      });
-
-      const updatedNonRotateStates = Array.from(
-        nonRotateGroupRef.current.children
-      ).map((mesh) => {
-        const position = new THREE.Vector3();
-        const quaternion = new THREE.Quaternion();
-
-        mesh.getWorldPosition(position);
-        mesh.getWorldQuaternion(quaternion);
-
-        return {
-          position: [position.x, position.y, position.z],
-          quaternion: [quaternion.x, quaternion.y, quaternion.z, quaternion.w],
-        };
-      });
-
-      const updateTotal = [...updatedRotateStates, ...updatedNonRotateStates];
-
-      setChuckPositionsList(updateTotal);
+      setChuckPositionsList(updateTotalChuckData);
       setUpdateTrigger(false);
     }
   }, [updateTrigger]);
@@ -169,9 +145,7 @@ const CanvasPainter = ({
         </React.Fragment>
       );
     });
-  }
-
-  if (targetIndex !== null) {
+  } else {
     rotateGroupItems = chuckPositionsList
       .slice(0, targetIndex + 1)
       .map((state, index) => {
