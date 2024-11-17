@@ -49,8 +49,8 @@ const CanvasPainter = ({
   useFrame(() => {
     if (
       customAxis &&
-      Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01 &&
-      rotationAngle !== 0
+      rotationAngle !== 0 &&
+      Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01
     ) {
       currentRotationAngleRef.current = THREE.MathUtils.lerp(
         currentRotationAngleRef.current,
@@ -70,9 +70,9 @@ const CanvasPainter = ({
       stopTriggerRef.current = false;
     } else if (
       !stopTriggerRef.current &&
-      Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01 &&
+      rotationAngle !== 0 &&
       customAxis &&
-      rotationAngle !== 0
+      Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01
     ) {
       setUpdateTrigger(true);
       setTargetIndex(null);
