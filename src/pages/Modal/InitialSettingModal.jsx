@@ -2,6 +2,7 @@ import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import useChuckStore from "../../store/chuckStore";
 import usePageStore from "../../store/pageStore";
+import * as THREE from "three";
 
 const InitialSettingModal = () => {
   const setIsOpenedInitial = usePageStore((state) => state.setIsOpenedInitial);
@@ -10,19 +11,23 @@ const InitialSettingModal = () => {
   );
 
   const handleClickStartButton = () => {
-    const initialPositionArray = [];
     const initialValue = 20;
     let positionX = 0;
 
-    while (initialPositionArray.length < initialValue) {
-      const positionY = initialPositionArray.length % 2 === 0 ? 0 : 2.5;
-      const positionArray = [positionX, positionY, 0];
-      initialPositionArray.push(positionArray);
-      positionX += 2.5;
-    }
+    const initialStateArray = Array.from(
+      { length: initialValue },
+      (_, index) => {
+        const positionY = index % 2 === 0 ? 0 : 2.5;
+        const position = [positionX, positionY, 0];
+        const quaternion = new THREE.Quaternion(0, 0, 0, 1).toArray();
+        positionX += 2.5;
+
+        return { position, quaternion };
+      }
+    );
 
     setIsOpenedInitial(false);
-    setChuckPositionsList(initialPositionArray);
+    setChuckPositionsList(initialStateArray);
   };
 
   return (

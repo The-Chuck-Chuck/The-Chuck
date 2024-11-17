@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import * as THREE from "three";
 
-const ReverseChuck = ({ position, color, onPointerDown, rotationAngle }) => {
+const ReverseChuck = ({
+  position,
+  quaternion,
+  color,
+  onPointerDown,
+  rotationAngle,
+}) => {
   const [lineColor, setLineColor] = useState("black");
   // prettier-ignore
   const vertexArray = new Float32Array([
@@ -47,6 +53,7 @@ const ReverseChuck = ({ position, color, onPointerDown, rotationAngle }) => {
       <mesh
         geometry={customGeometry}
         position={position}
+        quaternion={new THREE.Quaternion(...quaternion)}
         onPointerDown={onPointerDown}
       >
         <meshBasicMaterial color={color} side={THREE.DoubleSide} />

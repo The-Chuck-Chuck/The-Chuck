@@ -24,7 +24,8 @@ const Simulator = () => {
         clickedChuckInfo.position.z
       );
 
-      chuckPositionsList.forEach((position, index) => {
+      chuckPositionsList.forEach((state, index) => {
+        const position = state.position;
         if (JSON.stringify(position[0]) === JSON.stringify(positionMatch[0])) {
           setTargetIndex(index);
         }
@@ -54,7 +55,9 @@ const Simulator = () => {
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
             targetIndex={targetIndex}
+            setTargetIndex={setTargetIndex}
             setClickedChuckInfo={setClickedChuckInfo}
+            setRotationAngle={setRotationAngle}
           />
         </Canvas>
         <SimulController
