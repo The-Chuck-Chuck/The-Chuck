@@ -1,5 +1,5 @@
 import { OrbitControls } from "@react-three/drei";
-import { useThree, useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Raycaster } from "three";
@@ -13,6 +13,8 @@ const CanvasPainter = ({
   rotationAngle,
   clickedChuckInfo,
   setClickedChuckInfo,
+  setTargetIndex,
+  setRotationAngle,
 }) => {
   const { camera, gl, scene } = useThree();
   const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
@@ -23,13 +25,15 @@ const CanvasPainter = ({
   const currentRotationAngleRef = useRef(0);
   const stopTriggerRef = useRef(false);
   const [customAxis, setCustomAxis] = useState(null);
-  const [updateTirigger, setUpdateTrigger] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState(false);
+  let chuckItems = null;
   let rotateGroupItems = null;
   let nonRotateGroupItems = null;
 
   useEffect(() => {
     if (clickedChuckInfo && targetIndex) {
       const axistoss = makeCustomAxis(targetIndex);
+
       setCustomAxis(axistoss);
 
       pivotRef.current.position.copy(clickedChuckInfo.position);
@@ -40,39 +44,46 @@ const CanvasPainter = ({
         -clickedChuckInfo.position.z
       );
     }
-  }, [targetIndex]);
+  }, [targetIndex, clickedChuckInfo]);
 
   useFrame(() => {
     if (
       customAxis &&
-      Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01
+      Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01 &&
+      rotationAngle !== 0
     ) {
       currentRotationAngleRef.current = THREE.MathUtils.lerp(
         currentRotationAngleRef.current,
         rotationAngle,
-        0.02
+        0.04
       );
+
       const customRotation = new THREE.Quaternion();
 
       customRotation.setFromAxisAngle(
         customAxis,
         currentRotationAngleRef.current
       );
+
       pivotRef.current.quaternion.copy(customRotation);
+
       stopTriggerRef.current = false;
-    }
-    if (
+    } else if (
       !stopTriggerRef.current &&
       Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01 &&
-      customAxis
+      customAxis &&
+      rotationAngle !== 0
     ) {
       setUpdateTrigger(true);
+      setTargetIndex(null);
+      setRotationAngle(0);
+      currentRotationAngleRef.current = 0;
       stopTriggerRef.current = true;
     }
   });
 
   useEffect(() => {
-    if (updateTirigger) {
+    if (updateTrigger) {
       const updatedRotateStates = Array.from(
         rotateGroupRef.current.children
       ).map((mesh) => {
@@ -108,7 +119,7 @@ const CanvasPainter = ({
       setChuckPositionsList(updateTotal);
       setUpdateTrigger(false);
     }
-  }, [updateTirigger]);
+  }, [updateTrigger]);
 
   const handleClickChuck = (event) => {
     event.stopPropagation();
@@ -134,29 +145,31 @@ const CanvasPainter = ({
     }
   };
 
-  const chuckItems = chuckPositionsList.map((state, index) => {
-    const { position, quaternion } = state;
+  if (targetIndex === null) {
+    chuckItems = chuckPositionsList.map((state, index) => {
+      const { position, quaternion } = state;
 
-    return (
-      <React.Fragment key={index}>
-        {index % 2 === 0 ? (
-          <Chuck
-            color="red"
-            position={position}
-            quaternion={quaternion}
-            onPointerDown={handleClickChuck}
-          />
-        ) : (
-          <ReverseChuck
-            color="green"
-            position={position}
-            quaternion={quaternion}
-            onPointerDown={handleClickChuck}
-          />
-        )}
-      </React.Fragment>
-    );
-  });
+      return (
+        <React.Fragment key={index}>
+          {index % 2 === 0 ? (
+            <Chuck
+              color="red"
+              position={position}
+              quaternion={quaternion}
+              onPointerDown={handleClickChuck}
+            />
+          ) : (
+            <ReverseChuck
+              color="green"
+              position={position}
+              quaternion={quaternion}
+              onPointerDown={handleClickChuck}
+            />
+          )}
+        </React.Fragment>
+      );
+    });
+  }
 
   if (targetIndex !== null) {
     rotateGroupItems = chuckPositionsList

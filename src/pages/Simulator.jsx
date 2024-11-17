@@ -55,7 +55,9 @@ const Simulator = () => {
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
             targetIndex={targetIndex}
+            setTargetIndex={setTargetIndex}
             setClickedChuckInfo={setClickedChuckInfo}
+            setRotationAngle={setRotationAngle}
           />
         </Canvas>
         <SimulController
