@@ -15,11 +15,13 @@ const CanvasPainter = ({
   setClickedChuckInfo,
 }) => {
   const { camera, gl, scene } = useThree();
-  const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
+  const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
   const raycastingRef = useRef(new Raycaster());
-  const groupRef = useRef(new THREE.Group());
+  const rotateGroupRef = useRef(new THREE.Group());
+  const nonRotateGroupRef = useRef(new THREE.Group());
   const pivotRef = useRef(new THREE.Group());
   const currentRotationAngleRef = useRef(0);
+  const stopTriggerRef = useRef(false);
   const [customAxis, setCustomAxis] = useState(null);
   const [updateTirigger, setUpdateTrigger] = useState(false);
   let rotateGroupItems = null;
@@ -32,7 +34,7 @@ const CanvasPainter = ({
 
       pivotRef.current.position.copy(clickedChuckInfo.position);
 
-      groupRef.current.position.set(
+      rotateGroupRef.current.position.set(
         -clickedChuckInfo.position.x,
         -clickedChuckInfo.position.y,
         -clickedChuckInfo.position.z
@@ -45,14 +47,11 @@ const CanvasPainter = ({
       customAxis &&
       Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01
     ) {
-      setUpdateTrigger(false);
-
       currentRotationAngleRef.current = THREE.MathUtils.lerp(
         currentRotationAngleRef.current,
         rotationAngle,
         0.02
       );
-
       const customRotation = new THREE.Quaternion();
 
       customRotation.setFromAxisAngle(
@@ -60,14 +59,56 @@ const CanvasPainter = ({
         currentRotationAngleRef.current
       );
       pivotRef.current.quaternion.copy(customRotation);
+      stopTriggerRef.current = false;
     }
     if (
-      customAxis &&
-      Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01
+      !stopTriggerRef.current &&
+      Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01 &&
+      customAxis
     ) {
       setUpdateTrigger(true);
+      stopTriggerRef.current = true;
     }
   });
+
+  useEffect(() => {
+    if (updateTirigger) {
+      const updatedRotateStates = Array.from(
+        rotateGroupRef.current.children
+      ).map((mesh) => {
+        const position = new THREE.Vector3();
+        const quaternion = new THREE.Quaternion();
+
+        mesh.getWorldPosition(position);
+        mesh.getWorldQuaternion(quaternion);
+
+        return {
+          position: [position.x, position.y, position.z],
+          quaternion: [quaternion.x, quaternion.y, quaternion.z, quaternion.w],
+        };
+      });
+
+      const updatedNonRotateStates = Array.from(
+        nonRotateGroupRef.current.children
+      ).map((mesh) => {
+        const position = new THREE.Vector3();
+        const quaternion = new THREE.Quaternion();
+
+        mesh.getWorldPosition(position);
+        mesh.getWorldQuaternion(quaternion);
+
+        return {
+          position: [position.x, position.y, position.z],
+          quaternion: [quaternion.x, quaternion.y, quaternion.z, quaternion.w],
+        };
+      });
+
+      const updateTotal = [...updatedRotateStates, ...updatedNonRotateStates];
+
+      setChuckPositionsList(updateTotal);
+      setUpdateTrigger(false);
+    }
+  }, [updateTirigger]);
 
   const handleClickChuck = (event) => {
     event.stopPropagation();
@@ -178,9 +219,9 @@ const CanvasPainter = ({
       {targetIndex !== null ? (
         <>
           <group ref={pivotRef}>
-            <group ref={groupRef}>{rotateGroupItems}</group>
+            <group ref={rotateGroupRef}>{rotateGroupItems}</group>
           </group>
-          <group>{nonRotateGroupItems}</group>
+          <group ref={nonRotateGroupRef}>{nonRotateGroupItems}</group>
         </>
       ) : (
         chuckItems
