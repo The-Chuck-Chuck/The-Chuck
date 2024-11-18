@@ -14,11 +14,13 @@ const Simulator = () => {
   const [clickedChuckInfo, setClickedChuckInfo] = useState(null);
   const [targetIndex, setTargetIndex] = useState(null);
   const [isRotating, setIsRotating] = useState(false);
+  const [nextChuckInfo, setNextChuckInfo] = useState(null);
 
   useEffect(() => {
-    let positionMatch = [];
-
     if (clickedChuckInfo) {
+      let positionMatch = [];
+      let nextIndex = null;
+
       positionMatch.push(
         clickedChuckInfo.position.x,
         clickedChuckInfo.position.y,
@@ -27,8 +29,14 @@ const Simulator = () => {
 
       chuckPositionsList.forEach((state, index) => {
         const position = state.position;
+
         if (JSON.stringify(position[0]) === JSON.stringify(positionMatch[0])) {
+          nextIndex = index + 1;
           setTargetIndex(index);
+        }
+
+        if (index === nextIndex) {
+          setNextChuckInfo(state.position);
         }
       });
     }
@@ -48,25 +56,25 @@ const Simulator = () => {
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{
-            position: [0, 15, 15],
-            fov: 100,
+            position: [-7, 50, 45],
+            fov: 60,
           }}
         >
           <CanvasPainter
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
             targetIndex={targetIndex}
+            nextChuckInfo={nextChuckInfo}
+            isRotating={isRotating}
             setTargetIndex={setTargetIndex}
             setClickedChuckInfo={setClickedChuckInfo}
             setRotationAngle={setRotationAngle}
-            isRotating={isRotating}
             setIsRotating={setIsRotating}
           />
         </Canvas>
         <SimulController
           clickedChuckInfo={clickedChuckInfo}
           setRotationAngle={setRotationAngle}
-          isRotating={isRotating}
           setIsRotating={setIsRotating}
         />
       </main>

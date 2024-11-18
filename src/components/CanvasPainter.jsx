@@ -12,10 +12,11 @@ const CanvasPainter = ({
   targetIndex,
   rotationAngle,
   clickedChuckInfo,
+  isRotating,
+  nextChuckInfo,
   setClickedChuckInfo,
   setTargetIndex,
   setRotationAngle,
-  isRotating,
   setIsRotating,
 }) => {
   const { camera, gl, scene } = useThree();
@@ -26,6 +27,7 @@ const CanvasPainter = ({
   const pivotRef = useRef(new THREE.Group());
   const currentRotationAngleRef = useRef(0);
   const stopTriggerRef = useRef(false);
+  const cameraRef = useRef(0);
   const [customAxis, setCustomAxis] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(false);
   let chuckItems = null;
@@ -34,7 +36,7 @@ const CanvasPainter = ({
 
   useEffect(() => {
     if (clickedChuckInfo && targetIndex) {
-      const axistoss = makeCustomAxis(targetIndex);
+      const axistoss = makeCustomAxis(clickedChuckInfo.position, nextChuckInfo);
 
       setCustomAxis(axistoss);
 
@@ -133,6 +135,26 @@ const CanvasPainter = ({
       setClickedChuckInfo(clickedObject);
     }
   };
+
+  useEffect(() => {
+    if (clickedChuckInfo) {
+      const reConfiguePosition = clickedChuckInfo.position;
+
+      camera.position.set(
+        reConfiguePosition.x + -5,
+        reConfiguePosition.y + 40,
+        reConfiguePosition.z + 30
+      );
+
+      cameraRef.current.target.set(
+        reConfiguePosition.x,
+        reConfiguePosition.y,
+        reConfiguePosition.z
+      );
+
+      cameraRef.current.update();
+    }
+  }, [clickedChuckInfo]);
 
   if (targetIndex === null) {
     chuckItems = chuckPositionsList.map((state, index) => {
@@ -234,7 +256,7 @@ const CanvasPainter = ({
       ) : (
         chuckItems
       )}
-      <OrbitControls />
+      <OrbitControls ref={cameraRef} />
     </>
   );
 };
