@@ -12,10 +12,11 @@ const CanvasPainter = ({
   targetIndex,
   rotationAngle,
   clickedChuckInfo,
+  isRotating,
+  nextChuckInfo,
   setClickedChuckInfo,
   setTargetIndex,
   setRotationAngle,
-  isRotating,
   setIsRotating,
 }) => {
   const { camera, gl, scene } = useThree();
@@ -35,7 +36,7 @@ const CanvasPainter = ({
 
   useEffect(() => {
     if (clickedChuckInfo && targetIndex) {
-      const axistoss = makeCustomAxis(targetIndex);
+      const axistoss = makeCustomAxis(clickedChuckInfo.position, nextChuckInfo);
 
       setCustomAxis(axistoss);
 
