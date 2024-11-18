@@ -17,10 +17,10 @@ const Simulator = () => {
   const [nextChuckInfo, setNextChuckInfo] = useState(null);
 
   useEffect(() => {
-    let positionMatch = [];
-    let nextIndex = null;
-
     if (clickedChuckInfo) {
+      let positionMatch = [];
+      let nextIndex = null;
+
       positionMatch.push(
         clickedChuckInfo.position.x,
         clickedChuckInfo.position.y,
