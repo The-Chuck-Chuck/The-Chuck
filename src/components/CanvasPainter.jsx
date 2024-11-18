@@ -26,6 +26,7 @@ const CanvasPainter = ({
   const pivotRef = useRef(new THREE.Group());
   const currentRotationAngleRef = useRef(0);
   const stopTriggerRef = useRef(false);
+  const cameraRef = useRef(0);
   const [customAxis, setCustomAxis] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(false);
   let chuckItems = null;
@@ -133,6 +134,26 @@ const CanvasPainter = ({
     }
   };
 
+  useEffect(() => {
+    if (clickedChuckInfo) {
+      const reConfiguePosition = clickedChuckInfo.position;
+
+      camera.position.set(
+        reConfiguePosition.x + -5,
+        reConfiguePosition.y + 40,
+        reConfiguePosition.z + 30
+      );
+
+      cameraRef.current.target.set(
+        reConfiguePosition.x,
+        reConfiguePosition.y,
+        reConfiguePosition.z
+      );
+
+      cameraRef.current.update();
+    }
+  }, [clickedChuckInfo]);
+
   if (targetIndex === null) {
     chuckItems = chuckPositionsList.map((state, index) => {
       const { position, quaternion } = state;
@@ -225,7 +246,7 @@ const CanvasPainter = ({
       ) : (
         chuckItems
       )}
-      <OrbitControls />
+      <OrbitControls ref={cameraRef} />
       <axesHelper scale={10} />
     </>
   );
