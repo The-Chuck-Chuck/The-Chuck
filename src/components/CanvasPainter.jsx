@@ -215,6 +215,13 @@ const CanvasPainter = ({
 
   return (
     <>
+      <directionalLight
+        color="#f0f6ff"
+        intensity={1.5}
+        position={[0, 0, 5]}
+        shadow-radius={1}
+      />
+      <ambientLight color="#ffffff" intensity={2} />
       {targetIndex !== null ? (
         <>
           <group ref={pivotRef}>
@@ -226,7 +233,6 @@ const CanvasPainter = ({
         chuckItems
       )}
       <OrbitControls />
-      <axesHelper scale={10} />
     </>
   );
 };

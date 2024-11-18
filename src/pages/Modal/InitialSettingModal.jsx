@@ -20,7 +20,7 @@ const InitialSettingModal = () => {
         const positionY = index % 2 === 0 ? 0 : 2.5;
         const position = [positionX, positionY, 0];
         const quaternion = new THREE.Quaternion(0, 0, 0, 1).toArray();
-        positionX += 2.5;
+        positionX += 2.6;
 
         return { position, quaternion };
       }
