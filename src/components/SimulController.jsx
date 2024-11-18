@@ -3,20 +3,33 @@ import * as CONSTANTS from "../constants/constants";
 import ResetModal from "../pages/Modal/ResetModal";
 import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
+import Modal from "./Modal";
 
-const SimulController = ({ clickedChuckInfo, setRotationAngle }) => {
+const SimulController = ({
+  clickedChuckInfo,
+  isRotating,
+  setRotationAngle,
+  setIsRotating,
+}) => {
   const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
   const [isOpenedReset, setIsOpenedReset] = useState(false);
+  const [isOpenedSelected, setIsOpenedSelected] = useState(false);
 
   const handleClickLeft = () => {
-    if (clickedChuckInfo) {
+    if (!isRotating && clickedChuckInfo) {
       setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
+      setIsRotating(true);
+    } else if (!clickedChuckInfo) {
+      setIsOpenedSelected(true);
     }
   };
 
   const handleClickRight = () => {
-    if (clickedChuckInfo) {
+    if (!isRotating && clickedChuckInfo) {
       setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
+      setIsRotating(true);
+    } else if (!clickedChuckInfo) {
+      setIsOpenedSelected(true);
     }
   };
 
@@ -58,6 +71,18 @@ const SimulController = ({ clickedChuckInfo, setRotationAngle }) => {
 
   return (
     <>
+      {isOpenedSelected && (
+        <Modal
+          drection="horizontalr"
+          modalTitle="HELP!"
+          className="w-[300px] h-[250px] top-[35%] left-[35%]"
+          setIsOpened={setIsOpenedSelected}
+        >
+          <div className="h-[70%] flex justify-center items-center">
+            회전할 도형을 선택해 주세요!
+          </div>
+        </Modal>
+      )}
       <div className="flex flex-col gap-4 fixed bottom-2 right-2 w-[250px] h-[250px] bg-slate-600 p-3 justify-center items-center">
         <div className="w-[90%] flex gap-2 items-center">
           <p className="pl-[5%] pr-[15%] text-center font-bold text-lg">
