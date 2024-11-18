@@ -1,9 +1,11 @@
 import * as THREE from "three";
 
-const makeCustomAxis = (index) => {
-  const positionY = index % 2 === 0 ? 2.5 : -2.5;
+const makeCustomAxis = (targetInfo, nextTargetInfo) => {
+  const positionX = -(targetInfo.x - nextTargetInfo[0]);
+  const positionY = -(targetInfo.y - nextTargetInfo[1]);
+  const positionZ = -(targetInfo.z - nextTargetInfo[2]);
 
-  return new THREE.Vector3(2.5, positionY, 0).normalize();
+  return new THREE.Vector3(positionX, positionY, positionZ).normalize();
 };
 
 const updateChuckData = (groupRef) => {
