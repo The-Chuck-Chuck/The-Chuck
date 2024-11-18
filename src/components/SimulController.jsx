@@ -7,7 +7,6 @@ import Modal from "./Modal";
 
 const SimulController = ({
   clickedChuckInfo,
-  isRotating,
   setRotationAngle,
   setIsRotating,
 }) => {
@@ -16,7 +15,7 @@ const SimulController = ({
   const [isOpenedSelected, setIsOpenedSelected] = useState(false);
 
   const handleClickLeft = () => {
-    if (!isRotating && clickedChuckInfo) {
+    if (clickedChuckInfo) {
       setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
       setIsRotating(true);
     } else if (!clickedChuckInfo) {
@@ -25,7 +24,7 @@ const SimulController = ({
   };
 
   const handleClickRight = () => {
-    if (!isRotating && clickedChuckInfo) {
+    if (clickedChuckInfo) {
       setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
       setIsRotating(true);
     } else if (!clickedChuckInfo) {
