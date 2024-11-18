@@ -57,7 +57,7 @@ const ReverseChuck = ({
         />
         {isRotateGroup && (
           <lineSegments geometry={shapeFaceEdgeLine}>
-            <lineBasicMaterial color="white" />
+            <lineBasicMaterial color="#efefef" />
           </lineSegments>
         )}
       </mesh>
