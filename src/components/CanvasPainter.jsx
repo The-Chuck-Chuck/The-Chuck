@@ -15,6 +15,8 @@ const CanvasPainter = ({
   setClickedChuckInfo,
   setTargetIndex,
   setRotationAngle,
+  isRotating,
+  setIsRotating,
 }) => {
   const { camera, gl, scene } = useThree();
   const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
@@ -77,6 +79,8 @@ const CanvasPainter = ({
       setUpdateTrigger(true);
       setTargetIndex(null);
       setRotationAngle(0);
+      setClickedChuckInfo(null);
+      setIsRotating(false);
       currentRotationAngleRef.current = 0;
       stopTriggerRef.current = true;
     }
@@ -102,6 +106,10 @@ const CanvasPainter = ({
   }, [updateTrigger]);
 
   const handleClickChuck = (event) => {
+    if (isRotating) {
+      return;
+    }
+
     event.stopPropagation();
 
     const syncCordinater = new THREE.Vector2(

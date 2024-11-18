@@ -13,6 +13,7 @@ const Simulator = () => {
   const [rotationAngle, setRotationAngle] = useState(0);
   const [clickedChuckInfo, setClickedChuckInfo] = useState(null);
   const [targetIndex, setTargetIndex] = useState(null);
+  const [isRotating, setIsRotating] = useState(false);
 
   useEffect(() => {
     let positionMatch = [];
@@ -58,11 +59,15 @@ const Simulator = () => {
             setTargetIndex={setTargetIndex}
             setClickedChuckInfo={setClickedChuckInfo}
             setRotationAngle={setRotationAngle}
+            isRotating={isRotating}
+            setIsRotating={setIsRotating}
           />
         </Canvas>
         <SimulController
           clickedChuckInfo={clickedChuckInfo}
           setRotationAngle={setRotationAngle}
+          isRotating={isRotating}
+          setIsRotating={setIsRotating}
         />
       </main>
     </div>
