@@ -83,9 +83,13 @@ const CanvasPainter = ({
   });
 
   useEffect(() => {
-    if (updateTrigger) {
-      const updatedRotateStates = updateChuckData(rotateGroupRef);
-      const updatedNonRotateStates = updateChuckData(nonRotateGroupRef);
+    if (updateTrigger && rotateGroupRef.current && nonRotateGroupRef.current) {
+      const updatedRotateStates = updateChuckData(
+        rotateGroupRef.current.children
+      );
+      const updatedNonRotateStates = updateChuckData(
+        nonRotateGroupRef.current.children
+      );
 
       const updateTotalChuckData = [
         ...updatedRotateStates,

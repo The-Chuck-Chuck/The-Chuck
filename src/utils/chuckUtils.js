@@ -6,8 +6,8 @@ const makeCustomAxis = (index) => {
   return new THREE.Vector3(2.5, positionY, 0).normalize();
 };
 
-const updateChuckData = (ref) => {
-  return Array.from(ref.current.children).map((mesh) => {
+const updateChuckData = (groupRef) => {
+  return Array.from(groupRef).map((mesh) => {
     const position = new THREE.Vector3();
     const quaternion = new THREE.Quaternion();
 
