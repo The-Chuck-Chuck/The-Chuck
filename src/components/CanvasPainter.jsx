@@ -129,6 +129,7 @@ const CanvasPainter = ({
 
     if (intersects.length > 0) {
       const clickedObject = intersects[0].object;
+
       setClickedChuckInfo(clickedObject);
     }
   };
@@ -141,14 +142,14 @@ const CanvasPainter = ({
         <React.Fragment key={index}>
           {index % 2 === 0 ? (
             <Chuck
-              color="red"
+              color="#ff0000"
               position={position}
               quaternion={quaternion}
               onPointerDown={handleClickChuck}
             />
           ) : (
             <ReverseChuck
-              color="green"
+              color="#008000"
               position={position}
               quaternion={quaternion}
               onPointerDown={handleClickChuck}
@@ -162,24 +163,25 @@ const CanvasPainter = ({
       .slice(0, targetIndex + 1)
       .map((state, index) => {
         const { position, quaternion } = state;
+        const isRotateGroup = true;
 
         return (
           <React.Fragment key={index}>
             {index % 2 === 0 ? (
               <Chuck
-                color="red"
+                color="#ff0000"
                 position={position}
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
-                rotationAngle={rotationAngle}
+                isRotateGroup={isRotateGroup}
               />
             ) : (
               <ReverseChuck
-                color="green"
+                color="#008000"
                 position={position}
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
-                rotationAngle={rotationAngle}
+                isRotateGroup={isRotateGroup}
               />
             )}
           </React.Fragment>
@@ -195,14 +197,14 @@ const CanvasPainter = ({
           <React.Fragment key={index}>
             {(targetIndex + 1 + index) % 2 === 0 ? (
               <Chuck
-                color="red"
+                color="#ff0000"
                 position={position}
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
               />
             ) : (
               <ReverseChuck
-                color="green"
+                color="#008000"
                 position={position}
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
