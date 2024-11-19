@@ -13,6 +13,12 @@ const Home = () => {
     setIsOpenedInitial(true);
   };
 
+  const handleClickTutorial = () => {
+    navigate("/tutorial");
+
+    setIsOpenedInitial(true);
+  };
+
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-[20px]">
       <p className="text-white text-[50px] font-bold">The Chuck-Chuck</p>
@@ -25,7 +31,12 @@ const Home = () => {
       >
         Start!
       </Button>
-      <Button className="w-[20%] text-[25px] p-2">Tutorial!</Button>
+      <Button
+        clickHandler={handleClickTutorial}
+        className="w-[20%] text-[25px] p-2"
+      >
+        Tutorial!
+      </Button>
     </div>
   );
 };

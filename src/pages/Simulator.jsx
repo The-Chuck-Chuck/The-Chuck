@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import CanvasPainter from "../components/CanvasPainter";
+import Header from "../components/Header";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
@@ -45,14 +45,7 @@ const Simulator = () => {
   return (
     <div className="text-white">
       {isOpenedInitial && <InitialSettingModal />}
-      <header className="p-4">
-        <Link
-          to="/"
-          className="border-4 rounded-lg font-bold text-2xl w-80 flex justify-center items-center"
-        >
-          Chuck-Chuck! Simulator
-        </Link>
-      </header>
+      <Header />
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{
