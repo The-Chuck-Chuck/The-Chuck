@@ -7,6 +7,7 @@ import useChuckStore from "../store/chuckStore";
 import { makeCustomAxis, updateChuckData } from "../utils/chuckUtils";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
+import * as CONSTANTS from "../constants/constants";
 
 const CanvasPainter = ({
   targetIndex,
@@ -30,6 +31,7 @@ const CanvasPainter = ({
   const cameraRef = useRef(0);
   const [customAxis, setCustomAxis] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(false);
+  const [saveCollision, setSaveCollision] = useState(false);
   let chuckItems = null;
   let rotateGroupItems = null;
   let nonRotateGroupItems = null;
@@ -50,17 +52,50 @@ const CanvasPainter = ({
     }
   }, [targetIndex, clickedChuckInfo]);
 
+  const collisionCheck = (groupRefA, groupRefB, minDistance) => {
+    const collisionObjectA = groupRefA.current.children;
+    const collisionObjectB = groupRefB.current.children;
+
+    for (let i = 0; i < collisionObjectA.length; i++) {
+      for (let j = i + 1; j < collisionObjectB.length; j++) {
+        const objectA = new THREE.Vector3().setFromMatrixPosition(
+          collisionObjectA[i].matrixWorld
+        );
+        const objectB = new THREE.Vector3().setFromMatrixPosition(
+          collisionObjectB[j].matrixWorld
+        );
+
+        if (objectA.distanceTo(objectB) < minDistance) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   useFrame(() => {
     if (
       customAxis &&
       rotationAngle !== 0 &&
-      Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01
+      Math.abs(currentRotationAngleRef.current - rotationAngle) > 0.01 &&
+      collisionCheck
     ) {
       currentRotationAngleRef.current = THREE.MathUtils.lerp(
         currentRotationAngleRef.current,
         rotationAngle,
         0.04
       );
+
+      const minDistance = 0.08;
+
+      if (
+        !saveCollision &&
+        collisionCheck(rotateGroupRef, nonRotateGroupRef, minDistance)
+      ) {
+        setSaveCollision(true);
+        alert("충돌!!임퍢또!!");
+        setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
+      }
 
       const customRotation = new THREE.Quaternion();
 
@@ -85,6 +120,7 @@ const CanvasPainter = ({
       setIsRotating(false);
       currentRotationAngleRef.current = 0;
       stopTriggerRef.current = true;
+      setSaveCollision(false);
     }
   });
 
