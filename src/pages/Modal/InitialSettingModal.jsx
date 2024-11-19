@@ -12,12 +12,12 @@ const InitialSettingModal = () => {
 
   const handleClickStartButton = () => {
     const initialValue = 24;
-    let positionX = 0;
+    let positionX = -30;
 
     const initialStateArray = Array.from(
       { length: initialValue },
       (_, index) => {
-        const positionY = index % 2 === 0 ? 0 : 2.5;
+        const positionY = index % 2 === 0 ? 0 : 2.6;
         const position = [positionX, positionY, 0];
         const quaternion = new THREE.Quaternion(0, 0, 0, 1).toArray();
         positionX += 2.6;

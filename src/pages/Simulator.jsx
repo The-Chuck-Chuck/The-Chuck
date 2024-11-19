@@ -56,7 +56,7 @@ const Simulator = () => {
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{
-            position: [-7, 50, 45],
+            position: [0, 40, 40],
             fov: 60,
           }}
         >
