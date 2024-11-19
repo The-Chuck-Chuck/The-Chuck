@@ -17,6 +17,7 @@ const TutorialPainter = ({
   setIsComplatedIndex,
   setOrderButton,
   setIsComplatedButton,
+  setIsComplatedTutorial,
   indexRef,
 }) => {
   const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
@@ -31,6 +32,7 @@ const TutorialPainter = ({
   const [clickedChuckInfo, setClickedChuckInfo] = useState(null);
   const [nextChuckInfo, setNextChuckInfo] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(false);
+
   let chuckItems = null;
   let rotateGroupItems = null;
   let nonRotateGroupItems = null;
@@ -159,6 +161,10 @@ const TutorialPainter = ({
 
       setOrderIndex(selectedIndex[indexRef.current]);
       setOrderButton(clickedButton[indexRef.current]);
+
+      if (selectedIndex[indexRef.current] === undefined) {
+        setIsComplatedTutorial(true);
+      }
     }
   }, [updateTrigger]);
 
