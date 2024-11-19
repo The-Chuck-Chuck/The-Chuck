@@ -6,9 +6,14 @@ import Header from "../components/Header";
 import Modal from "../components/Modal";
 import TutorialController from "../components/TutorialController";
 import TutorialPainter from "../components/TutorialPainter";
+import usePageStore from "../store/pageStore";
 import { clickedButton, selectedIndex } from "../utils/makeDogTutorial";
+import StartTutorialModal from "./Modal/StartTutorialModal";
 
 const Tutorial = () => {
+  const isOpenedTutorialModal = usePageStore(
+    (state) => state.isOpenedTutorialModal
+  );
   const indexRef = useRef(0);
   const [rotationAngle, setRotationAngle] = useState(0);
   const [orderIndex, setOrderIndex] = useState(selectedIndex[0]);
@@ -24,6 +29,7 @@ const Tutorial = () => {
 
   return (
     <div className="text-white">
+      {isOpenedTutorialModal && <StartTutorialModal />}
       {isComplatedTutorial && (
         <Modal
           drection="horizontal"
