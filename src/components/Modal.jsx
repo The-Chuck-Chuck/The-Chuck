@@ -1,7 +1,7 @@
 import useStore from "../store/pageStore";
 import Button from "./Button";
 
-const Modal = ({ drection, title, setIsOpened, className, children }) => {
+const Modal = ({ drection, title, className, children }) => {
   const setIsOpenedSimulatorModal = useStore(
     (state) => state.setIsOpenedSimulatorModal
   );
@@ -11,7 +11,7 @@ const Modal = ({ drection, title, setIsOpened, className, children }) => {
   };
 
   const handleClickClose = () => {
-    return setIsOpened ? setIsOpened(false) : setIsOpenedSimulatorModal(false);
+    setIsOpenedSimulatorModal(false);
   };
 
   return (
