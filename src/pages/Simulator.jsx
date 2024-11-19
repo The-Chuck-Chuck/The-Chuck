@@ -20,7 +20,7 @@ const Simulator = () => {
 
   useEffect(() => {
     if (clickedChuckInfo) {
-      let positionMatch = [];
+      const positionMatch = [];
       let nextIndex = null;
 
       positionMatch.push(
