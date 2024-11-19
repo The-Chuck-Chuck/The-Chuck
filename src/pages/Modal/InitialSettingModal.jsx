@@ -5,7 +5,9 @@ import usePageStore from "../../store/pageStore";
 import * as THREE from "three";
 
 const InitialSettingModal = () => {
-  const setIsOpenedInitial = usePageStore((state) => state.setIsOpenedInitial);
+  const setIsOpenedSimulatorModal = usePageStore(
+    (state) => state.setIsOpenedSimulatorModal
+  );
   const setChuckPositionsList = useChuckStore(
     (state) => state.setChuckPositionsList
   );
@@ -26,12 +28,12 @@ const InitialSettingModal = () => {
       }
     );
 
-    setIsOpenedInitial(false);
+    setIsOpenedSimulatorModal(false);
     setChuckPositionsList(initialStateArray);
   };
 
   return (
-    <Modal drection="horizontal" modalTitle="Initial Setting">
+    <Modal drection="horizontal" title="Initial Setting">
       <form className="mt-[15%] flex flex-col gap-5 justify-center items-center">
         <div className="font-bold text-lg">
           원하는 삼각기둥을 클릭 후 회전시켜 보세요!

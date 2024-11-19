@@ -73,7 +73,7 @@ const SimulController = ({
       {isOpenedSelected && (
         <Modal
           drection="horizontalr"
-          modalTitle="HELP!"
+          title="HELP!"
           className="w-[300px] h-[250px] top-[35%] left-[35%]"
           setIsOpened={setIsOpenedSelected}
         >

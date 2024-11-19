@@ -9,7 +9,9 @@ import InitialSettingModal from "./Modal/InitialSettingModal";
 
 const Simulator = () => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
-  const isOpenedInitial = usePageStore((state) => state.isOpenedModal);
+  const isOpenedSimulatorModal = usePageStore(
+    (state) => state.isOpenedSimulatorModal
+  );
   const [rotationAngle, setRotationAngle] = useState(0);
   const [clickedChuckInfo, setClickedChuckInfo] = useState(null);
   const [targetIndex, setTargetIndex] = useState(null);
@@ -44,7 +46,7 @@ const Simulator = () => {
 
   return (
     <div className="text-white">
-      {isOpenedInitial && <InitialSettingModal />}
+      {isOpenedSimulatorModal && <InitialSettingModal />}
       <header className="p-4">
         <Link
           to="/"

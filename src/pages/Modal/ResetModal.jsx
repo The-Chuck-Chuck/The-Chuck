@@ -9,7 +9,7 @@ const ResetModal = ({ setIsOpened }) => {
   return (
     <Modal
       drection="horizontal"
-      modalTitle="초기화하시겠습니까?"
+      title="초기화하시겠습니까?"
       className="top-[30%] left-[30%]"
       setIsOpened={setIsOpened}
     >
