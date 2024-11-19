@@ -4,13 +4,15 @@ import Button from "../components/Button";
 import usePageStore from "../store/pageStore";
 
 const Home = () => {
-  const setIsOpenedInitial = usePageStore((state) => state.setIsOpenedInitial);
+  const setIsOpenedSimulatorModal = usePageStore(
+    (state) => state.setIsOpenedSimulatorModal
+  );
   const navigate = useNavigate();
 
   const handleClickStart = () => {
     navigate("/simulator");
 
-    setIsOpenedInitial(true);
+    setIsOpenedSimulatorModal(true);
   };
 
   return (

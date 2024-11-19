@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
 import * as THREE from "three";
 
 const ReverseChuck = ({
   position,
   quaternion,
   color,
+  isRotateGroup,
   onPointerDown,
-  rotationAngle,
 }) => {
-  const [lineColor, setLineColor] = useState("black");
   // prettier-ignore
   const vertexArray = new Float32Array([
     -2.5, 0, -1.75,
@@ -28,13 +26,7 @@ const ReverseChuck = ({
     1, 4, 5,
     0, 1, 3,
     1, 3, 4,
-  ]
-
-  useEffect(() => {
-    if (rotationAngle) {
-      setLineColor("white");
-    }
-  }, [rotationAngle]);
+  ];
 
   const customGeometry = new THREE.BufferGeometry();
 
@@ -43,6 +35,7 @@ const ReverseChuck = ({
     new THREE.BufferAttribute(vertexArray, 3)
   );
   customGeometry.setIndex(shapeFace);
+  customGeometry.computeVertexNormals();
   customGeometry.computeBoundingBox();
   customGeometry.computeBoundingSphere();
 
@@ -56,10 +49,17 @@ const ReverseChuck = ({
         quaternion={new THREE.Quaternion(...quaternion)}
         onPointerDown={onPointerDown}
       >
-        <meshBasicMaterial color={color} side={THREE.DoubleSide} />
-        <lineSegments geometry={shapeFaceEdgeLine}>
-          <lineBasicMaterial color={lineColor} />
-        </lineSegments>
+        <meshToonMaterial
+          color={color}
+          side={THREE.DoubleSide}
+          emissive={"#006e04"}
+          emissiveIntensity={isRotateGroup ? 1 : 0}
+        />
+        {isRotateGroup && (
+          <lineSegments geometry={shapeFaceEdgeLine}>
+            <lineBasicMaterial color="#efefef" />
+          </lineSegments>
+        )}
       </mesh>
     </>
   );

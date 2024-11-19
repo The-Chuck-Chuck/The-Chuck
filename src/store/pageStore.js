@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 const usePageStore = create((set) => ({
-  isOpenedInitial: false,
-  setIsOpenedInitial: (state) => set({ isOpenedModal: state }),
+  isOpenedSimulatorModal: false,
+  setIsOpenedSimulatorModal: (state) => set({ isOpenedSimulatorModal: state }),
 }));
 
 export default usePageStore;
