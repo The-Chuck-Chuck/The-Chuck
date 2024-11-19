@@ -1,7 +1,7 @@
 import useStore from "../store/pageStore";
 import Button from "./Button";
 
-const Modal = ({ drection, title, className, children }) => {
+const Modal = ({ drection, title, className, setIsOpened, children }) => {
   const setIsOpenedSimulatorModal = useStore(
     (state) => state.setIsOpenedSimulatorModal
   );
@@ -11,7 +11,7 @@ const Modal = ({ drection, title, className, children }) => {
   };
 
   const handleClickClose = () => {
-    setIsOpenedSimulatorModal(false);
+    return setIsOpened ? setIsOpened(false) : setIsOpenedSimulatorModal(false);
   };
 
   return (
@@ -20,7 +20,7 @@ const Modal = ({ drection, title, className, children }) => {
         className={`${modalDrection[drection]} ${className} fixed top-[30%] left-[30%] text-white flex flex-col bg-gray-700 rounded-xl border-gray-400 border-4 p-4 z-20`}
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">{title}</h2>
+          <h2 className="text-2xl font-semibold">{title}</h2>
           <Button clickHandler={handleClickClose} className="border-2 w-8">
             X
           </Button>
