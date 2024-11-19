@@ -185,7 +185,7 @@ const CanvasPainter = ({
       .slice(0, targetIndex + 1)
       .map((state, index) => {
         const { position, quaternion } = state;
-        const isRotateGroup = true;
+        const highlightOn = true;
 
         return (
           <React.Fragment key={index}>
@@ -195,7 +195,7 @@ const CanvasPainter = ({
                 position={position}
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
-                isRotateGroup={isRotateGroup}
+                highlightOn={highlightOn}
               />
             ) : (
               <ReverseChuck
@@ -203,7 +203,7 @@ const CanvasPainter = ({
                 position={position}
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
-                isRotateGroup={isRotateGroup}
+                highlightOn={highlightOn}
               />
             )}
           </React.Fragment>

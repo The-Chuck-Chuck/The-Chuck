@@ -4,7 +4,7 @@ const ReverseChuck = ({
   position,
   quaternion,
   color,
-  isRotateGroup,
+  highlightOn,
   onPointerDown,
 }) => {
   // prettier-ignore
@@ -53,9 +53,9 @@ const ReverseChuck = ({
           color={color}
           side={THREE.DoubleSide}
           emissive={"#006e04"}
-          emissiveIntensity={isRotateGroup ? 1 : 0}
+          emissiveIntensity={highlightOn ? 1 : 0}
         />
-        {isRotateGroup && (
+        {highlightOn && (
           <lineSegments geometry={shapeFaceEdgeLine}>
             <lineBasicMaterial color="#efefef" />
           </lineSegments>

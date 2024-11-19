@@ -1,12 +1,6 @@
 import * as THREE from "three";
 
-const Chuck = ({
-  position,
-  quaternion,
-  color,
-  isRotateGroup,
-  onPointerDown,
-}) => {
+const Chuck = ({ position, quaternion, color, highlightOn, onPointerDown }) => {
   // prettier-ignore
   const vertexArray = new Float32Array([
     -2.5, 0, -1.75,
@@ -53,9 +47,9 @@ const Chuck = ({
           color={color}
           side={THREE.DoubleSide}
           emissive={"#ab1103"}
-          emissiveIntensity={isRotateGroup ? 1 : 0}
+          emissiveIntensity={highlightOn ? 1 : 0}
         />
-        {isRotateGroup && (
+        {highlightOn && (
           <lineSegments geometry={shapeFaceEdgeLine}>
             <lineBasicMaterial color="#efefef" />
           </lineSegments>
