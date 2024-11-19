@@ -5,11 +5,13 @@ import Header from "../components/Header";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
-import InitialSettingModal from "./Modal/InitialSettingModal";
+import StartSimulatorModal from "./Modal/StartSimulatorModal";
 
 const Simulator = () => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
-  const isOpenedInitial = usePageStore((state) => state.isOpenedModal);
+  const isOpenedSimulatorModal = usePageStore(
+    (state) => state.isOpenedSimulatorModal
+  );
   const [rotationAngle, setRotationAngle] = useState(0);
   const [clickedChuckInfo, setClickedChuckInfo] = useState(null);
   const [targetIndex, setTargetIndex] = useState(null);
@@ -18,7 +20,7 @@ const Simulator = () => {
 
   useEffect(() => {
     if (clickedChuckInfo) {
-      let positionMatch = [];
+      const positionMatch = [];
       let nextIndex = null;
 
       positionMatch.push(
@@ -44,7 +46,7 @@ const Simulator = () => {
 
   return (
     <div className="text-white">
-      {isOpenedInitial && <InitialSettingModal />}
+      {isOpenedSimulatorModal && <StartSimulatorModal />}
       <Header />
       <main className="w-[100%] h-[100vh]">
         <Canvas
