@@ -1,18 +1,25 @@
+import * as CONSTANTS from "../constants/constants";
 import Button from "./Button";
 
 const TutorialController = ({
-  isDisable = true,
-  rotationAngle,
+  orderButton,
+  isComplatedIndex,
+  isComplatedButton,
   setRotationAngle,
+  setIsComplatedButton,
 }) => {
-  const preventButton = isDisable && "text-gray-400 border-gray-400";
-
   const handleClickLeft = () => {
-    setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
+    if (!isComplatedButton) {
+      setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
+      setIsComplatedButton(true);
+    }
   };
 
   const handleClickRight = () => {
-    setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
+    if (!isComplatedButton) {
+      setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
+      setIsComplatedButton(true);
+    }
   };
 
   return (
@@ -20,14 +27,18 @@ const TutorialController = ({
       <div className="w-[90%] flex gap-2 items-center">
         <p className="pl-[2%] pr-[15%] text-center font-bold text-lg">Turn!</p>
         <Button
-          className={`${preventButton} h-10 p-1`}
-          clickHandler={!isDisable ? handleClickLeft : undefined}
+          className="h-10 p-1"
+          clickHandler={handleClickLeft}
+          disabled={
+            (!isComplatedIndex || orderButton === "right") && "disabled"
+          }
         >
           Left
         </Button>
         <Button
-          className={`${preventButton} h-10 p-1`}
-          clickHandler={!isDisable ? handleClickRight : undefined}
+          className="h-10 p-1"
+          clickHandler={handleClickRight}
+          disabled={(!isComplatedIndex || orderButton === "left") && "disabled"}
         >
           Right
         </Button>
