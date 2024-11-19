@@ -6,6 +6,7 @@ const ReverseChuck = ({
   color,
   highlightOn,
   onPointerDown,
+  clickedIndex,
 }) => {
   // prettier-ignore
   const vertexArray = new Float32Array([
@@ -53,7 +54,7 @@ const ReverseChuck = ({
           color={color}
           side={THREE.DoubleSide}
           emissive={"#006e04"}
-          emissiveIntensity={highlightOn ? 1 : 0}
+          emissiveIntensity={highlightOn ? (clickedIndex ? 3 : 1) : 0}
         />
         {highlightOn && (
           <lineSegments geometry={shapeFaceEdgeLine}>

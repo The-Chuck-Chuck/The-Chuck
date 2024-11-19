@@ -186,6 +186,7 @@ const CanvasPainter = ({
       .map((state, index) => {
         const { position, quaternion } = state;
         const highlightOn = true;
+        const clickedIndex = targetIndex === index;
 
         return (
           <React.Fragment key={index}>
@@ -196,6 +197,7 @@ const CanvasPainter = ({
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
                 highlightOn={highlightOn}
+                clickedIndex={clickedIndex}
               />
             ) : (
               <ReverseChuck
@@ -204,6 +206,7 @@ const CanvasPainter = ({
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
                 highlightOn={highlightOn}
+                clickedIndex={clickedIndex}
               />
             )}
           </React.Fragment>

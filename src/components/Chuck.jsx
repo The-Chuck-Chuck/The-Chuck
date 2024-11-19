@@ -1,6 +1,13 @@
 import * as THREE from "three";
 
-const Chuck = ({ position, quaternion, color, highlightOn, onPointerDown }) => {
+const Chuck = ({
+  position,
+  quaternion,
+  color,
+  highlightOn,
+  clickedIndex,
+  onPointerDown,
+}) => {
   // prettier-ignore
   const vertexArray = new Float32Array([
     -2.5, 0, -1.75,
@@ -46,8 +53,8 @@ const Chuck = ({ position, quaternion, color, highlightOn, onPointerDown }) => {
         <meshToonMaterial
           color={color}
           side={THREE.DoubleSide}
-          emissive={"#ab1103"}
-          emissiveIntensity={highlightOn ? 1 : 0}
+          emissive={"#a84300"}
+          emissiveIntensity={highlightOn ? (clickedIndex ? 3 : 1) : 0}
         />
         {highlightOn && (
           <lineSegments geometry={shapeFaceEdgeLine}>
