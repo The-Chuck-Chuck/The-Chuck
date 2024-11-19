@@ -1,9 +1,12 @@
 import { Canvas } from "@react-three/fiber";
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
+import TutorialController from "../components/TutorialController";
 import TutorialPainter from "../components/TutorialPainter";
 
 const Tutorial = () => {
+  const [rotationAngle, setRotationAngle] = useState(0);
+
   return (
     <div className="text-white">
       <Header />
@@ -14,8 +17,15 @@ const Tutorial = () => {
             fov: 60,
           }}
         >
-          <TutorialPainter />
+          <TutorialPainter
+            rotationAngle={rotationAngle}
+            setRotationAngle={setRotationAngle}
+          />
         </Canvas>
+        <TutorialController
+          rotationAngle={rotationAngle}
+          setRotationAngle={setRotationAngle}
+        />
       </main>
     </div>
   );
