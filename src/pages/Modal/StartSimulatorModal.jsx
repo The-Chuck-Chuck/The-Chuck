@@ -4,7 +4,7 @@ import useChuckStore from "../../store/chuckStore";
 import usePageStore from "../../store/pageStore";
 import * as THREE from "three";
 
-const InitialSettingModal = () => {
+const StartSimulatorModal = () => {
   const setIsOpenedSimulatorModal = usePageStore(
     (state) => state.setIsOpenedSimulatorModal
   );
@@ -49,4 +49,4 @@ const InitialSettingModal = () => {
   );
 };
 
-export default InitialSettingModal;
+export default StartSimulatorModal;

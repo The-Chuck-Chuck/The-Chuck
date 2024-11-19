@@ -5,7 +5,7 @@ import CanvasPainter from "../components/CanvasPainter";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
-import InitialSettingModal from "./Modal/InitialSettingModal";
+import StartSimulatorModal from "./Modal/StartSimulatorModal";
 
 const Simulator = () => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
@@ -46,7 +46,7 @@ const Simulator = () => {
 
   return (
     <div className="text-white">
-      {isOpenedSimulatorModal && <InitialSettingModal />}
+      {isOpenedSimulatorModal && <StartSimulatorModal />}
       <header className="p-4">
         <Link
           to="/"
