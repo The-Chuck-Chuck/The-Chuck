@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Button from "../components/Button";
 import CanvasPainter from "../components/CanvasPainter";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
@@ -17,6 +18,7 @@ const Simulator = () => {
   const [targetIndex, setTargetIndex] = useState(null);
   const [isRotating, setIsRotating] = useState(false);
   const [nextChuckInfo, setNextChuckInfo] = useState(null);
+  const [iscameraMode, setIsCameraMode] = useState(false);
 
   useEffect(() => {
     if (clickedChuckInfo) {
@@ -44,6 +46,14 @@ const Simulator = () => {
     }
   }, [clickedChuckInfo]);
 
+  const setCameraMode = () => {
+    if (iscameraMode) {
+      setIsCameraMode(false);
+    } else {
+      setIsCameraMode(true);
+    }
+  };
+
   return (
     <div className="text-white">
       {isOpenedSimulatorModal && <StartSimulatorModal />}
@@ -54,6 +64,12 @@ const Simulator = () => {
         >
           Chuck-Chuck! Simulator
         </Link>
+        <Button
+          className={`${iscameraMode && "bg-gray-100 text-black"} fixed right-4 top-4 border-1 rounded-lg font-semibold w-60 text-md flex justify-center items-center`}
+          clickHandler={setCameraMode}
+        >
+          {`${iscameraMode ? "Tracking Camera View" : "Normal Camera View"}`}
+        </Button>
       </header>
       <main className="w-[100%] h-[100vh]">
         <Canvas
@@ -68,6 +84,7 @@ const Simulator = () => {
             targetIndex={targetIndex}
             nextChuckInfo={nextChuckInfo}
             isRotating={isRotating}
+            iscameraMode={iscameraMode}
             setTargetIndex={setTargetIndex}
             setClickedChuckInfo={setClickedChuckInfo}
             setRotationAngle={setRotationAngle}

@@ -14,6 +14,7 @@ const CanvasPainter = ({
   clickedChuckInfo,
   isRotating,
   nextChuckInfo,
+  iscameraMode,
   setClickedChuckInfo,
   setTargetIndex,
   setRotationAngle,
@@ -137,7 +138,7 @@ const CanvasPainter = ({
   };
 
   useEffect(() => {
-    if (clickedChuckInfo) {
+    if (clickedChuckInfo && iscameraMode) {
       const reConfiguePosition = clickedChuckInfo.position;
 
       camera.position.set(
