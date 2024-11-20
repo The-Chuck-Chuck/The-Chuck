@@ -156,8 +156,6 @@ const CanvasPainter = ({
     }
   }, [clickedChuckInfo]);
 
-  console.log("W", targetIndex);
-
   if (targetIndex === null) {
     chuckItems = chuckPositionsList.map((state, index) => {
       const { position, quaternion } = state;
