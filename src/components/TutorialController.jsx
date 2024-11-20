@@ -2,7 +2,7 @@ import * as CONSTANTS from "../constants/constants";
 import Button from "./Button";
 
 const TutorialController = ({
-  orderButton,
+  clickRequestButton,
   isCompletedIndex,
   isCompletedButton,
   setRotationAngle,
@@ -30,7 +30,7 @@ const TutorialController = ({
           className="h-10 p-1"
           clickHandler={handleClickLeft}
           disabled={
-            (!isCompletedIndex || orderButton === "right") && "disabled"
+            (!isCompletedIndex || clickRequestButton === "right") && "disabled"
           }
         >
           Left
@@ -38,7 +38,9 @@ const TutorialController = ({
         <Button
           className="h-10 p-1"
           clickHandler={handleClickRight}
-          disabled={(!isCompletedIndex || orderButton === "left") && "disabled"}
+          disabled={
+            (!isCompletedIndex || clickRequestButton === "left") && "disabled"
+          }
         >
           Right
         </Button>

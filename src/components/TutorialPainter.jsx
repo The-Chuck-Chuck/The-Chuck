@@ -10,12 +10,12 @@ import ReverseChuck from "./ReverseChuck";
 
 const TutorialPainter = ({
   rotationAngle,
-  orderIndex,
+  essentialClickIndex,
   isCompletedIndex,
   setRotationAngle,
-  setOrderIndex,
+  setEssentialClickIndex,
   setIsCompletedIndex,
-  setOrderButton,
+  setEssentialClickButton,
   setIsCompletedButton,
   setIsCompletedTutorial,
   indexRef,
@@ -81,7 +81,7 @@ const TutorialPainter = ({
         }
       });
 
-      if (orderIndex === clickIndex) {
+      if (essentialClickIndex === clickIndex) {
         setIsCompletedIndex(true);
       }
     }
@@ -101,7 +101,7 @@ const TutorialPainter = ({
         -clickedChuckInfo.position.z
       );
     }
-  }, [orderIndex, clickedChuckInfo]);
+  }, [essentialClickIndex, clickedChuckInfo]);
 
   useFrame(() => {
     if (
@@ -159,8 +159,8 @@ const TutorialPainter = ({
 
       indexRef.current = indexRef.current + 1;
 
-      setOrderIndex(selectedIndex[indexRef.current]);
-      setOrderButton(clickedButton[indexRef.current]);
+      setEssentialClickIndex(selectedIndex[indexRef.current]);
+      setEssentialClickButton(clickedButton[indexRef.current]);
 
       if (selectedIndex[indexRef.current] === undefined) {
         setIsCompletedTutorial(true);
@@ -171,13 +171,13 @@ const TutorialPainter = ({
   if (!isCompletedIndex) {
     chuckItems = chuckPositionsList.map((state, index) => {
       const { position, quaternion } = state;
-      const highlightOn = orderIndex === index;
+      const highlightOn = essentialClickIndex === index;
 
       return (
         <React.Fragment key={index}>
           {index % 2 === 0 ? (
             <Chuck
-              targetIndex={orderIndex}
+              targetIndex={essentialClickIndex}
               index={index}
               color="#ff0000"
               position={position}
@@ -187,7 +187,7 @@ const TutorialPainter = ({
             />
           ) : (
             <ReverseChuck
-              targetIndex={orderIndex}
+              targetIndex={essentialClickIndex}
               index={index}
               color="#008000"
               position={position}
@@ -201,7 +201,7 @@ const TutorialPainter = ({
     });
   } else {
     rotateGroupItems = chuckPositionsList
-      .slice(0, orderIndex + 1)
+      .slice(0, essentialClickIndex + 1)
       .map((state, index) => {
         const { position, quaternion } = state;
 
@@ -209,7 +209,7 @@ const TutorialPainter = ({
           <React.Fragment key={index}>
             {index % 2 === 0 ? (
               <Chuck
-                targetIndex={orderIndex}
+                targetIndex={essentialClickIndex}
                 index={index}
                 color="#ff0000"
                 position={position}
@@ -218,7 +218,7 @@ const TutorialPainter = ({
               />
             ) : (
               <ReverseChuck
-                targetIndex={orderIndex}
+                targetIndex={essentialClickIndex}
                 index={index}
                 color="#008000"
                 position={position}
@@ -231,13 +231,13 @@ const TutorialPainter = ({
       });
 
     nonRotateGroupItems = chuckPositionsList
-      .slice(orderIndex + 1)
+      .slice(essentialClickIndex + 1)
       .map((state, index) => {
         const { position, quaternion } = state;
 
         return (
           <React.Fragment key={index}>
-            {(orderIndex + 1 + index) % 2 === 0 ? (
+            {(essentialClickIndex + 1 + index) % 2 === 0 ? (
               <Chuck
                 color="#ff0000"
                 position={position}

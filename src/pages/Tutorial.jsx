@@ -16,8 +16,12 @@ const Tutorial = () => {
   );
   const indexRef = useRef(0);
   const [rotationAngle, setRotationAngle] = useState(0);
-  const [orderIndex, setOrderIndex] = useState(selectedIndex[0]);
-  const [orderButton, setOrderButton] = useState(clickedButton[0]);
+  const [essentialClickIndex, setEssentialClickIndex] = useState(
+    selectedIndex[0]
+  );
+  const [essentialClickButton, setEssentialClickButton] = useState(
+    clickedButton[0]
+  );
   const [isCompletedIndex, setIsCompletedIndex] = useState(false);
   const [isCompletedButton, setIsCompletedButton] = useState(false);
   const [isCompletedTutorial, setIsCompletedTutorial] = useState(false);
@@ -54,20 +58,20 @@ const Tutorial = () => {
         >
           <TutorialPainter
             rotationAngle={rotationAngle}
-            orderIndex={orderIndex}
+            essentialClickIndex={essentialClickIndex}
             isCompletedIndex={isCompletedIndex}
             isCompletedButton={isCompletedButton}
             setRotationAngle={setRotationAngle}
-            setOrderIndex={setOrderIndex}
+            setEssentialClickIndex={setEssentialClickIndex}
             setIsCompletedIndex={setIsCompletedIndex}
-            setOrderButton={setOrderButton}
+            setEssentialClickButton={setEssentialClickButton}
             setIsCompletedButton={setIsCompletedButton}
             setIsCompletedTutorial={setIsCompletedTutorial}
             indexRef={indexRef}
           />
         </Canvas>
         <TutorialController
-          orderButton={orderButton}
+          essentialClickButton={essentialClickButton}
           isCompletedIndex={isCompletedIndex}
           isCompletedButton={isCompletedButton}
           setRotationAngle={setRotationAngle}
