@@ -1,8 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Button from "../components/Button";
 import CanvasPainter from "../components/CanvasPainter";
+import Header from "../components/Header";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
@@ -48,31 +47,10 @@ const Simulator = () => {
     }
   }, [clickedChuckInfo]);
 
-  const setCameraMode = () => {
-    if (iscameraMode) {
-      setIsCameraMode(false);
-    } else {
-      setIsCameraMode(true);
-    }
-  };
-
   return (
     <div className="text-white">
       {isOpenedSimulatorModal && <StartSimulatorModal />}
-      <header className="p-4">
-        <Link
-          to="/"
-          className="border-4 rounded-lg font-bold text-2xl w-80 flex justify-center items-center"
-        >
-          Chuck-Chuck! Simulator
-        </Link>
-        <Button
-          className={`${iscameraMode && "bg-gray-100 text-black"} fixed right-4 top-4 border-1 rounded-lg font-semibold w-60 text-md flex justify-center items-center`}
-          clickHandler={setCameraMode}
-        >
-          {`${iscameraMode ? "Tracking Camera View" : "Normal Camera View"}`}
-        </Button>
-      </header>
+      <Header iscameraMode={iscameraMode} setIsCameraMode={setIsCameraMode} />
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{
