@@ -97,6 +97,7 @@ const Simulator = () => {
         </Canvas>
         <SimulController
           clickedChuckInfo={clickedChuckInfo}
+          sceneAngle={sceneAngle}
           setRotationAngle={setRotationAngle}
           setIsRotating={setIsRotating}
           setIsCameraRotate={setIsCameraRotate}

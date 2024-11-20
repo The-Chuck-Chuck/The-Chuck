@@ -265,7 +265,11 @@ const CanvasPainter = ({
       ) : (
         chuckItems
       )}
-      <OrbitControls ref={cameraRef} />
+      <OrbitControls
+        ref={cameraRef}
+        autoRotate={sceneAngle ? true : false}
+        autoRotateSpeed={sceneAngle ? 4.0 : 0.0}
+      />
     </>
   );
 };

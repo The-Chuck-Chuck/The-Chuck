@@ -1,19 +1,25 @@
 import { useState } from "react";
+import * as THREE from "three";
 import * as CONSTANTS from "../constants/constants";
+import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 import Modal from "./Modal";
 
 const SimulController = ({
   clickedChuckInfo,
+  sceneAngle,
   setRotationAngle,
   setIsRotating,
   setIsCameraRotate,
   setSceneAngle,
 }) => {
   const [isOpenedSelected, setIsOpenedSelected] = useState(false);
+  const setChuckPositionsList = useChuckStore(
+    (state) => state.setChuckPositionsList
+  );
 
   const handleClickLeft = () => {
-    if (clickedChuckInfo) {
+    if (clickedChuckInfo && !sceneAngle) {
       setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
       setIsRotating(true);
     } else if (!clickedChuckInfo) {
@@ -22,7 +28,7 @@ const SimulController = ({
   };
 
   const handleClickRight = () => {
-    if (clickedChuckInfo) {
+    if (clickedChuckInfo && !sceneAngle) {
       setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
       setIsRotating(true);
     } else if (!clickedChuckInfo) {
@@ -33,6 +39,25 @@ const SimulController = ({
   const handleClickTurn = () => {
     setIsCameraRotate(true);
     setSceneAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
+  };
+
+  const handleClickReset = () => {
+    setSceneAngle(0);
+    const initialValue = 24;
+    let positionX = -30;
+
+    const initialStateArray = Array.from(
+      { length: initialValue },
+      (_, index) => {
+        const positionY = index % 2 === 0 ? 0 : 2.6;
+        const position = [positionX, positionY, 0];
+        const quaternion = new THREE.Quaternion(0, 0, 0, 1).toArray();
+        positionX += 2.6;
+
+        return { position, quaternion };
+      }
+    );
+    setChuckPositionsList(initialStateArray);
   };
 
   return (
@@ -51,9 +76,7 @@ const SimulController = ({
       )}
       <div className="flex flex-col gap-4 fixed bottom-4 right-4 w-[250px] rounded-md bg-slate-600 p-5 justify-center items-center">
         <div className="w-[90%] flex gap-2 items-center">
-          <p className="pl-[2%] pr-[15%] text-center font-bold text-lg">
-            Turn!
-          </p>
+          <p className="pl-[2%] pr-[15%] text-center font-bold text-lg">Turn</p>
           <Button className="h-10 p-1" clickHandler={handleClickLeft}>
             Left
           </Button>
@@ -61,9 +84,15 @@ const SimulController = ({
             Right
           </Button>
         </div>
-        <div className="w-[90%] flex gap-2 justify-end items-center">
+        <div className="w-[90%] flex gap-5 items-center">
+          <p className="text-center font-bold text-lg">Show & Trun</p>
           <Button className="h-10 p-1" clickHandler={handleClickTurn}>
-            도형 각 회전
+            Turn
+          </Button>
+        </div>
+        <div className="w-[90%] flex gap-2 justify-center items-center">
+          <Button className="h-10 p-1" clickHandler={handleClickReset}>
+            RESET
           </Button>
         </div>
       </div>
