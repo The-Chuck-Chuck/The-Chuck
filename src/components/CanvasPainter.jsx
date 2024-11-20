@@ -80,7 +80,7 @@ const CanvasPainter = ({
       Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01
     ) {
       const minDistance = 0.5;
-      const maxContact = 2;
+      const maxContact = 3;
 
       if (
         collisionCheck(
@@ -111,7 +111,7 @@ const CanvasPainter = ({
     groupRefA,
     groupRefB,
     minDistance = 0.5,
-    maxContact = 2
+    maxContact = 3
   ) => {
     const collisionObjectA = groupRefA.current.children;
     const collisionObjectB = groupRefB.current.children;
