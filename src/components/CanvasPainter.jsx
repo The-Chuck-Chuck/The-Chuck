@@ -38,7 +38,10 @@ const CanvasPainter = ({
   let nonRotateGroupItems = null;
 
   useEffect(() => {
-    if (clickedChuckInfo && targetIndex) {
+    if (
+      (clickedChuckInfo && targetIndex) ||
+      (clickedChuckInfo && targetIndex === 0)
+    ) {
       const axistoss = makeCustomAxis(clickedChuckInfo.position, nextChuckInfo);
 
       setCustomAxis(axistoss);
