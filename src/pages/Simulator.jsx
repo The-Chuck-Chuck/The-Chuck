@@ -17,6 +17,7 @@ const Simulator = () => {
   const [targetIndex, setTargetIndex] = useState(null);
   const [isRotating, setIsRotating] = useState(false);
   const [nextChuckInfo, setNextChuckInfo] = useState(null);
+  const [iscameraMode, setIsCameraMode] = useState(false);
   const [isCameraRotate, setIsCameraRotate] = useState(false);
   const [sceneAngle, setSceneAngle] = useState(0);
 
@@ -49,7 +50,7 @@ const Simulator = () => {
   return (
     <div className="text-white">
       {isOpenedSimulatorModal && <StartSimulatorModal />}
-      <Header />
+      <Header iscameraMode={iscameraMode} setIsCameraMode={setIsCameraMode} />
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{
