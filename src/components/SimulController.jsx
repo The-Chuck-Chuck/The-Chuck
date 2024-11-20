@@ -36,7 +36,7 @@ const SimulController = ({
     }
   };
 
-  const handleClickTurn = () => {
+  const handleClickViewTurn = () => {
     setIsCameraRotate(true);
     setSceneAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
   };
@@ -90,16 +90,15 @@ const SimulController = ({
           </Button>
         </div>
         <div className="w-[90%] flex gap-2 items-center">
-          <p className="text-center font-bold text-lg">Show & Trun</p>
-          <Button className="h-10 p-1" clickHandler={handleClickTurn}>
-            Turn
+          <Button className="grow h-10 p-1" clickHandler={handleClickViewTurn}>
+            Rotation
           </Button>
-          <Button className="h-10 p-1" clickHandler={handleClickStop}>
+          <Button className="grow h-10 p-1" clickHandler={handleClickStop}>
             Stop
           </Button>
         </div>
         <div className="w-[90%] flex gap-2 justify-center items-center">
-          <Button className="h-10 p-1" clickHandler={handleClickReset}>
+          <Button className="w-[100%] h-10 p-1" clickHandler={handleClickReset}>
             RESET
           </Button>
         </div>
