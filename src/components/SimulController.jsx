@@ -7,6 +7,8 @@ const SimulController = ({
   clickedChuckInfo,
   setRotationAngle,
   setIsRotating,
+  setIsCameraRotate,
+  setSceneAngle,
 }) => {
   const [isOpenedSelected, setIsOpenedSelected] = useState(false);
 
@@ -26,6 +28,11 @@ const SimulController = ({
     } else if (!clickedChuckInfo) {
       setIsOpenedSelected(true);
     }
+  };
+
+  const handleClickTurn = () => {
+    setIsCameraRotate(true);
+    setSceneAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
   };
 
   return (
@@ -52,6 +59,11 @@ const SimulController = ({
           </Button>
           <Button className="h-10 p-1" clickHandler={handleClickRight}>
             Right
+          </Button>
+        </div>
+        <div className="w-[90%] flex gap-2 justify-end items-center">
+          <Button className="h-10 p-1" clickHandler={handleClickTurn}>
+            도형 각 회전
           </Button>
         </div>
       </div>

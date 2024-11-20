@@ -15,6 +15,8 @@ const CanvasPainter = ({
   isRotating,
   nextChuckInfo,
   iscameraMode,
+  isCameraRotate,
+  sceneAngle,
   setClickedChuckInfo,
   setTargetIndex,
   setRotationAngle,
@@ -156,6 +158,12 @@ const CanvasPainter = ({
       cameraRef.current.update();
     }
   }, [clickedChuckInfo]);
+
+  useEffect(() => {
+    if (isCameraRotate) {
+      scene.rotation.z = sceneAngle;
+    }
+  }, [sceneAngle]);
 
   if (targetIndex === null) {
     chuckItems = chuckPositionsList.map((state, index) => {

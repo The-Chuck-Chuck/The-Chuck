@@ -19,6 +19,8 @@ const Simulator = () => {
   const [isRotating, setIsRotating] = useState(false);
   const [nextChuckInfo, setNextChuckInfo] = useState(null);
   const [iscameraMode, setIsCameraMode] = useState(false);
+  const [isCameraRotate, setIsCameraRotate] = useState(false);
+  const [sceneAngle, setSceneAngle] = useState(0);
 
   useEffect(() => {
     if (clickedChuckInfo) {
@@ -85,6 +87,8 @@ const Simulator = () => {
             nextChuckInfo={nextChuckInfo}
             isRotating={isRotating}
             iscameraMode={iscameraMode}
+            isCameraRotate={isCameraRotate}
+            sceneAngle={sceneAngle}
             setTargetIndex={setTargetIndex}
             setClickedChuckInfo={setClickedChuckInfo}
             setRotationAngle={setRotationAngle}
@@ -95,6 +99,8 @@ const Simulator = () => {
           clickedChuckInfo={clickedChuckInfo}
           setRotationAngle={setRotationAngle}
           setIsRotating={setIsRotating}
+          setIsCameraRotate={setIsCameraRotate}
+          setSceneAngle={setSceneAngle}
         />
       </main>
     </div>
