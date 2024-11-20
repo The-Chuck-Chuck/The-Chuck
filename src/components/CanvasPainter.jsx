@@ -14,6 +14,9 @@ const CanvasPainter = ({
   clickedChuckInfo,
   isRotating,
   nextChuckInfo,
+  iscameraMode,
+  isCameraRotate,
+  sceneAngle,
   setClickedChuckInfo,
   setTargetIndex,
   setRotationAngle,
@@ -35,7 +38,7 @@ const CanvasPainter = ({
   let nonRotateGroupItems = null;
 
   useEffect(() => {
-    if (clickedChuckInfo && targetIndex) {
+    if (clickedChuckInfo && (targetIndex || targetIndex === 0)) {
       const axistoss = makeCustomAxis(clickedChuckInfo.position, nextChuckInfo);
 
       setCustomAxis(axistoss);
@@ -137,7 +140,7 @@ const CanvasPainter = ({
   };
 
   useEffect(() => {
-    if (clickedChuckInfo) {
+    if (clickedChuckInfo && iscameraMode) {
       const reConfiguePosition = clickedChuckInfo.position;
 
       camera.position.set(
@@ -155,6 +158,12 @@ const CanvasPainter = ({
       cameraRef.current.update();
     }
   }, [clickedChuckInfo]);
+
+  useEffect(() => {
+    if (isCameraRotate) {
+      scene.rotation.z = sceneAngle;
+    }
+  }, [sceneAngle]);
 
   if (targetIndex === null) {
     chuckItems = chuckPositionsList.map((state, index) => {
@@ -256,7 +265,11 @@ const CanvasPainter = ({
       ) : (
         chuckItems
       )}
-      <OrbitControls ref={cameraRef} />
+      <OrbitControls
+        ref={cameraRef}
+        autoRotate={sceneAngle ? true : false}
+        autoRotateSpeed={sceneAngle ? 4.0 : 0.0}
+      />
     </>
   );
 };
