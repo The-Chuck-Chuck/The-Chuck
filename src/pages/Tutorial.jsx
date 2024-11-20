@@ -18,9 +18,9 @@ const Tutorial = () => {
   const [rotationAngle, setRotationAngle] = useState(0);
   const [orderIndex, setOrderIndex] = useState(selectedIndex[0]);
   const [orderButton, setOrderButton] = useState(clickedButton[0]);
-  const [isComplatedIndex, setIsComplatedIndex] = useState(false);
-  const [isComplatedButton, setIsComplatedButton] = useState(false);
-  const [isComplatedTutorial, setIsComplatedTutorial] = useState(false);
+  const [isCompletedIndex, setIsCompletedIndex] = useState(false);
+  const [isCompletedButton, setIsCompletedButton] = useState(false);
+  const [isCompletedTutorial, setIsCompletedTutorial] = useState(false);
   const navigate = useNavigate();
 
   const handleClickBackHome = () => {
@@ -30,11 +30,11 @@ const Tutorial = () => {
   return (
     <div className="text-white">
       {isOpenedTutorialModal && <StartTutorialModal />}
-      {isComplatedTutorial && (
+      {isCompletedTutorial && (
         <Modal
           drection="horizontal"
           title="Done!"
-          setIsOpened={setIsComplatedTutorial}
+          setIsOpened={setIsCompletedTutorial}
         >
           <div className="text-center text-lg font-semibold mt-16 h-[40%]">
             튜토리얼을 모두 완료했습니다!
@@ -55,23 +55,23 @@ const Tutorial = () => {
           <TutorialPainter
             rotationAngle={rotationAngle}
             orderIndex={orderIndex}
-            isComplatedIndex={isComplatedIndex}
-            isComplatedButton={isComplatedButton}
+            isCompletedIndex={isCompletedIndex}
+            isCompletedButton={isCompletedButton}
             setRotationAngle={setRotationAngle}
             setOrderIndex={setOrderIndex}
-            setIsComplatedIndex={setIsComplatedIndex}
+            setIsCompletedIndex={setIsCompletedIndex}
             setOrderButton={setOrderButton}
-            setIsComplatedButton={setIsComplatedButton}
-            setIsComplatedTutorial={setIsComplatedTutorial}
+            setIsCompletedButton={setIsCompletedButton}
+            setIsCompletedTutorial={setIsCompletedTutorial}
             indexRef={indexRef}
           />
         </Canvas>
         <TutorialController
           orderButton={orderButton}
-          isComplatedIndex={isComplatedIndex}
-          isComplatedButton={isComplatedButton}
+          isCompletedIndex={isCompletedIndex}
+          isCompletedButton={isCompletedButton}
           setRotationAngle={setRotationAngle}
-          setIsComplatedButton={setIsComplatedButton}
+          setIsCompletedButton={setIsCompletedButton}
         />
       </main>
     </div>

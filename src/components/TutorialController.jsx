@@ -3,22 +3,22 @@ import Button from "./Button";
 
 const TutorialController = ({
   orderButton,
-  isComplatedIndex,
-  isComplatedButton,
+  isCompletedIndex,
+  isCompletedButton,
   setRotationAngle,
-  setIsComplatedButton,
+  setIsCompletedButton,
 }) => {
   const handleClickLeft = () => {
-    if (!isComplatedButton) {
+    if (!isCompletedButton) {
       setRotationAngle((prevAngle) => prevAngle - 90 * CONSTANTS.DEGREE);
-      setIsComplatedButton(true);
+      setIsCompletedButton(true);
     }
   };
 
   const handleClickRight = () => {
-    if (!isComplatedButton) {
+    if (!isCompletedButton) {
       setRotationAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
-      setIsComplatedButton(true);
+      setIsCompletedButton(true);
     }
   };
 
@@ -30,7 +30,7 @@ const TutorialController = ({
           className="h-10 p-1"
           clickHandler={handleClickLeft}
           disabled={
-            (!isComplatedIndex || orderButton === "right") && "disabled"
+            (!isCompletedIndex || orderButton === "right") && "disabled"
           }
         >
           Left
@@ -38,7 +38,7 @@ const TutorialController = ({
         <Button
           className="h-10 p-1"
           clickHandler={handleClickRight}
-          disabled={(!isComplatedIndex || orderButton === "left") && "disabled"}
+          disabled={(!isCompletedIndex || orderButton === "left") && "disabled"}
         >
           Right
         </Button>

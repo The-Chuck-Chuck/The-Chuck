@@ -11,13 +11,13 @@ import ReverseChuck from "./ReverseChuck";
 const TutorialPainter = ({
   rotationAngle,
   orderIndex,
-  isComplatedIndex,
+  isCompletedIndex,
   setRotationAngle,
   setOrderIndex,
-  setIsComplatedIndex,
+  setIsCompletedIndex,
   setOrderButton,
-  setIsComplatedButton,
-  setIsComplatedTutorial,
+  setIsCompletedButton,
+  setIsCompletedTutorial,
   indexRef,
 }) => {
   const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
@@ -82,13 +82,13 @@ const TutorialPainter = ({
       });
 
       if (orderIndex === clickIndex) {
-        setIsComplatedIndex(true);
+        setIsCompletedIndex(true);
       }
     }
   };
 
   useEffect(() => {
-    if (isComplatedIndex) {
+    if (isCompletedIndex) {
       const axistoss = makeCustomAxis(clickedChuckInfo.position, nextChuckInfo);
 
       setCustomAxis(axistoss);
@@ -154,8 +154,8 @@ const TutorialPainter = ({
 
       setChuckPositionsList(updateTotalChuckData);
       setUpdateTrigger(false);
-      setIsComplatedIndex(false);
-      setIsComplatedButton(false);
+      setIsCompletedIndex(false);
+      setIsCompletedButton(false);
 
       indexRef.current = indexRef.current + 1;
 
@@ -163,12 +163,12 @@ const TutorialPainter = ({
       setOrderButton(clickedButton[indexRef.current]);
 
       if (selectedIndex[indexRef.current] === undefined) {
-        setIsComplatedTutorial(true);
+        setIsCompletedTutorial(true);
       }
     }
   }, [updateTrigger]);
 
-  if (!isComplatedIndex) {
+  if (!isCompletedIndex) {
     chuckItems = chuckPositionsList.map((state, index) => {
       const { position, quaternion } = state;
       const highlightOn = orderIndex === index;
@@ -264,7 +264,7 @@ const TutorialPainter = ({
         shadow-radius={1}
       />
       <ambientLight color="#ffffff" intensity={2} />
-      {isComplatedIndex ? (
+      {isCompletedIndex ? (
         <>
           <group ref={pivotRef}>
             <group ref={rotateGroupRef}>{rotateGroupItems}</group>
