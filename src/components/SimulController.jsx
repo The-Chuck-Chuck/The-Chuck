@@ -41,6 +41,11 @@ const SimulController = ({
     setSceneAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
   };
 
+  const handleClickStop = () => {
+    setSceneAngle((prevAngle) => prevAngle + 90 * CONSTANTS.DEGREE);
+    setSceneAngle(0);
+  };
+
   const handleClickReset = () => {
     setSceneAngle(0);
     const initialValue = 24;
@@ -84,10 +89,13 @@ const SimulController = ({
             Right
           </Button>
         </div>
-        <div className="w-[90%] flex gap-5 items-center">
+        <div className="w-[90%] flex gap-2 items-center">
           <p className="text-center font-bold text-lg">Show & Trun</p>
           <Button className="h-10 p-1" clickHandler={handleClickTurn}>
             Turn
+          </Button>
+          <Button className="h-10 p-1" clickHandler={handleClickStop}>
+            Stop
           </Button>
         </div>
         <div className="w-[90%] flex gap-2 justify-center items-center">
