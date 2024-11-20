@@ -2,44 +2,93 @@ import { OrbitControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { Raycaster } from "three";
 import useChuckStore from "../store/chuckStore";
 import { makeCustomAxis, updateChuckData } from "../utils/chuckUtils";
+import { clickedButton, selectedIndex } from "../utils/makeDogTutorial";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
-const CanvasPainter = ({
-  targetIndex,
+const TutorialPainter = ({
   rotationAngle,
-  clickedChuckInfo,
-  isRotating,
-  nextChuckInfo,
-  iscameraMode,
-  isCameraRotate,
-  sceneAngle,
-  setClickedChuckInfo,
-  setTargetIndex,
+  essentialClickIndex,
+  isCompletedIndex,
   setRotationAngle,
-  setIsRotating,
+  setEssentialClickIndex,
+  setIsCompletedIndex,
+  setEssentialClickButton,
+  setIsCompletedButton,
+  setIsCompletedTutorial,
+  indexRef,
 }) => {
-  const { camera, gl, scene } = useThree();
   const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
-  const raycastingRef = useRef(new Raycaster());
+  const { camera, gl, scene } = useThree();
+  const raycastingRef = useRef(new THREE.Raycaster());
   const rotateGroupRef = useRef(new THREE.Group());
   const nonRotateGroupRef = useRef(new THREE.Group());
   const pivotRef = useRef(new THREE.Group());
   const currentRotationAngleRef = useRef(0);
   const stopTriggerRef = useRef(false);
-  const lastRotationAngleRef = useRef(0);
-  const cameraRef = useRef(0);
   const [customAxis, setCustomAxis] = useState(null);
+  const [clickedChuckInfo, setClickedChuckInfo] = useState(null);
+  const [nextChuckInfo, setNextChuckInfo] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(false);
+
   let chuckItems = null;
   let rotateGroupItems = null;
   let nonRotateGroupItems = null;
 
+  const handleClickChuck = (event) => {
+    event.stopPropagation();
+
+    const syncCordinater = new THREE.Vector2(
+      (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
+      -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
+    );
+
+    raycastingRef.current.setFromCamera(syncCordinater, camera);
+    raycastingRef.current.precision = 0.000001;
+
+    let intersects = raycastingRef.current.intersectObjects(
+      scene.children,
+      true
+    );
+
+    intersects = intersects.filter((intersect) => intersect.object.isMesh);
+
+    if (intersects.length > 0) {
+      const clickedObject = intersects[0].object;
+
+      setClickedChuckInfo(clickedObject);
+
+      let clickIndex = null;
+
+      chuckPositionsList.forEach((state, index) => {
+        const position = state.position;
+        const clickedPosition = [
+          clickedObject.position.x,
+          clickedObject.position.y,
+          clickedObject.position.z,
+        ];
+
+        if (
+          JSON.stringify(position[0]) === JSON.stringify(clickedPosition[0])
+        ) {
+          clickIndex = index;
+        }
+
+        if (clickIndex + 1 === index) {
+          setNextChuckInfo(state.position);
+        }
+      });
+
+      if (essentialClickIndex === clickIndex) {
+        setIsCompletedIndex(true);
+      }
+    }
+  };
+
   useEffect(() => {
-    if (clickedChuckInfo && (targetIndex || targetIndex === 0)) {
+    if (isCompletedIndex) {
       const axistoss = makeCustomAxis(clickedChuckInfo.position, nextChuckInfo);
 
       setCustomAxis(axistoss);
@@ -52,7 +101,7 @@ const CanvasPainter = ({
         -clickedChuckInfo.position.z
       );
     }
-  }, [targetIndex, clickedChuckInfo]);
+  }, [essentialClickIndex, clickedChuckInfo]);
 
   useFrame(() => {
     if (
@@ -82,81 +131,12 @@ const CanvasPainter = ({
       customAxis &&
       Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01
     ) {
-      const minDistance = 0.5;
-      const maxContact = 3;
-
-      if (
-        collisionCheck(
-          rotateGroupRef,
-          nonRotateGroupRef,
-          minDistance,
-          maxContact
-        )
-      ) {
-        alert("충돌 감지");
-        currentRotationAngleRef.current = lastRotationAngleRef.current;
-        setRotationAngle(lastRotationAngleRef.current);
-      } else {
-        lastRotationAngleRef.current = rotationAngle;
-      }
-
       setUpdateTrigger(true);
-      setTargetIndex(null);
       setRotationAngle(0);
-      setClickedChuckInfo(null);
-      setIsRotating(false);
       currentRotationAngleRef.current = 0;
       stopTriggerRef.current = true;
     }
   });
-
-  const collisionCheck = (
-    groupRefA,
-    groupRefB,
-    minDistance = 0.5,
-    maxContact = 3
-  ) => {
-    const collisionObjectA = groupRefA.current.children;
-    const collisionObjectB = groupRefB.current.children;
-
-    const collisionContact = new Map();
-    let totalContact = 0;
-
-    for (let i = 0; i < collisionObjectA.length; i++) {
-      for (let j = 0; j < collisionObjectB.length; j++) {
-        const objectA = new THREE.Vector3().setFromMatrixPosition(
-          collisionObjectA[i].matrixWorld
-        );
-        const objectB = new THREE.Vector3().setFromMatrixPosition(
-          collisionObjectB[j].matrixWorld
-        );
-
-        if (objectA.distanceTo(objectB) < minDistance) {
-          totalContact++;
-
-          const compareObject =
-            collisionObjectA[i].uuid + collisionObjectB[j].uuid;
-
-          if (collisionContact.has(compareObject)) {
-            collisionContact.set(
-              compareObject,
-              collisionContact.get(compareObject) + 1
-            );
-          } else {
-            collisionContact.set(compareObject, 1);
-          }
-        }
-      }
-    }
-
-    if (collisionContact.size >= maxContact) {
-      return false;
-    } else if (totalContact > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   useEffect(() => {
     if (updateTrigger && rotateGroupRef.current && nonRotateGroupRef.current) {
@@ -174,87 +154,46 @@ const CanvasPainter = ({
 
       setChuckPositionsList(updateTotalChuckData);
       setUpdateTrigger(false);
+      setIsCompletedIndex(false);
+      setIsCompletedButton(false);
+
+      indexRef.current = indexRef.current + 1;
+
+      setEssentialClickIndex(selectedIndex[indexRef.current]);
+      setEssentialClickButton(clickedButton[indexRef.current]);
+
+      if (selectedIndex[indexRef.current] === undefined) {
+        setIsCompletedTutorial(true);
+      }
     }
   }, [updateTrigger]);
 
-  const handleClickChuck = (event) => {
-    if (isRotating) {
-      return;
-    }
-
-    event.stopPropagation();
-
-    const syncCordinater = new THREE.Vector2(
-      (event.offsetX / gl.domElement.clientWidth) * 2 - 1,
-      -(event.offsetY / gl.domElement.clientHeight) * 2 + 1
-    );
-
-    raycastingRef.current.setFromCamera(syncCordinater, camera);
-    raycastingRef.current.precision = 0.000001;
-
-    let intersects = raycastingRef.current.intersectObjects(
-      scene.children,
-      true
-    );
-
-    intersects = intersects.filter((intersect) => intersect.object.isMesh);
-
-    if (intersects.length > 0) {
-      const clickedObject = intersects[0].object;
-
-      setClickedChuckInfo(clickedObject);
-    }
-  };
-
-  useEffect(() => {
-    if (clickedChuckInfo && iscameraMode) {
-      const reConfiguePosition = clickedChuckInfo.position;
-
-      camera.position.set(
-        reConfiguePosition.x + -5,
-        reConfiguePosition.y + 40,
-        reConfiguePosition.z + 30
-      );
-
-      cameraRef.current.target.set(
-        reConfiguePosition.x,
-        reConfiguePosition.y,
-        reConfiguePosition.z
-      );
-
-      cameraRef.current.update();
-    }
-  }, [clickedChuckInfo]);
-
-  useEffect(() => {
-    if (isCameraRotate) {
-      scene.rotation.z = sceneAngle;
-    }
-  }, [sceneAngle]);
-
-  if (targetIndex === null) {
+  if (!isCompletedIndex) {
     chuckItems = chuckPositionsList.map((state, index) => {
       const { position, quaternion } = state;
+      const highlightOn = essentialClickIndex === index;
 
       return (
         <React.Fragment key={index}>
           {index % 2 === 0 ? (
             <Chuck
-              targetIndex={targetIndex}
+              targetIndex={essentialClickIndex}
               index={index}
               color="#ff0000"
               position={position}
               quaternion={quaternion}
               onPointerDown={handleClickChuck}
+              highlightOn={highlightOn}
             />
           ) : (
             <ReverseChuck
-              targetIndex={targetIndex}
+              targetIndex={essentialClickIndex}
               index={index}
               color="#008000"
               position={position}
               quaternion={quaternion}
               onPointerDown={handleClickChuck}
+              highlightOn={highlightOn}
             />
           )}
         </React.Fragment>
@@ -262,32 +201,29 @@ const CanvasPainter = ({
     });
   } else {
     rotateGroupItems = chuckPositionsList
-      .slice(0, targetIndex + 1)
+      .slice(0, essentialClickIndex + 1)
       .map((state, index) => {
         const { position, quaternion } = state;
-        const highlightOn = true;
 
         return (
           <React.Fragment key={index}>
             {index % 2 === 0 ? (
               <Chuck
-                targetIndex={targetIndex}
+                targetIndex={essentialClickIndex}
                 index={index}
                 color="#ff0000"
                 position={position}
                 quaternion={quaternion}
-                onPointerDown={handleClickChuck}
-                highlightOn={highlightOn}
+                highlightOn={true}
               />
             ) : (
               <ReverseChuck
-                targetIndex={targetIndex}
+                targetIndex={essentialClickIndex}
                 index={index}
                 color="#008000"
                 position={position}
                 quaternion={quaternion}
-                onPointerDown={handleClickChuck}
-                highlightOn={highlightOn}
+                highlightOn={true}
               />
             )}
           </React.Fragment>
@@ -295,25 +231,23 @@ const CanvasPainter = ({
       });
 
     nonRotateGroupItems = chuckPositionsList
-      .slice(targetIndex + 1)
+      .slice(essentialClickIndex + 1)
       .map((state, index) => {
         const { position, quaternion } = state;
 
         return (
           <React.Fragment key={index}>
-            {(targetIndex + 1 + index) % 2 === 0 ? (
+            {(essentialClickIndex + 1 + index) % 2 === 0 ? (
               <Chuck
                 color="#ff0000"
                 position={position}
                 quaternion={quaternion}
-                onPointerDown={handleClickChuck}
               />
             ) : (
               <ReverseChuck
                 color="#008000"
                 position={position}
                 quaternion={quaternion}
-                onPointerDown={handleClickChuck}
               />
             )}
           </React.Fragment>
@@ -330,7 +264,7 @@ const CanvasPainter = ({
         shadow-radius={1}
       />
       <ambientLight color="#ffffff" intensity={2} />
-      {targetIndex !== null ? (
+      {isCompletedIndex ? (
         <>
           <group ref={pivotRef}>
             <group ref={rotateGroupRef}>{rotateGroupItems}</group>
@@ -340,13 +274,9 @@ const CanvasPainter = ({
       ) : (
         chuckItems
       )}
-      <OrbitControls
-        ref={cameraRef}
-        autoRotate={sceneAngle ? true : false}
-        autoRotateSpeed={sceneAngle ? 4.0 : 0.0}
-      />
+      <OrbitControls />
     </>
   );
 };
 
-export default CanvasPainter;
+export default TutorialPainter;

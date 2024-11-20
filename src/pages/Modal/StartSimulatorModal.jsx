@@ -34,10 +34,13 @@ const StartSimulatorModal = () => {
 
   return (
     <Modal drection="horizontal" title="Simulator Information">
-      <form className="mt-[15%] flex flex-col gap-5 justify-center items-center">
-        <div className="font-semibold text-lg">
-          원하는 삼각기둥을 클릭 후 회전시켜 보세요!
-        </div>
+      <form className="mt-[10%] flex flex-col justify-center items-center">
+        <p className="font-semibold text-lg">
+          회전시키고 싶은 도형을 클릭 후 버튼을 눌러 척척이를 돌려요!
+        </p>
+        <p className="font-semibold text-lg">
+          우클릭을 사용해 화면을 원하는 위치로 변경할 수 있어요!
+        </p>
         <Button
           clickHandler={handleClickStartButton}
           className="w-[80%] mt-[10%] text-lg pl-7 pr-7 pt-2 pb-2"
