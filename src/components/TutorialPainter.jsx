@@ -171,27 +171,29 @@ const TutorialPainter = ({
   if (!isComplatedIndex) {
     chuckItems = chuckPositionsList.map((state, index) => {
       const { position, quaternion } = state;
-      const clickedIndex = orderIndex === index;
+      const highlightOn = orderIndex === index;
 
       return (
         <React.Fragment key={index}>
           {index % 2 === 0 ? (
             <Chuck
+              targetIndex={orderIndex}
+              index={index}
               color="#ff0000"
               position={position}
               quaternion={quaternion}
               onPointerDown={handleClickChuck}
-              highlightOn={clickedIndex}
-              clickedIndex={clickedIndex}
+              highlightOn={highlightOn}
             />
           ) : (
             <ReverseChuck
+              targetIndex={orderIndex}
+              index={index}
               color="#008000"
               position={position}
               quaternion={quaternion}
               onPointerDown={handleClickChuck}
-              highlightOn={clickedIndex}
-              clickedIndex={clickedIndex}
+              highlightOn={highlightOn}
             />
           )}
         </React.Fragment>
@@ -202,26 +204,26 @@ const TutorialPainter = ({
       .slice(0, orderIndex + 1)
       .map((state, index) => {
         const { position, quaternion } = state;
-        const highlightOn = true;
-        const clickedIndex = orderIndex === index;
 
         return (
           <React.Fragment key={index}>
             {index % 2 === 0 ? (
               <Chuck
+                targetIndex={orderIndex}
+                index={index}
                 color="#ff0000"
                 position={position}
                 quaternion={quaternion}
-                highlightOn={highlightOn}
-                clickedIndex={clickedIndex}
+                highlightOn={true}
               />
             ) : (
               <ReverseChuck
+                targetIndex={orderIndex}
+                index={index}
                 color="#008000"
                 position={position}
                 quaternion={quaternion}
-                highlightOn={highlightOn}
-                clickedIndex={clickedIndex}
+                highlightOn={true}
               />
             )}
           </React.Fragment>

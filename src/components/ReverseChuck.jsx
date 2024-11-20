@@ -1,13 +1,19 @@
+import { useFrame } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 const ReverseChuck = ({
+  targetIndex,
+  index,
   position,
   quaternion,
   color,
-  highlightOn,
+  highlightOn = false,
   onPointerDown,
-  clickedIndex,
 }) => {
+  const isClickedIndex = targetIndex === index;
+  const [emissiveIntensity, setEmissiveIntensity] = useState(0);
+
   // prettier-ignore
   const vertexArray = new Float32Array([
     -2.5, 0, -1.75,
@@ -42,6 +48,18 @@ const ReverseChuck = ({
 
   const shapeFaceEdgeLine = new THREE.EdgesGeometry(customGeometry);
 
+  useEffect(() => {
+    if (isClickedIndex) {
+      const interval = setInterval(() => {
+        setEmissiveIntensity((prev) => (prev === 3 ? 1 : 3));
+      }, 500);
+
+      return () => clearInterval(interval);
+    } else {
+      setEmissiveIntensity(0);
+    }
+  }, [isClickedIndex]);
+
   return (
     <>
       <mesh
@@ -54,7 +72,9 @@ const ReverseChuck = ({
           color={color}
           side={THREE.DoubleSide}
           emissive={"#006e04"}
-          emissiveIntensity={highlightOn ? (clickedIndex ? 3 : 1) : 0}
+          emissiveIntensity={
+            highlightOn ? (isClickedIndex ? emissiveIntensity : 1) : 0
+          }
         />
         {highlightOn && (
           <lineSegments geometry={shapeFaceEdgeLine}>

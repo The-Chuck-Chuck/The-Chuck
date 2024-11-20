@@ -156,6 +156,8 @@ const CanvasPainter = ({
     }
   }, [clickedChuckInfo]);
 
+  console.log("W", targetIndex);
+
   if (targetIndex === null) {
     chuckItems = chuckPositionsList.map((state, index) => {
       const { position, quaternion } = state;
@@ -164,6 +166,8 @@ const CanvasPainter = ({
         <React.Fragment key={index}>
           {index % 2 === 0 ? (
             <Chuck
+              targetIndex={targetIndex}
+              index={index}
               color="#ff0000"
               position={position}
               quaternion={quaternion}
@@ -171,6 +175,8 @@ const CanvasPainter = ({
             />
           ) : (
             <ReverseChuck
+              targetIndex={targetIndex}
+              index={index}
               color="#008000"
               position={position}
               quaternion={quaternion}
@@ -186,27 +192,28 @@ const CanvasPainter = ({
       .map((state, index) => {
         const { position, quaternion } = state;
         const highlightOn = true;
-        const clickedIndex = targetIndex === index;
 
         return (
           <React.Fragment key={index}>
             {index % 2 === 0 ? (
               <Chuck
+                targetIndex={targetIndex}
+                index={index}
                 color="#ff0000"
                 position={position}
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
                 highlightOn={highlightOn}
-                clickedIndex={clickedIndex}
               />
             ) : (
               <ReverseChuck
+                targetIndex={targetIndex}
+                index={index}
                 color="#008000"
                 position={position}
                 quaternion={quaternion}
                 onPointerDown={handleClickChuck}
                 highlightOn={highlightOn}
-                clickedIndex={clickedIndex}
               />
             )}
           </React.Fragment>
