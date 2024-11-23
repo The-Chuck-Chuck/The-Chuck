@@ -6,6 +6,7 @@ import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
 import StartSimulatorModal from "./Modal/StartSimulatorModal";
+import Button from "../components/Button";
 
 const Simulator = () => {
   const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
@@ -20,6 +21,14 @@ const Simulator = () => {
   const [iscameraMode, setIsCameraMode] = useState(false);
   const [isCameraRotate, setIsCameraRotate] = useState(false);
   const [sceneAngle, setSceneAngle] = useState(0);
+
+  const setCameraMode = () => {
+    if (iscameraMode) {
+      setIsCameraMode(false);
+    } else {
+      setIsCameraMode(true);
+    }
+  };
 
   useEffect(() => {
     if (clickedChuckInfo) {
@@ -50,8 +59,14 @@ const Simulator = () => {
   return (
     <div className="text-white">
       {isOpenedSimulatorModal && <StartSimulatorModal />}
-      <Header iscameraMode={iscameraMode} setIsCameraMode={setIsCameraMode} />
+      <Header />
       <main className="w-[100%] h-[100vh]">
+        <Button
+          className={`${iscameraMode && "bg-gray-100 text-black"} fixed right-4 top-20 border-1 rounded-lg font-semibold w-60 text-md flex justify-center items-center z-10`}
+          clickHandler={setCameraMode}
+        >
+          {`${iscameraMode ? "Tracking Camera View" : "Normal Camera View"}`}
+        </Button>
         <Canvas
           camera={{
             position: [0, 40, 40],
