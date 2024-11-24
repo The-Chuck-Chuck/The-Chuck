@@ -23,7 +23,8 @@ const CanvasPainter = ({
   setIsRotating,
 }) => {
   const { camera, gl, scene } = useThree();
-  const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
+  const { chuckPositionsList, isSharedLinks, setChuckPositionsList } =
+    useChuckStore();
   const raycastingRef = useRef(new Raycaster());
   const rotateGroupRef = useRef(new THREE.Group());
   const nonRotateGroupRef = useRef(new THREE.Group());
@@ -111,7 +112,7 @@ const CanvasPainter = ({
   }, [updateTrigger]);
 
   const handleClickChuck = (event) => {
-    if (isRotating) {
+    if (isRotating || isSharedLinks) {
       return;
     }
 

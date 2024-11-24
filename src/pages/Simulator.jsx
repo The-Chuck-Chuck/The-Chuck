@@ -10,7 +10,12 @@ import usePageStore from "../store/pageStore";
 import StartSimulatorModal from "./Modal/StartSimulatorModal";
 
 const Simulator = () => {
-  const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
+  const {
+    chuckPositionsList,
+    isSharedLinks,
+    setChuckPositionsList,
+    setIsSharedLinks,
+  } = useChuckStore();
   const isOpenedSimulatorModal = usePageStore(
     (state) => state.isOpenedSimulatorModal
   );
@@ -37,6 +42,9 @@ const Simulator = () => {
       const chuckLinkPositionsList = JSON.parse(atob(chuckData));
 
       setChuckPositionsList(chuckLinkPositionsList);
+      setIsSharedLinks(true);
+    } else {
+      setIsSharedLinks(false);
     }
   }, []);
 
@@ -74,6 +82,7 @@ const Simulator = () => {
         <Button
           className={`${iscameraMode && "bg-gray-100 text-black"} fixed right-4 top-20 border-1 rounded-lg font-semibold w-60 text-md flex justify-center items-center z-10`}
           clickHandler={setCameraMode}
+          disabled={isSharedLinks}
         >
           {`${iscameraMode ? "Tracking Camera View" : "Normal Camera View"}`}
         </Button>
