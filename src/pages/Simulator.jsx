@@ -1,15 +1,16 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Button from "../components/Button";
 import CanvasPainter from "../components/CanvasPainter";
 import Header from "../components/Header";
 import SimulController from "../components/SimulController";
 import useChuckStore from "../store/chuckStore";
 import usePageStore from "../store/pageStore";
 import StartSimulatorModal from "./Modal/StartSimulatorModal";
-import Button from "../components/Button";
 
 const Simulator = () => {
-  const chuckPositionsList = useChuckStore((state) => state.chuckPositionsList);
+  const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
   const isOpenedSimulatorModal = usePageStore(
     (state) => state.isOpenedSimulatorModal
   );
@@ -21,6 +22,7 @@ const Simulator = () => {
   const [iscameraMode, setIsCameraMode] = useState(false);
   const [isCameraRotate, setIsCameraRotate] = useState(false);
   const [sceneAngle, setSceneAngle] = useState(0);
+  const { chuckData } = useParams();
 
   const setCameraMode = () => {
     if (iscameraMode) {
@@ -29,6 +31,14 @@ const Simulator = () => {
       setIsCameraMode(true);
     }
   };
+
+  useEffect(() => {
+    if (chuckData) {
+      const chuckLinkPositionsList = JSON.parse(atob(chuckData));
+
+      setChuckPositionsList(chuckLinkPositionsList);
+    }
+  }, []);
 
   useEffect(() => {
     if (clickedChuckInfo) {

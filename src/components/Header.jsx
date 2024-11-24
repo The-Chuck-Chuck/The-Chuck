@@ -1,18 +1,30 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import shareImage from "../asset/share-svgrepo-com.svg";
 import ShareUrlModal from "../pages/Modal/ShareUrlModal";
-import { useState } from "react";
+import useChuckStore from "../store/chuckStore";
 
 const Header = () => {
+  const { chuckPositionsList, setEncodedPositionsData } = useChuckStore();
   const [isOpenedShare, setIsOpenedShare] = useState(false);
 
   const handleClickShare = () => {
+    const chuckListsStringify = JSON.stringify(chuckPositionsList);
+    const encodedList = btoa(chuckListsStringify);
+
+    setEncodedPositionsData(encodedList);
+
     setIsOpenedShare(true);
   };
 
   return (
     <>
-      {isOpenedShare && <ShareUrlModal setIsOpenedShare={setIsOpenedShare} />}
+      {isOpenedShare && (
+        <ShareUrlModal
+          isOpenedShare={isOpenedShare}
+          setIsOpenedShare={setIsOpenedShare}
+        />
+      )}
       <header className="p-4 flex justify-between">
         <Link
           to="/"
