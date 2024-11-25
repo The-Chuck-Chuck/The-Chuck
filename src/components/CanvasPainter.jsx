@@ -31,6 +31,7 @@ const CanvasPainter = ({
   const pivotRef = useRef(new THREE.Group());
   const currentRotationAngleRef = useRef(0);
   const stopTriggerRef = useRef(false);
+  const lastRotationAngleRef = useRef(0);
   const cameraRef = useRef(0);
   const [customAxis, setCustomAxis] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(false);
@@ -53,6 +54,43 @@ const CanvasPainter = ({
       );
     }
   }, [targetIndex, clickedChuckInfo]);
+
+  const detectConflict = () => {
+    const rotateMeshes = rotateGroupRef.current.children;
+    const nonRotateMeshes = nonRotateGroupRef.current.children;
+
+    const allMeshes = [...rotateMeshes, ...nonRotateMeshes];
+    const centerMap = allMeshes.map((mesh) => getCenterPosition(mesh));
+
+    for (let i = 0; i < centerMap.length; i++) {
+      for (let j = i + 1; j < centerMap.length; j++) {
+        const distance = centerMap[i].distanceTo(centerMap[j]);
+        if (distance < 1.55) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  const getCenterPosition = (mesh) => {
+    const vertex = mesh.geometry.attributes.position.array;
+    const center = new THREE.Vector3();
+    const tempVertex = new THREE.Vector3();
+
+    let vertexCount = 0;
+
+    for (let i = 0; i < vertex.length; i += 3) {
+      tempVertex.set(vertex[i], vertex[i + 1], vertex[i + 2]);
+      tempVertex.applyMatrix4(mesh.matrixWorld);
+      center.add(tempVertex);
+      vertexCount++;
+    }
+
+    center.divideScalar(vertexCount);
+
+    return center;
+  };
 
   useFrame(() => {
     if (
@@ -82,7 +120,17 @@ const CanvasPainter = ({
       customAxis &&
       Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01
     ) {
-      setUpdateTrigger(true);
+      const isConflict = detectConflict();
+
+      if (isConflict) {
+        alert("충돌 발생!");
+        currentRotationAngleRef.current = lastRotationAngleRef.current;
+        setRotationAngle(lastRotationAngleRef.current);
+      } else {
+        lastRotationAngleRef.current = rotationAngle;
+        setUpdateTrigger(true);
+      }
+
       setTargetIndex(null);
       setRotationAngle(0);
       setClickedChuckInfo(null);
