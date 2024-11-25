@@ -54,6 +54,43 @@ const CanvasPainter = ({
     }
   }, [targetIndex, clickedChuckInfo]);
 
+  const detectConflict = () => {
+    const rotateMeshes = rotateGroupRef.current.children;
+    const nonRotateMeshes = nonRotateGroupRef.current.children;
+
+    const allMeshes = [...rotateMeshes, ...nonRotateMeshes];
+    const centerMap = allMeshes.map((mesh) => getCenterPosition(mesh));
+
+    for (let i = 0; i < centerMap.length; i++) {
+      for (let j = i + 1; j < centerMap.length; j++) {
+        const distance = centerMap[i].distanceTo(centerMap[j]);
+        if (distance < 1.55) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  const getCenterPosition = (mesh) => {
+    const vertex = mesh.geometry.attributes.position.array;
+    const center = new THREE.Vector3();
+    const tempVertex = new THREE.Vector3();
+
+    let vertexCount = 0;
+
+    for (let i = 0; i < vertex.length; i += 3) {
+      tempVertex.set(vertex[i], vertex[i + 1], vertex[i + 2]);
+      tempVertex.applyMatrix4(mesh.matrixWorld);
+      center.add(tempVertex);
+      vertexCount++;
+    }
+
+    center.divideScalar(vertexCount);
+
+    return center;
+  };
+
   useFrame(() => {
     if (
       customAxis &&
@@ -82,25 +119,17 @@ const CanvasPainter = ({
       customAxis &&
       Math.abs(currentRotationAngleRef.current - rotationAngle) <= 0.01
     ) {
-      const minDistance = 0.5;
-      const maxContact = 3;
+      const isConflict = detectConflict();
 
-      if (
-        collisionCheck(
-          rotateGroupRef,
-          nonRotateGroupRef,
-          minDistance,
-          maxContact
-        )
-      ) {
-        alert("충돌 감지");
+      if (isConflict) {
+        alert("충돌 발생!");
         currentRotationAngleRef.current = lastRotationAngleRef.current;
         setRotationAngle(lastRotationAngleRef.current);
       } else {
         lastRotationAngleRef.current = rotationAngle;
+        setUpdateTrigger(true);
       }
 
-      setUpdateTrigger(true);
       setTargetIndex(null);
       setRotationAngle(0);
       setClickedChuckInfo(null);
@@ -109,54 +138,6 @@ const CanvasPainter = ({
       stopTriggerRef.current = true;
     }
   });
-
-  const collisionCheck = (
-    groupRefA,
-    groupRefB,
-    minDistance = 0.5,
-    maxContact = 3
-  ) => {
-    const collisionObjectA = groupRefA.current.children;
-    const collisionObjectB = groupRefB.current.children;
-
-    const collisionContact = new Map();
-    let totalContact = 0;
-
-    for (let i = 0; i < collisionObjectA.length; i++) {
-      for (let j = 0; j < collisionObjectB.length; j++) {
-        const objectA = new THREE.Vector3().setFromMatrixPosition(
-          collisionObjectA[i].matrixWorld
-        );
-        const objectB = new THREE.Vector3().setFromMatrixPosition(
-          collisionObjectB[j].matrixWorld
-        );
-
-        if (objectA.distanceTo(objectB) < minDistance) {
-          totalContact++;
-
-          const compareObject =
-            collisionObjectA[i].uuid + collisionObjectB[j].uuid;
-
-          if (collisionContact.has(compareObject)) {
-            collisionContact.set(
-              compareObject,
-              collisionContact.get(compareObject) + 1
-            );
-          } else {
-            collisionContact.set(compareObject, 1);
-          }
-        }
-      }
-    }
-
-    if (collisionContact.size >= maxContact) {
-      return false;
-    } else if (totalContact > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   useEffect(() => {
     if (updateTrigger && rotateGroupRef.current && nonRotateGroupRef.current) {
