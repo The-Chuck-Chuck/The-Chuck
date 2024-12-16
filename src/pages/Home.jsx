@@ -46,12 +46,14 @@ const Home = () => {
       >
         Start!
       </Button>
-      <Button
-        clickHandler={handleClickTutorial}
-        className="w-[20%] text-[25px] p-2"
-      >
-        Tutorial!
-      </Button>
+      <div id="tutorialTest">
+        <Button
+          clickHandler={handleClickTutorial}
+          className="w-[20%] text-[25px] p-2"
+        >
+          Tutorial!
+        </Button>
+      </div>
     </div>
   );
 };
