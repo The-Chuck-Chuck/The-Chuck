@@ -1,17 +1,13 @@
-import useStore from "../store/pageStore";
 import Button from "./Button";
 
 const Modal = ({ drection, title, className, setIsOpened, children }) => {
-  const setIsOpenedSimulatorModal = useStore(
-    (state) => state.setIsOpenedSimulatorModal
-  );
   const modalDrection = {
     horizontal: "w-[500px] h-[300px]",
     vertical: "w-[400px] h-[500px]",
   };
 
   const handleClickClose = () => {
-    return setIsOpened ? setIsOpened(false) : setIsOpenedSimulatorModal(false);
+    return setIsOpened(false);
   };
 
   return (
@@ -21,9 +17,11 @@ const Modal = ({ drection, title, className, setIsOpened, children }) => {
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">{title}</h2>
-          <Button clickHandler={handleClickClose} className="border-2 w-8">
-            X
-          </Button>
+          {setIsOpened ? (
+            <Button clickHandler={handleClickClose} className="border-2 w-8">
+              X
+            </Button>
+          ) : null}
         </div>
         {children}
       </div>
