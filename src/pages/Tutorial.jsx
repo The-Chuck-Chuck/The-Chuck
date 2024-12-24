@@ -48,7 +48,7 @@ const Tutorial = () => {
           </Button>
         </Modal>
       )}
-      <Header />
+      <Header isTutorial={true} />
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{

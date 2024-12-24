@@ -4,7 +4,7 @@ import shareImage from "../asset/share-svgrepo-com.svg";
 import ShareUrlModal from "../pages/Modal/ShareUrlModal";
 import useChuckStore from "../store/chuckStore";
 
-const Header = () => {
+const Header = ({ isTutorial }) => {
   const { chuckPositionsList, setEncodedPositionsData } = useChuckStore();
   const [isOpenedShare, setIsOpenedShare] = useState(false);
 
@@ -32,9 +32,11 @@ const Header = () => {
         >
           Chuck-Chuck! Simulator
         </Link>
-        <button className="p-1" onClick={handleClickShare}>
-          <img className="w-8" src={shareImage} alt="share link" />
-        </button>
+        {!isTutorial && (
+          <button className="p-1" onClick={handleClickShare}>
+            <img className="w-8" src={shareImage} alt="share link" />
+          </button>
+        )}
       </header>
     </>
   );
