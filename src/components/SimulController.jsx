@@ -60,6 +60,7 @@ const SimulController = ({
         return { position, quaternion };
       }
     );
+
     setChuckPositionsList(initialStateArray);
   };
 
@@ -69,7 +70,7 @@ const SimulController = ({
         <Modal
           drection="horizontalr"
           title="Select Chuck!"
-          className="w-[300px] h-[250px] top-[35%] left-[40%]"
+          className="w-[300px] h-[250px] top-[37%] left-[40%]"
           setIsOpened={setIsOpenedSelected}
         >
           <div className="h-[70%] flex justify-center items-center">
