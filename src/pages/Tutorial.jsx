@@ -32,7 +32,7 @@ const Tutorial = () => {
   };
 
   return (
-    <div className="text-white">
+    <div className="text-white w-screen h-screen">
       {isOpenedTutorialModal && <StartTutorialModal />}
       {isCompletedTutorial && (
         <Modal
