@@ -14,7 +14,6 @@ const DownloadImageModal = ({
 
   useEffect(() => {
     gl.render(scene, camera);
-    gl.setClearColor("#2d3134", 1);
 
     gl.domElement.toBlob(
       (blob) => {
@@ -26,12 +25,12 @@ const DownloadImageModal = ({
     );
   }, []);
 
-  const handleClickCopy = async () => {
+  const handleClickCopy = () => {
     const link = linkRef.current;
 
     link.href = imagePreviewUrl;
     link.download = "chuck-chuck.png";
-    await link.click();
+    link.click();
 
     setIsDownload(true);
   };
