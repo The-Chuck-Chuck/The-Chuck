@@ -1,28 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import shareImage from "../asset/share-svgrepo-com.svg";
-import ShareUrlModal from "../pages/Modal/ShareUrlModal";
-import useChuckStore from "../store/chuckStore";
+import shareImage from "../asset/download-square-icon.svg";
+import DownloadImageModal from "../pages/Modal/DownloadImageModal";
 
-const Header = ({ isTutorial }) => {
-  const { chuckPositionsList, setEncodedPositionsData } = useChuckStore();
-  const [isOpenedShare, setIsOpenedShare] = useState(false);
+const Header = ({ isTutorial, canvasRef }) => {
+  const [isOpenDownloadImg, setIsOpenDownloadImg] = useState(false);
 
   const handleClickShare = () => {
-    const chuckListsStringify = JSON.stringify(chuckPositionsList);
-    const encodedList = btoa(chuckListsStringify);
-
-    setEncodedPositionsData(encodedList);
-
-    setIsOpenedShare(true);
+    setIsOpenDownloadImg(true);
   };
 
   return (
     <>
-      {isOpenedShare && (
-        <ShareUrlModal
-          isOpenedShare={isOpenedShare}
-          setIsOpenedShare={setIsOpenedShare}
+      {isOpenDownloadImg && (
+        <DownloadImageModal
+          canvasRef={canvasRef}
+          isOpenDownloadImg={isOpenDownloadImg}
+          setIsOpenDownloadImg={setIsOpenDownloadImg}
         />
       )}
       <header className="p-4 flex justify-between">
