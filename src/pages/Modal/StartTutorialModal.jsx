@@ -46,7 +46,7 @@ const StartTutorialModal = () => {
   };
 
   return (
-    <Modal drection="vertical" title="Start Tutorial">
+    <Modal drection="vertical">
       <div className="flex h-[100%] flex-col items-center gap-3">
         <h2 className="text-center text-3xl font-semibold mb-3">
           Start Tuorial!
