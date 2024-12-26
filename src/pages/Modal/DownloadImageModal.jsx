@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 
-const ShareUrlModal = ({
+const DownloadImageModal = ({
   canvasRef,
   isOpenDownladImg,
   setIsOpenDownladImg,
@@ -72,4 +72,4 @@ const ShareUrlModal = ({
   );
 };
 
-export default ShareUrlModal;
+export default DownloadImageModal;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import shareImage from "../asset/download-square-icon.svg";
-import ShareUrlModal from "../pages/Modal/ShareUrlModal";
+import DownloadImageModal from "../pages/Modal/DownloadImageModal";
 
 const Header = ({ isTutorial, canvasRef }) => {
   const [isOpenDownladImg, setIsOpenDownladImg] = useState(false);
@@ -13,7 +13,7 @@ const Header = ({ isTutorial, canvasRef }) => {
   return (
     <>
       {isOpenDownladImg && (
-        <ShareUrlModal
+        <DownloadImageModal
           canvasRef={canvasRef}
           isOpenDownladImg={isOpenDownladImg}
           setIsOpenDownladImg={setIsOpenDownladImg}
