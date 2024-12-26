@@ -75,7 +75,7 @@ const Simulator = () => {
   }, [clickedChuckInfo]);
 
   return (
-    <div className="text-white">
+    <div className="text-white w-screen h-screen">
       {isOpenedSimulatorModal && <StartSimulatorModal />}
       <Header />
       <main className="w-[100%] h-[100vh]">

@@ -32,7 +32,7 @@ const Tutorial = () => {
   };
 
   return (
-    <div className="text-white">
+    <div className="text-white w-screen h-screen">
       {isOpenedTutorialModal && <StartTutorialModal />}
       {isCompletedTutorial && (
         <Modal
@@ -48,7 +48,7 @@ const Tutorial = () => {
           </Button>
         </Modal>
       )}
-      <Header />
+      <Header isTutorial={true} />
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{

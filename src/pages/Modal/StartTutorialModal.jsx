@@ -34,12 +34,7 @@ const StartTutorialModal = () => {
   };
 
   return (
-    <Modal
-      drection="vertical"
-      title="Start Tutorial"
-      setIsOpened={setIsOpenedTutorialModal}
-      className="top-[15%] left-[35%]"
-    >
+    <Modal drection="vertical" title="Start Tutorial">
       <div className="flex w-[90%] h-[100vh] flex-col justify-center items-center ml-2 gap-3">
         <h2 className="text-center text-2xl font-bold">강아지 만들기</h2>
         <img className="m-7 w-24" src={tempChuckImage} alt="chuckimage" />
