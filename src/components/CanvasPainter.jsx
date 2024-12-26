@@ -9,6 +9,7 @@ import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
 
 const CanvasPainter = ({
+  canvasRef,
   targetIndex,
   rotationAngle,
   clickedChuckInfo,
@@ -38,6 +39,10 @@ const CanvasPainter = ({
   let chuckItems = null;
   let rotateGroupItems = null;
   let nonRotateGroupItems = null;
+
+  useEffect(() => {
+    canvasRef.current = { camera, gl, scene };
+  });
 
   useEffect(() => {
     if (clickedChuckInfo && (targetIndex || targetIndex === 0)) {
