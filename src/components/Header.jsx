@@ -2,12 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import shareImage from "../asset/download-square-icon.svg";
 import DownloadImageModal from "../pages/Modal/DownloadImageModal";
+import Button from "./Button";
+import useChuckStore from "../store/chuckStore";
 
-const Header = ({ isTutorial, canvasRef }) => {
+const Header = ({ isTutorial, isCompletedTutorial, canvasRef }) => {
+  const { setIsClickSkip } = useChuckStore();
   const [isOpenDownloadImg, setIsOpenDownloadImg] = useState(false);
 
   const handleClickShare = () => {
     setIsOpenDownloadImg(true);
+  };
+
+  const handleClickSkip = () => {
+    setIsClickSkip(true);
   };
 
   return (
@@ -31,7 +38,15 @@ const Header = ({ isTutorial, canvasRef }) => {
             <img className="w-8" src={shareImage} alt="share link" />
           </button>
         )}
+        {isTutorial && (
+          <Button className="p-2 text-lg mb-3" clickHandler={handleClickSkip}>
+            Skip
+          </Button>
+        )}
       </header>
+      {isCompletedTutorial && (
+        <span className="m-10 text-xl">튜토리얼이 모두 끝났습니다!</span>
+      )}
     </>
   );
 };
