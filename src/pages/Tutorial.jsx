@@ -56,6 +56,7 @@ const Tutorial = () => {
             isCompletedIndex={isCompletedIndex}
             isCompletedButton={isCompletedButton}
             setRotationAngle={setRotationAngle}
+            isCompletedTutorial={isCompletedTutorial}
             setEssentialClickIndex={setEssentialClickIndex}
             setIsCompletedIndex={setIsCompletedIndex}
             setEssentialClickButton={setEssentialClickButton}

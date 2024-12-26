@@ -11,11 +11,13 @@ import {
 } from "../utils/makeDogTutorial";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
+import * as CONSTANT from "../constants/constants";
 
 const TutorialPainter = ({
   rotationAngle,
   essentialClickIndex,
   isCompletedIndex,
+  isCompletedTutorial,
   setRotationAngle,
   setEssentialClickIndex,
   setIsCompletedIndex,
@@ -103,6 +105,10 @@ const TutorialPainter = ({
       setEssentialClickIndex(selectedIndex[selectedIndex.length]);
       setEssentialClickButton(clickedButton[clickedButton.length]);
       setIsCompletedTutorial(true);
+
+      scene.rotation.z = 90 * CONSTANT.DEGREE;
+
+      camera.position.set(0, 80, -50);
     }
   }, [isClickSkip]);
 
@@ -183,6 +189,10 @@ const TutorialPainter = ({
 
       if (selectedIndex[indexRef.current] === undefined) {
         setIsCompletedTutorial(true);
+
+        scene.rotation.z = 90 * CONSTANT.DEGREE;
+
+        camera.position.set(0, 80, -50);
       }
     }
   }, [updateTrigger]);
