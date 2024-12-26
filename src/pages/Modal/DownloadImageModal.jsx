@@ -4,8 +4,8 @@ import Modal from "../../components/Modal";
 
 const DownloadImageModal = ({
   canvasRef,
-  isOpenDownladImg,
-  setIsOpenDownladImg,
+  isOpenDownloadImg,
+  setIsOpenDownloadImg,
 }) => {
   const [isDownload, setIsDownload] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
@@ -37,19 +37,19 @@ const DownloadImageModal = ({
   };
 
   useEffect(() => {
-    if (!isOpenDownladImg) {
+    if (!isOpenDownloadImg) {
       setIsDownload(false);
 
       URL.revokeObjectURL(imagePreviewUrl);
       setImagePreviewUrl(null);
     }
-  }, [isOpenDownladImg]);
+  }, [isOpenDownloadImg]);
 
   return (
     <Modal
       drection="vertical"
       title="Share Your Chuck-chuck!"
-      setIsOpened={setIsOpenDownladImg}
+      setIsOpened={setIsOpenDownloadImg}
     >
       <div className="w-[100%] h-[100%] flex flex-col justify-center items-center gap-5">
         <p className="text-xl font-semibold">이미지를 다운받아 공유하세요!</p>

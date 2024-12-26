@@ -4,19 +4,19 @@ import shareImage from "../asset/download-square-icon.svg";
 import DownloadImageModal from "../pages/Modal/DownloadImageModal";
 
 const Header = ({ isTutorial, canvasRef }) => {
-  const [isOpenDownladImg, setIsOpenDownladImg] = useState(false);
+  const [isOpenDownloadImg, setIsOpenDownloadImg] = useState(false);
 
   const handleClickShare = () => {
-    setIsOpenDownladImg(true);
+    setIsOpenDownloadImg(true);
   };
 
   return (
     <>
-      {isOpenDownladImg && (
+      {isOpenDownloadImg && (
         <DownloadImageModal
           canvasRef={canvasRef}
-          isOpenDownladImg={isOpenDownladImg}
-          setIsOpenDownladImg={setIsOpenDownladImg}
+          isOpenDownloadImg={isOpenDownloadImg}
+          setIsOpenDownloadImg={setIsOpenDownloadImg}
         />
       )}
       <header className="p-4 flex justify-between">
