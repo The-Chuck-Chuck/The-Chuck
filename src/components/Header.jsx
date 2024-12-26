@@ -4,16 +4,10 @@ import shareImage from "../asset/share-svgrepo-com.svg";
 import ShareUrlModal from "../pages/Modal/ShareUrlModal";
 import useChuckStore from "../store/chuckStore";
 
-const Header = ({ isTutorial }) => {
-  const { chuckPositionsList, setEncodedPositionsData } = useChuckStore();
+const Header = ({ isTutorial, canvasRef }) => {
   const [isOpenedShare, setIsOpenedShare] = useState(false);
 
   const handleClickShare = () => {
-    const chuckListsStringify = JSON.stringify(chuckPositionsList);
-    const encodedList = btoa(chuckListsStringify);
-
-    setEncodedPositionsData(encodedList);
-
     setIsOpenedShare(true);
   };
 
@@ -21,6 +15,7 @@ const Header = ({ isTutorial }) => {
     <>
       {isOpenedShare && (
         <ShareUrlModal
+          canvasRef={canvasRef}
           isOpenedShare={isOpenedShare}
           setIsOpenedShare={setIsOpenedShare}
         />

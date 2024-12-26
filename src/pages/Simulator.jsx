@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../components/Button";
 import CanvasPainter from "../components/CanvasPainter";
@@ -28,6 +28,7 @@ const Simulator = () => {
   const [isCameraRotate, setIsCameraRotate] = useState(false);
   const [sceneAngle, setSceneAngle] = useState(0);
   const { chuckData } = useParams();
+  const canvasRef = useRef();
 
   const setCameraMode = () => {
     if (iscameraMode) {
@@ -77,7 +78,7 @@ const Simulator = () => {
   return (
     <div className="text-white w-screen h-screen">
       {isOpenedSimulatorModal && <StartSimulatorModal />}
-      <Header />
+      <Header canvasRef={canvasRef} />
       <main className="w-[100%] h-[100vh]">
         <Button
           className={`${iscameraMode && "bg-gray-100 text-black"} fixed right-4 top-20 border-1 rounded-lg font-semibold w-60 text-md flex justify-center items-center z-10`}
@@ -93,6 +94,7 @@ const Simulator = () => {
           }}
         >
           <CanvasPainter
+            canvasRef={canvasRef}
             rotationAngle={rotationAngle}
             clickedChuckInfo={clickedChuckInfo}
             targetIndex={targetIndex}
