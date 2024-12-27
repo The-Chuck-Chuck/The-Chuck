@@ -17,7 +17,6 @@ const TutorialPainter = ({
   rotationAngle,
   essentialClickIndex,
   isCompletedIndex,
-  isCompletedTutorial,
   setRotationAngle,
   setEssentialClickIndex,
   setIsCompletedIndex,
