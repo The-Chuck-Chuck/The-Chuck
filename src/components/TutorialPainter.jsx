@@ -4,9 +4,14 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import useChuckStore from "../store/chuckStore";
 import { makeCustomAxis, updateChuckData } from "../utils/chuckUtils";
-import { clickedButton, selectedIndex } from "../utils/makeDogTutorial";
+import {
+  clickedButton,
+  lastStep,
+  selectedIndex,
+} from "../utils/makeDogTutorial";
 import Chuck from "./Chuck";
 import ReverseChuck from "./ReverseChuck";
+import * as CONSTANT from "../constants/constants";
 
 const TutorialPainter = ({
   rotationAngle,
@@ -20,7 +25,12 @@ const TutorialPainter = ({
   setIsCompletedTutorial,
   indexRef,
 }) => {
-  const { chuckPositionsList, setChuckPositionsList } = useChuckStore();
+  const {
+    isClickSkip,
+    chuckPositionsList,
+    setChuckPositionsList,
+    setIsClickSkip,
+  } = useChuckStore();
   const { camera, gl, scene } = useThree();
   const raycastingRef = useRef(new THREE.Raycaster());
   const rotateGroupRef = useRef(new THREE.Group());
@@ -86,6 +96,20 @@ const TutorialPainter = ({
       }
     }
   };
+
+  useEffect(() => {
+    if (isClickSkip) {
+      setChuckPositionsList(lastStep);
+      setIsClickSkip(false);
+      setEssentialClickIndex(selectedIndex[selectedIndex.length]);
+      setEssentialClickButton(clickedButton[clickedButton.length]);
+      setIsCompletedTutorial(true);
+
+      scene.rotation.z = 90 * CONSTANT.DEGREE;
+
+      camera.position.set(0, 80, -50);
+    }
+  }, [isClickSkip]);
 
   useEffect(() => {
     if (isCompletedIndex) {
@@ -164,6 +188,10 @@ const TutorialPainter = ({
 
       if (selectedIndex[indexRef.current] === undefined) {
         setIsCompletedTutorial(true);
+
+        scene.rotation.z = 90 * CONSTANT.DEGREE;
+
+        camera.position.set(0, 80, -50);
       }
     }
   }, [updateTrigger]);

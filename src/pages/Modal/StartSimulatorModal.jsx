@@ -33,8 +33,11 @@ const StartSimulatorModal = () => {
   };
 
   return (
-    <Modal drection="horizontal" title="Simulator Information">
-      <form className="mt-[10%] flex flex-col justify-center items-center">
+    <Modal drection="horizontal">
+      <h2 className="text-center text-3xl font-semibold mb-2">
+        Simulator Information
+      </h2>
+      <div className="mt-[10%] mb-5 flex flex-col justify-center items-center">
         <p className="font-semibold text-lg">
           회전시키고 싶은 도형을 클릭 후 버튼을 눌러 척척이를 돌려요!
         </p>
@@ -47,7 +50,7 @@ const StartSimulatorModal = () => {
         >
           Start Simulation!
         </Button>
-      </form>
+      </div>
     </Modal>
   );
 };

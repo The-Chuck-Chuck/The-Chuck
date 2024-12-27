@@ -3,7 +3,6 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Header from "../components/Header";
-import Modal from "../components/Modal";
 import TutorialController from "../components/TutorialController";
 import TutorialPainter from "../components/TutorialPainter";
 import usePageStore from "../store/pageStore";
@@ -34,21 +33,16 @@ const Tutorial = () => {
   return (
     <div className="text-white w-screen h-screen">
       {isOpenedTutorialModal && <StartTutorialModal />}
+
       {isCompletedTutorial && (
-        <Modal
-          drection="horizontal"
-          title="Done!"
-          setIsOpened={setIsCompletedTutorial}
+        <Button
+          clickHandler={handleClickBackHome}
+          className="z-10 flex fixed bottom-10 right-[45%] p-3 text-xl"
         >
-          <div className="text-center text-lg font-semibold mt-16 h-[40%]">
-            튜토리얼을 모두 완료했습니다!
-          </div>
-          <Button clickHandler={handleClickBackHome} className="p-2 text-md">
-            Home으로 돌아가기
-          </Button>
-        </Modal>
+          Home으로 돌아가기
+        </Button>
       )}
-      <Header isTutorial={true} />
+      <Header isTutorial={true} isCompletedTutorial={isCompletedTutorial} />
       <main className="w-[100%] h-[100vh]">
         <Canvas
           camera={{

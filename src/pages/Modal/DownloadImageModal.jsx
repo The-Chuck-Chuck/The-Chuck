@@ -45,17 +45,16 @@ const DownloadImageModal = ({
   }, [isOpenDownloadImg]);
 
   return (
-    <Modal
-      drection="vertical"
-      title="Share Your Chuck-chuck!"
-      setIsOpened={setIsOpenDownloadImg}
-    >
-      <div className="w-[100%] h-[100%] flex flex-col justify-center items-center gap-5">
-        <p className="text-xl font-semibold">이미지를 다운받아 공유하세요!</p>
+    <Modal drection="vertical" setIsOpened={setIsOpenDownloadImg}>
+      <div className="w-[100%] h-[100%] flex flex-col items-center gap-5">
+        <p className="text-2xl font-bold">이미지를 다운받아 공유하세요!</p>
         <div className="flex flex-col gap-10 justify-center items-center">
-          <div className="flex flex-col justify-center items-center gap-3">
-            <p className="font-medium">아래의 사진이 저장됩니다.</p>
-            <img className="w-72" src={imagePreviewUrl} />
+          <div className="flex flex-col justify-center items-center gap-5">
+            <p className="font-medium">아래의 이미지가 저장됩니다.</p>
+            <img
+              className="w-80 border-solid border-[#9d9d9d] border-2 rounded-md"
+              src={imagePreviewUrl}
+            />
           </div>
           <Button
             clickHandler={handleClickCopy}

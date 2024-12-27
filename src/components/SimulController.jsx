@@ -14,7 +14,7 @@ const SimulController = ({
   setSceneAngle,
 }) => {
   const [isOpenedSelected, setIsOpenedSelected] = useState(false);
-  const { isSharedLinks, setChuckPositionsList } = useChuckStore();
+  const { setChuckPositionsList } = useChuckStore();
 
   const handleClickLeft = () => {
     if (clickedChuckInfo && !sceneAngle) {
@@ -81,43 +81,23 @@ const SimulController = ({
       <div className="flex flex-col gap-4 fixed bottom-4 right-4 w-[250px] rounded-md bg-slate-600 p-5 justify-center items-center">
         <div className="w-[90%] flex gap-2 items-center">
           <p className="pl-[2%] pr-[15%] text-center font-bold text-lg">Turn</p>
-          <Button
-            className="h-10 p-1"
-            clickHandler={handleClickLeft}
-            disabled={isSharedLinks}
-          >
+          <Button className="h-10 p-1" clickHandler={handleClickLeft}>
             Left
           </Button>
-          <Button
-            className="h-10 p-1"
-            clickHandler={handleClickRight}
-            disabled={isSharedLinks}
-          >
+          <Button className="h-10 p-1" clickHandler={handleClickRight}>
             Right
           </Button>
         </div>
         <div className="w-[90%] flex gap-2 items-center">
-          <Button
-            className="grow h-10 p-1"
-            clickHandler={handleClickViewTurn}
-            disabled={isSharedLinks}
-          >
+          <Button className="grow h-10 p-1" clickHandler={handleClickViewTurn}>
             Rotation
           </Button>
-          <Button
-            className="grow h-10 p-1"
-            clickHandler={handleClickStop}
-            disabled={isSharedLinks}
-          >
+          <Button className="grow h-10 p-1" clickHandler={handleClickStop}>
             Stop
           </Button>
         </div>
         <div className="w-[90%] flex gap-2 justify-center items-center">
-          <Button
-            className="w-[100%] h-10 p-1"
-            clickHandler={handleClickReset}
-            disabled={isSharedLinks}
-          >
+          <Button className="w-[100%] h-10 p-1" clickHandler={handleClickReset}>
             RESET
           </Button>
         </div>
