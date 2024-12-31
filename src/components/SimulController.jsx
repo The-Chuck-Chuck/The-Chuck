@@ -4,6 +4,8 @@ import * as CONSTANTS from "../constants/constants";
 import useChuckStore from "../store/chuckStore";
 import Button from "./Button";
 import Modal from "./Modal";
+import left from "../asset/left-rotate.svg";
+import right from "../asset/right-rotate.svg";
 
 const SimulController = ({
   clickedChuckInfo,
@@ -80,26 +82,29 @@ const SimulController = ({
       )}
       <div className="flex flex-col gap-4 fixed bottom-4 right-4 w-[250px] rounded-md bg-slate-600 p-5 justify-center items-center">
         <div className="w-[90%] flex gap-2 items-center">
-          <p className="pl-[2%] pr-[15%] text-center font-bold text-lg">Turn</p>
-          <Button className="h-10 p-1" clickHandler={handleClickLeft}>
-            Left
-          </Button>
-          <Button className="h-10 p-1" clickHandler={handleClickRight}>
-            Right
-          </Button>
+          <p className="pl-[2%] pr-[10%] text-center font-bold text-lg">회전</p>
+          <button className="pr-[5%]" onClick={handleClickLeft}>
+            <img src={left} className="h-13 p-1" />
+          </button>
+          <button onClick={handleClickRight}>
+            <img src={right} className="h-13 p-1" />
+          </button>
         </div>
         <div className="w-[90%] flex gap-2 items-center">
           <Button className="grow h-10 p-1" clickHandler={handleClickViewTurn}>
-            Rotation
+            전체 회전
           </Button>
           <Button className="grow h-10 p-1" clickHandler={handleClickStop}>
-            Stop
+            멈춤
           </Button>
         </div>
         <div className="w-[90%] flex gap-2 justify-center items-center">
-          <Button className="w-[100%] h-10 p-1" clickHandler={handleClickReset}>
-            RESET
-          </Button>
+          <button
+            className="w-[100%] h-10 p-1 text-white font-bold rounded-md border-4 hover:bg-red-600"
+            onClick={handleClickReset}
+          >
+            초기화
+          </button>
         </div>
       </div>
     </>

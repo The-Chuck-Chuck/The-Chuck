@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-[20px]">
-      <p className="text-white text-[50px] font-bold">The Chuck-Chuck</p>
+      <p className="text-white text-[50px] font-bold">Chuck-Chuck</p>
       <div>
         <img
           className="mt-5 mb-3 ml-3 w-[200px]"
@@ -41,16 +41,16 @@ const Home = () => {
         />
       </div>
       <Button
-        clickHandler={handleClickStart}
-        className="w-[20%] text-[25px] p-2"
-      >
-        Start!
-      </Button>
-      <Button
         clickHandler={handleClickTutorial}
         className="w-[20%] text-[25px] p-2"
       >
-        Tutorial!
+        튜토리얼
+      </Button>
+      <Button
+        clickHandler={handleClickStart}
+        className="w-[20%] text-[25px] p-2"
+      >
+        시작하기
       </Button>
     </div>
   );

@@ -73,10 +73,10 @@ const Simulator = () => {
       <Header canvasRef={canvasRef} />
       <main className="w-[100%] h-[100vh]">
         <Button
-          className={`${iscameraMode && "bg-gray-100 text-black"} fixed right-4 top-20 border-1 rounded-lg font-semibold w-60 text-md flex justify-center items-center z-10`}
+          className={`${iscameraMode && "text-black"} fixed right-4 top-20 border-1 rounded-lg font-semibold w-40 text-md flex justify-center items-center z-10`}
           clickHandler={setCameraMode}
         >
-          {`${iscameraMode ? "Tracking Camera View" : "Normal Camera View"}`}
+          {`${iscameraMode ? "카메라 시점 따라가기" : "카메라 시점 고정"}`}
         </Button>
         <Canvas
           camera={{
