@@ -49,7 +49,7 @@ const StartTutorialModal = () => {
     <Modal drection="vertical">
       <div className="flex h-[100%] flex-col items-center gap-3">
         <h2 className="text-center text-3xl font-semibold mb-3">
-          Start Tuorial!
+          안내 문구를 확인해 주세요
         </h2>
         {pageCount === 0 && (
           <>
@@ -106,7 +106,7 @@ const StartTutorialModal = () => {
           clickHandler={handleClicPrevPage}
           className="w-[50%] p-2 text-md mb-3"
         >
-          Prev Page
+          이전 안내
         </Button>
         <Button
           clickHandler={
@@ -114,7 +114,7 @@ const StartTutorialModal = () => {
           }
           className="w-[50%] p-2 text-md mb-3"
         >
-          {pageCount !== 2 ? "Next Page" : "Start Tutorial!"}
+          {pageCount !== 2 ? "다음 안내" : "시작하기"}
         </Button>
       </div>
     </Modal>

@@ -39,7 +39,7 @@ const Tutorial = () => {
           clickHandler={handleClickBackHome}
           className="z-10 flex fixed bottom-10 right-[45%] p-3 text-xl"
         >
-          Home으로 돌아가기
+          시작 화면으로 돌아가기
         </Button>
       )}
       <Header isTutorial={true} isCompletedTutorial={isCompletedTutorial} />

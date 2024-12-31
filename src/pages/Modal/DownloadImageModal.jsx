@@ -58,10 +58,10 @@ const DownloadImageModal = ({
           </div>
           <Button
             clickHandler={handleClickCopy}
-            className={`${isDownload && "bg-green-400 border-white text-white"} h-12 w-72 pl-2 pr-2`}
+            className={`${isDownload && "bg-green-400 border-white text-white"} h-12 w-50 pl-2 pr-2`}
             disabled={isDownload && true}
           >
-            {isDownload ? "Save completed! ✅" : "Download Image!"}
+            {isDownload ? "다운로드 완료 ✅" : "다운로드"}
           </Button>
           <a ref={linkRef} className="hidden" />
         </div>

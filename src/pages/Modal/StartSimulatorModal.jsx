@@ -35,7 +35,7 @@ const StartSimulatorModal = () => {
   return (
     <Modal drection="horizontal">
       <h2 className="text-center text-3xl font-semibold mb-2">
-        Simulator Information
+        안내 문구를 확인해 주세요
       </h2>
       <div className="mt-[10%] mb-5 flex flex-col justify-center items-center">
         <p className="font-semibold text-lg">
@@ -46,9 +46,9 @@ const StartSimulatorModal = () => {
         </p>
         <Button
           clickHandler={handleClickStartButton}
-          className="w-[80%] mt-[10%] text-lg pl-7 pr-7 pt-2 pb-2"
+          className="w-[50%] mt-[10%] text-lg pl-7 pr-7 pt-2 pb-2"
         >
-          Start Simulation!
+          시작 하기
         </Button>
       </div>
     </Modal>
