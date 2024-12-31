@@ -48,7 +48,7 @@ const StartSimulatorModal = () => {
           clickHandler={handleClickStartButton}
           className="w-[50%] mt-[10%] text-lg pl-7 pr-7 pt-2 pb-2"
         >
-          시작 하기
+          시작하기
         </Button>
       </div>
     </Modal>

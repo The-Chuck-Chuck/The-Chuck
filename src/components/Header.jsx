@@ -26,7 +26,7 @@ const Header = ({ isTutorial, isCompletedTutorial, canvasRef }) => {
           setIsOpenDownloadImg={setIsOpenDownloadImg}
         />
       )}
-      <header className="p-4 flex justify-between">
+      <header className="p-4 flex justify-between h-24">
         <Link
           to="/"
           className="border-4 rounded-lg font-bold text-2xl w-40 flex justify-center items-center hover:text-black hover:bg-white"

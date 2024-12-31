@@ -84,15 +84,15 @@ const SimulController = ({
         <div className="w-[90%] flex gap-2 items-center">
           <p className="pl-[2%] pr-[10%] text-center font-bold text-lg">회전</p>
           <button className="pr-[5%]" onClick={handleClickLeft}>
-            <img src={left} className="h-10 p-1" />
+            <img src={left} className="h-13 p-1" />
           </button>
           <button onClick={handleClickRight}>
-            <img src={right} className="h-10 p-1" />
+            <img src={right} className="h-13 p-1" />
           </button>
         </div>
         <div className="w-[90%] flex gap-2 items-center">
           <Button className="grow h-10 p-1" clickHandler={handleClickViewTurn}>
-            전체회전
+            전체 회전
           </Button>
           <Button className="grow h-10 p-1" clickHandler={handleClickStop}>
             멈춤

@@ -28,7 +28,7 @@ const TutorialController = ({
     <div className="flex flex-col gap-4 fixed bottom-4 right-4 w-[250px] rounded-md bg-slate-600 p-5 justify-center items-center">
       <div className="w-[90%] flex gap-2 items-center">
         <p className="pl-[2%] pr-[15%] text-center font-bold text-lg">회전</p>
-        <button onClick={handleClickLeft} className="h-10 p-1 pr-[10%]">
+        <button onClick={handleClickLeft} className="h-13 p-1 pr-[10%]">
           <img
             src={left}
             className={`h-full ${
@@ -38,7 +38,7 @@ const TutorialController = ({
             }`}
           />
         </button>
-        <button onClick={handleClickRight} className="h-10 p-1">
+        <button onClick={handleClickRight} className="h-13 p-1">
           <img
             src={right}
             className={`h-full ${
