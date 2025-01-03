@@ -1,15 +1,20 @@
 # Chuck-Chuck
 
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/3b4115c5-89cc-487f-ac66-e0af9269c61d" />
+척척이는 작은 삼각 도형들이 이어져 있는 큐브 시뮬레이션입니다. 척척이를 회전시켜 강아지, 뱀, 공룡 등 원하는 모양을 만들 수 있습니다.
 
-척척이는 작은 삼각 도형들이 이어져 있는 큐브 시뮬레이션입니다. 척척이를 회전시켜 강아지, 뱀, 공룡 등 원하는 모양을 만들 수 있습니다.  
+<details>
+<summary>척척이란?</summary>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/3b4115c5-89cc-487f-ac66-e0af9269c61d" />
+</details>
+
 <br>
 <br>
 <br>
 <a href="https://youtu.be/FcokVflyLLs">
-<img width="600" alt="스크린샷 2024-12-27 오후 12 05 22" src="https://github.com/user-attachments/assets/9f46b7d1-9580-46e5-ac79-e11fc0df9322" />  
+<img width="600" alt="스크린샷 2024-12-27 오후 12 05 22" src="https://github.com/user-attachments/assets/9f46b7d1-9580-46e5-ac79-e11fc0df9322" />
 </a>
-(위 이미지를 클릭하면 시현 및 사용 방법 영상을 시청할 수 있습니다.)
+
+위 이미지를 클릭하면 시현 및 사용 방법 영상을 시청할 수 있습니다.
 
 [배포 주소](https://chuckchuck-simulator.netlify.app/)
 
@@ -48,7 +53,7 @@
 아이디어를 구상하다 보니 어렸을 적 갖고 놀던 척척이가 생각났습니다. 요즘은 보기도 힘들뿐더러, 그게 무엇인지 모르는 사람이 태반일 겁니다.
 그래서 그때 그 추억을 되살리며 프로젝트를 진행한다면 좋은 시너지를 얻을 수 있을 것이라 생각했습니다.
 
-또, 일반 큐브와는 다르게 형식이 정해져 있지 않아 여러 방향의 움직임을 고려해야 하기 때문에 챌린징한 요소도 충분할 것이라 생각하여 이 프로젝트를 시작했습니다.
+또, 일반 큐브와는 다르게 형식이 정해져 있지 않아 여러 방향의 움직임을 고려해야 하기 때문에 도전적인 요소도 충분할 것이라 생각하여 이 프로젝트를 시작했습니다.
 
 ## 개발 환경
 
@@ -249,19 +254,15 @@ const detectConflictBoundingBox = () => {
 
 아래 이미지를 통해서 BoundingBox를 통해 충돌 감지가 어떻게 되는지 쉽게 파악할 수 있습니다.
 
-<img width="400" alt="바운딩박스 시각화" src="  
-https://github.com/user-attachments/assets/bc24947a-c6bc-40d4-9def-e622741d1a32
-" />
-<br><br>
+![바운딩박스 시각화](https://github.com/user-attachments/assets/bc24947a-c6bc-40d4-9def-e622741d1a32)
 
 BoundingBox가 충돌로 인식하는 최소 거리는 확장된 BoundingBox와 상관없이 기존 BoundingBox가 겹치면 발생합니다.  
 진행하고 있는 프로젝트 전체 도형은 여러 개의 삼각 도형들이 처음부터 붙어 있고, 또 회전하는 삼각 도형도 회전하지 않는 삼각 도형과 붙어 있는 상태에서  
 회전하기 때문에 어느 방향으로 회전을 시켜도 처음부터 BoundingBox가 겹쳐 있습니다. 그래서 어떤 방향으로 회전을 시켜도 충돌로 인식하게 됩니다.
 
 ![바운딩박스 회전 충돌](https://github.com/user-attachments/assets/31955aa4-ed83-4bf7-9d53-bf14764ad932)
-<img width="607" alt="바운딩박스 충돌 콘솔 1" src="  
-https://github.com/user-attachments/assets/54e319bc-1625-4eb6-95c3-0f312ceacbda
-" />
+![바운딩박스 충돌 콘솔 1](https://github.com/user-attachments/assets/54e319bc-1625-4eb6-95c3-0f312ceacbda)
+
 <br>
 
 전체적인 로직 순서가 회전이 끝나고 충돌 감지 함수가 실행되기 때문에, 삼각 도형을 한 바퀴 회전시켜 원래 모양을 그대로 유지해도 충돌을 감지하였습니다.  
@@ -270,8 +271,7 @@ https://github.com/user-attachments/assets/54e319bc-1625-4eb6-95c3-0f312ceacbda
 해당 문제를 인식한 후 BoundingBox로 충돌을 인식하는 것은 이 프로젝트에 적합하지 않다고 판단하여 Raycaster 방식으로 방법을 전환하여 진행하였습니다.
 
 ![바운딩박스 제자리 회전 충돌.gif](https://github.com/user-attachments/assets/998ba73f-e00b-42c3-8a6c-b56a54c5822b)
-<img width="607" alt="바운딩박스 충돌 콘솔 2" src="  
-https://github.com/user-attachments/assets/f48e856f-9aa2-4a89-b258-b8f5c7fe0cf6
+![바운딩박스 충돌 콘솔 2](https://github.com/user-attachments/assets/f48e856f-9aa2-4a89-b258-b8f5c7fe0cf6)
 " />
 
 ### 2. Raycaster
@@ -338,9 +338,7 @@ const detectConflictRaycaster = () => {
 
 아래 이미지를 통해 Raycaster가 어떤 식으로 광선을 발사해 충돌을 감지하는지 알 수 있습니다.
 
-<img width="400" alt="레이케스터 시각화" src="  
-https://github.com/user-attachments/assets/3a9a5c6c-7cdf-49a9-96cb-075ea68b0ae9
-" />
+![레이케스터 시각화](https://github.com/user-attachments/assets/3a9a5c6c-7cdf-49a9-96cb-075ea68b0ae9)
 <br>
 
 Raycaster에서 이전에 발생하던 문제들은 나타나지 않았으나, 가장 중요한 부분에서 문제가 발생했습니다.  
@@ -350,12 +348,10 @@ Raycaster에서 이전에 발생하던 문제들은 나타나지 않았으나, �
 임의의 수치(충돌로 인식하는 최소 거리)를 조절해보았지만, 면과 면이 닿았을 때는 이미 임의의 수치(충돌로 인식하는 최소 거리)보다 가까운 상태가 되기 때문에 수치 조정이 의미가 없는 상태가 되었습니다.
 
 [참고] 서로 포개지는 모양  
-<img width="500" alt="서로 포개지는 모양 사진" src="  
-https://github.com/user-attachments/assets/936b729e-a628-4004-ab29-f80f8abf829b" />
+![서로 포개지는 모양 사진](https://github.com/user-attachments/assets/936b729e-a628-4004-ab29-f80f8abf829b)
 
 ![레이케스터 충돌 오류.gif](https://github.com/user-attachments/assets/fa6889db-ccf6-4f36-b7c5-e7da9643ebc4)
-<img width="454" alt="레이케스터 콘솔" src="  
-https://github.com/user-attachments/assets/c5b50820-6d13-4589-a8f8-221635b18a23" />
+![레이케스터 콘솔](https://github.com/user-attachments/assets/c5b50820-6d13-4589-a8f8-221635b18a23)
 
 Raycaster를 사용하면 서로 포개지는 부분을 계속 충돌로 인식하기 때문에 이 프로젝트에는 적합하지 않다고 판단하여, Vertex를 통해 중심점을 구하고 중심점의 거리 간격을 통해 충돌을 감지하는 방법으로 전환하였습니다.
 
@@ -386,9 +382,7 @@ for (let v1 = 0; v1 < vertices1.length; v1 += 3) {
 
 아래 이미지를 통해 Vertex(정점)이 어떤 식으로 충돌을 감지하는지 알 수 있습니다.
 
-<img width="400" alt="버텍스 시각화" src="  
-https://github.com/user-attachments/assets/6c3418fb-1799-4864-8b48-38c85d66b2d6
-" />
+![버텍스 시각화](https://github.com/user-attachments/assets/6c3418fb-1799-4864-8b48-38c85d66b2d6)
 
 서로 포개지는 모양처럼 선 또는 면들이 닿았을 때도 충돌로 인식하지 않는 방법이 무엇이 있을까 고민했을 때, Vertex(정점)들의 위치를 모두 더하여 Vertex(정점)의 수만큼 나누고 Vertex(정점)의 평균 위치를 구하면 될 것이라 판단했습니다. 즉, 이 방법은 삼각 도형의 중심점을 구하는 방법입니다.
 
@@ -442,9 +436,7 @@ const getCenterPosition = (mesh) => {
 
 아래 이미지를 통해 Vertex(정점)으로 구한 중심점의 위치가 어디에 있는지 알 수 있습니다.
 
-<img width="400" alt="버텍스센터 시각화" src="  
-https://github.com/user-attachments/assets/120df54a-f3d3-4789-9f31-ef961e2d0d84
-" />
+![버텍스센터 시각화](https://github.com/user-attachments/assets/120df54a-f3d3-4789-9f31-ef961e2d0d84)
 
 회전하는 삼각 도형의 중심점과 회전하지 않는 삼각 도형의 중심점의 거리가 임의의 수치(충돌로 인식하는 최소 거리)보다 작게 되면 충돌로 인식하도록 설정했습니다.  
 그리고 임의의 수치는 테스트를 통해 삼각 도형이 서로 겹치면 충돌로 인식하지만 선 또는 면이 닿았을 때는 충돌로 인식하지 않도록 수치를 설정했습니다.
@@ -452,9 +444,7 @@ https://github.com/user-attachments/assets/120df54a-f3d3-4789-9f31-ef961e2d0d84
 최종적으로 위 방법을 통해 충돌 감지 함수를 구현했을 때, 서로 포개지는 모양에서도 충돌로 인식하지 않고 잘 작동하는 것을 확인했습니다.
 
 ![최종코드 포개짐 모양.gif](https://github.com/user-attachments/assets/4fcba8f0-91b0-490e-97d2-03e5614aab43)
-<img width="449" alt="정상작동 콘솔" src="  
-https://github.com/user-attachments/assets/e66f229e-82dd-4fcd-a65b-9db228622261
-" />
+![정상작동 콘솔](https://github.com/user-attachments/assets/e66f229e-82dd-4fcd-a65b-9db228622261)
 
 서로 포개지는 모양이 되었을 때, 거리가 임의의 수치(1.55)보다 크기 때문에 충돌로 인식하지 않고 정상적으로 작동하고 있습니다.  
 또 서로 포개지는 모양처럼 문제가 될 것 같은 모양들을 테스트해보았을 때도 문제없이 작동하는 것을 확인했습니다.
