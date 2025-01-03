@@ -41,7 +41,9 @@ const Header = ({ isTutorial, isCompletedTutorial, canvasRef }) => {
         {isCompletedTutorial && (
           <div className="flex flex-col justify-center items-center">
             <span className="mt-5 text-xl">튜토리얼이 모두 끝났습니다!</span>
-            <span className="text-xl">시작 화면으로 돌아간 후 척척이를 만들어 보세요!</span>
+            <span className="text-xl">
+              시작 화면으로 돌아간 후 척척이를 만들어 보세요!
+            </span>
           </div>
         )}
         {isTutorial && (
