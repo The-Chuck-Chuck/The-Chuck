@@ -8,13 +8,11 @@
 </details>
 
 <br>
-<br>
-<br>
 <a href="https://youtu.be/FcokVflyLLs">
 <img width="600" alt="스크린샷 2024-12-27 오후 12 05 22" src="https://github.com/user-attachments/assets/9f46b7d1-9580-46e5-ac79-e11fc0df9322" />
 </a>
 
-위 이미지를 클릭하면 시현 및 사용 방법 영상을 시청할 수 있습니다.
+위 이미지를 클릭하면 시연 및 사용 방법 영상을 시청할 수 있습니다.
 
 [배포 주소](https://chuckchuck-simulator.netlify.app/)
 
@@ -22,21 +20,23 @@
 
 <!-- toc -->
 
-- [선정 이유](#%EC%84%A0%EC%A0%95-%EC%9D%B4%EC%9C%A0)
+- [프로젝트 동기](#%EC%84%A0%EC%A0%95-%EC%9D%B4%EC%9C%A0)
 - [개발 환경](#%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD)
 - [문제 해결](#%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0)
+
   - [도형을 어떻게 회전 시켜야 할까?](#%EB%8F%84%ED%98%95%EC%9D%84-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%9A%8C%EC%A0%84-%EC%8B%9C%EC%BC%9C%EC%95%BC-%ED%95%A0%EA%B9%8C)
     - [1. Mesh 와 Group](#1-mesh-%EC%99%80-group)
     - [2. State와 Ref](#2-state%EC%99%80-ref)
-  - [문제 발견 (회전 시작점 고정 이슈)](#%EB%AC%B8%EC%A0%9C-%EB%B0%9C%EA%B2%AC-%ED%9A%8C%EC%A0%84-%EC%8B%9C%EC%9E%91%EC%A0%90-%EA%B3%A0%EC%A0%95-%EC%9D%B4%EC%8A%88)
+  - [회전 시작점 고정 이슈](#%EB%AC%B8%EC%A0%9C-%EB%B0%9C%EA%B2%AC-%ED%9A%8C%EC%A0%84-%EC%8B%9C%EC%9E%91%EC%A0%90-%EA%B3%A0%EC%A0%95-%EC%9D%B4%EC%8A%88)
+
     - [1. 회전축의 시작점이 고정되었다](#1-%ED%9A%8C%EC%A0%84%EC%B6%95%EC%9D%98-%EC%8B%9C%EC%9E%91%EC%A0%90%EC%9D%B4-%EA%B3%A0%EC%A0%95%EB%90%98%EC%97%88%EB%8B%A4)
     - [2. 다양한 시도](#2-%EB%8B%A4%EC%96%91%ED%95%9C-%EC%8B%9C%EB%8F%84)
     - [3. 수평 관계의 그룹화](#3-%EC%88%98%ED%8F%89-%EA%B4%80%EA%B3%84%EC%9D%98-%EA%B7%B8%EB%A3%B9%ED%99%94)
 
-* [어떻게 충돌을 감지할 수 있을까?](#%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B6%A9%EB%8F%8C%EC%9D%84-%EA%B0%90%EC%A7%80%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
-  - [1. BoundingBox](#1-boundingbox)
-  - [2. Raycaster](#2-raycaster)
-  - [3. Vertex(정점) and Center](#3-vertex%EC%A0%95%EC%A0%90-and-center)
+  - [어떻게 충돌을 감지할 수 있을까?](#%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B6%A9%EB%8F%8C%EC%9D%84-%EA%B0%90%EC%A7%80%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
+    - [1. BoundingBox](#1-boundingbox)
+    - [2. Raycaster](#2-raycaster)
+    - [3. Vertex(정점) and Center](#3-vertex%EC%A0%95%EC%A0%90-and-center)
 
 - [협업 방식](#%ED%98%91%EC%97%85-%EB%B0%A9%EC%8B%9D)
   - [1. 원활한 협업 진행을 위한 방향 일치화](#1-%EC%9B%90%ED%99%9C%ED%95%9C-%ED%98%91%EC%97%85-%EC%A7%84%ED%96%89%EC%9D%84-%EC%9C%84%ED%95%9C-%EB%B0%A9%ED%96%A5-%EC%9D%BC%EC%B9%98%ED%99%94)
@@ -60,7 +60,7 @@
 | 분류       | 기술                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 개발 언어  | <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| 클라이언트 | <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" /> <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" /> <img src="https://img.shields.io/badge/zustand-54283c?style=for-the-badge&logo=zustand&logoColor=black" /> <img src="https://img.shields.io/badge/three.js-%23323330.svg?style=for-the-badge&logo=threedotjs&logoColor=white" /> <img src="https://img.shields.io/badge/React Three/fiber-f7f9ff?style=for-the-badge&logo=threedotjs&logoColor=black" /> <img src="https://img.shields.io/badge/React Three/drei-f7f9ff?style=for-the-badge&logo=threedotjs&logoColor=black" /> |
+| 클라이언트 | <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" /> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" /> <img src="https://img.shields.io/badge/zustand-54283c?style=for-the-badge&logo=zustand&logoColor=black" /> <img src="https://img.shields.io/badge/three.js-%23323330.svg?style=for-the-badge&logo=threedotjs&logoColor=white" /> <img src="https://img.shields.io/badge/React Three/fiber-f7f9ff?style=for-the-badge&logo=threedotjs&logoColor=black" /> <img src="https://img.shields.io/badge/React Three/drei-f7f9ff?style=for-the-badge&logo=threedotjs&logoColor=black" /> |
 | 배포       | <img src="https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7" />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 ## 문제 해결
@@ -460,14 +460,14 @@ const getCenterPosition = (mesh) => {
 프로젝트를 진행할 때 팀원 간의 생각을 일치시키는 과정이 중요하다고 판단했습니다. 동일한 주제로 대화할 때 각기 다른 관점에서 해석될 수 있습니다. 이러한 상황이 지속되면 서로의 의도를 명확히 이해하지 못 하고, 프로젝트 진행에 차질이 생길 수 있다고 판단했습니다.
 이러한 문제를 해결하기 위해 크게 세 가지 방식을 도입했습니다.
 
-**1-1. 정기적인 회의 시행**
+**1-1. 정기적인 회의 진행**
 
 팀원 간의 방향성 일치를 지속시키기 위해 하루에 두 번, 오전과 오후로 나누어 정기적인 회의를 진행했습니다. 오전 회의는 전날 밤에 추가로 진행한 작업과 당일에 해야 할 작업에 관한 내용을 공유하였습니다. 오후 회의에는 코드를 작성하며 발생한 문제에 대해 논의하고, 팀 프로젝트 진행 방향에 대한 회고를 KPT 형식으로 진행했습니다. 회의를 통해 팀원 간의 소통을 강화하고, 프로젝트 진행에 필요한 정보를 신속히 공유할 수 있도록 하였습니다.
 
 <table>
 	<tr>
 		<th>
-			<img width="500" alt="회의록" src="https://github.com/user-attachments/assets/461473f1-2e54-4bd2-a2ad-93af0f464235" />
+			<img width="490" alt="회의록" src="https://github.com/user-attachments/assets/461473f1-2e54-4bd2-a2ad-93af0f464235" />
 		</th>
 	</tr>
 	<tr>
@@ -482,10 +482,10 @@ const getCenterPosition = (mesh) => {
 <table>
 	<tr>
 		<th>
-			<img width="300" alt="문서양식_안건" src="https://github.com/user-attachments/assets/d118aebd-6665-45cd-9dc5-3193387c1756" />
+			<img width="297" alt="문서양식_안건" src="https://github.com/user-attachments/assets/d118aebd-6665-45cd-9dc5-3193387c1756" />
 		</th>
 		<th>
-			<img width="300" alt="문서양식_결론" src="https://github.com/user-attachments/assets/d0a452bd-091a-4d0b-a3c7-a2a4fbd8c519" />
+			<img width="297" alt="문서양식_결론" src="https://github.com/user-attachments/assets/d0a452bd-091a-4d0b-a3c7-a2a4fbd8c519" />
 		</th>
 	</tr>
 	<tr>
@@ -501,7 +501,7 @@ const getCenterPosition = (mesh) => {
 <table>
 	<tr>
 		<th>
-		<img width="489" alt="단어_통일하기" src="https://github.com/user-attachments/assets/ce3d2bb5-2e7c-400e-911c-0857c2824372" />
+		<img width="485" alt="단어_통일하기" src="https://github.com/user-attachments/assets/ce3d2bb5-2e7c-400e-911c-0857c2824372" />
 		</th>
 	</tr>
 	<tr>
@@ -510,7 +510,6 @@ const getCenterPosition = (mesh) => {
 </table>
 
 이 세 가지 방식을 팀원 간의 생각을 일치시킴으로써 팀의 협업 능력이 향상되었으며, 일관된 방향으로 프로젝트를 진행할 수 있었습니다. 이러한 접근 방식을 통해 오해와 혼란을 줄이고 팀 내의 소통이 개선되었습니다.
-13:11
 
 ### 2. 협업을 통한 핵심 태스크 지연 문제 해결 방안
 
@@ -525,7 +524,7 @@ const getCenterPosition = (mesh) => {
 <table>
 	<tr>
 		<th>
-		<img width="489" alt="의사코드_공유하기" src="https://github.com/user-attachments/assets/1c337a71-6414-46ca-903d-9168fab2dff5" />
+		<img width="485" alt="의사코드_공유하기" src="https://github.com/user-attachments/assets/1c337a71-6414-46ca-903d-9168fab2dff5" />
 		</th>
 	</tr>
 	<tr>
@@ -565,7 +564,7 @@ const getCenterPosition = (mesh) => {
 
 | <img width="200" alt="회의록" src="https://github.com/user-attachments/assets/9851c2be-0d11-44ad-89e9-f3c2ef51dca0" /> | <img width="200" alt="칸반_태스크" src="https://github.com/user-attachments/assets/d2598442-aaee-4879-8c7e-ece154e13885" />     | <img width="200" alt="이슈_기록" src="https://github.com/user-attachments/assets/c3adf3b7-5ee9-4942-86c5-5ca12db89d88" /> |
 | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| [회의록](https://balsam-ceramic-da1.notion.site/1297aad7a2ea819ea182d08d848f463c?pvs=4)                                | [칸반 태스크 캘릭터](https://www.notion.so/Chuck-Chuck-1297aad7a2ea8054bc6cf050c979133c?pvs=4#1297aad7a2ea810c9020c322c1573833) | [이슈 기록 페이지](https://balsam-ceramic-da1.notion.site/1337aad7a2ea8016972ff891dea5c6b2?pvs=4)                         |
+| [회의록](https://balsam-ceramic-da1.notion.site/1297aad7a2ea819ea182d08d848f463c?pvs=4)                                | [칸반 태스크 캘린더](https://www.notion.so/Chuck-Chuck-1297aad7a2ea8054bc6cf050c979133c?pvs=4#1297aad7a2ea810c9020c322c1573833) | [이슈 기록 페이지](https://balsam-ceramic-da1.notion.site/1337aad7a2ea8016972ff891dea5c6b2?pvs=4)                         |
 
 ## 개인 회고
 
