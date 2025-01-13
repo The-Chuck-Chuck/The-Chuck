@@ -130,7 +130,7 @@ useRef를 사용한 이유는 이러한 회전 동작 방식에서 출발했습�
 여러 도형을 회전시키는 방법에 대한 고민을 끝마친 후, 코드를 작성하고 처음 마주한 구현 화면은 저희의 예상과는 다른 모습이었습니다.  
 일반적으로 척척이가 움직이는 회전 그룹과 고정 그룹이 맞물린 형태가 아닌, 영점 (화면상 도형의 왼쪽 하단)을 기준으로 도형이 회전하는 모습이었습니다.
 
-![issue-left-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/502ba9ba-38e5-4efa-ae4e-ea20e95ecf6d)
+<img width="50%" src="https://github.com/user-attachments/assets/fdffef21-75c8-4122-8728-8e3df8706b99"/><img width="50%" src="https://github.com/user-attachments/assets/4f678c1f-07a3-48c7-bfed-0dcf05535afa"/>
 
 #### 2-1. 회전축의 시작점이 고정되었다
 
