@@ -197,7 +197,7 @@ Three.js에서는 크게 `BoundingBox`, `Raycasting`, `Vertex(정점)` 이 세 �
 >
 > `Raycasting` : 생성된 도형을 기준으로 모든 방향에 광선을 쏘아서 그 광선이 무언가에 닿았을 때 감지되는 방식(태양처럼 사방으로 빛을 보낸다고 생각하면 이해하기 쉽습니다.)
 >
-> `Vertex` : 도형을 생성할 때
+> `Vertex` : 도형을 생성할 때 정해놓은 정점이 서로 닿았을 때 감지되는 방식(종이접기를 할 때 접히는 선의 있는 정점들이 닿는다고 생각하면 이해하기 쉽습니다.)
 
 ### 1. BoundingBox
 
@@ -278,8 +278,8 @@ const detectConflictBoundingBox = () => {
 진행하고 있는 프로젝트 전체 도형은 여러 개의 삼각 도형들이 처음부터 붙어 있고, 또 회전하는 삼각 도형도 회전하지 않는 삼각 도형과 붙어 있는 상태에서  
 회전하기 때문에 처음부터 BoundingBox가 겹쳐 있습니다. 그래서 어떤 방향으로 회전을 시켜도 충돌로 인식하게 됩니다.
 
-<img width="100%" alt="바운딩 박스 회전 충돌" src="https://github.com/user-attachments/assets/ebc514ad-bd4d-49c4-8845-ee1476fd2cb9" />
-<img width="80%" alt="바운딩 박스 회전 충돌 콘솔" src="https://github.com/user-attachments/assets/54e319bc-1625-4eb6-95c3-0f312ceacbda" />
+<img width="80%" alt="바운딩 박스 회전 충돌" src="https://github.com/user-attachments/assets/ebc514ad-bd4d-49c4-8845-ee1476fd2cb9" />
+<img width="70%" alt="바운딩 박스 회전 충돌 콘솔" src="https://github.com/user-attachments/assets/54e319bc-1625-4eb6-95c3-0f312ceacbda" />
 
 <br>
 
@@ -288,8 +288,8 @@ const detectConflictBoundingBox = () => {
 
 해당 문제를 인식한 후 BoundingBox로 충돌을 인식하는 것은 이 프로젝트에 적합하지 않다고 판단하여 Raycaster 방식으로 방법을 전환하여 진행하였습니다.
 
-<img width="100%" alt="바운딩 제자리 회전 충돌" src="https://github.com/user-attachments/assets/a278469a-212d-4c4b-a32c-224ed461bee8" />
-<img width="80%" alt="바운딩 충돌 콘솔 2" src="https://github.com/user-attachments/assets/f48e856f-9aa2-4a89-b258-b8f5c7fe0cf6" />
+<img width="80%" alt="바운딩 제자리 회전 충돌" src="https://github.com/user-attachments/assets/a278469a-212d-4c4b-a32c-224ed461bee8" />
+<img width="70%" alt="바운딩 충돌 콘솔 2" src="https://github.com/user-attachments/assets/f48e856f-9aa2-4a89-b258-b8f5c7fe0cf6" />
 
 ### 2. Raycaster
 
@@ -367,10 +367,10 @@ Raycaster에서 이전에 발생하던 문제들은 나타나지 않았으나, �
 
 [참고] 서로 포개지는 모양  
 아래 빨간색으로 강조된 원을 본다면 레이케스터가 어떻게 광선을 발사해 충돌을 감지하는지 알기 쉽습니다.  
-<img width="70%" alt="서로 포개지는 모양" src="https://github.com/user-attachments/assets/c0f3cbcb-8a41-437c-bb48-a42ec3efaa78" />
+<img width="60%" alt="서로 포개지는 모양" src="https://github.com/user-attachments/assets/c0f3cbcb-8a41-437c-bb48-a42ec3efaa78" />
 
-<img width="100%" alt="레이케스터 충돌 오류" src="https://github.com/user-attachments/assets/23cf3e86-c549-4d39-96c0-1bdca9a08071" />
-<img width="60%" alt="레이케스터 충돌 콘솔" src="https://github.com/user-attachments/assets/c5b50820-6d13-4589-a8f8-221635b18a23" />
+<img width="80%" alt="레이케스터 충돌 오류" src="https://github.com/user-attachments/assets/23cf3e86-c549-4d39-96c0-1bdca9a08071" />
+<img width="40%" alt="레이케스터 충돌 콘솔" src="https://github.com/user-attachments/assets/c5b50820-6d13-4589-a8f8-221635b18a23" />
 
 <br>
 
@@ -467,8 +467,8 @@ const getCenterPosition = (mesh) => {
 
 최종적으로 위 방법을 통해 충돌 감지 함수를 구현했을 때, 서로 포개지는 모양에서도 충돌로 인식하지 않고 잘 작동하는 것을 확인했습니다.
 
-<img width="100%" alt="최종 정상 작동" src="https://github.com/user-attachments/assets/1760a914-a292-4a27-a393-cff3350f522a" />
-<img width="60%" alt="최종 정상 작동 콘솔" src="https://github.com/user-attachments/assets/e66f229e-82dd-4fcd-a65b-9db228622261" />
+<img width="80%" alt="최종 정상 작동" src="https://github.com/user-attachments/assets/1760a914-a292-4a27-a393-cff3350f522a" />
+<img width="50%" alt="최종 정상 작동 콘솔" src="https://github.com/user-attachments/assets/e66f229e-82dd-4fcd-a65b-9db228622261" />
 
 <br>
 
@@ -476,10 +476,10 @@ const getCenterPosition = (mesh) => {
 또 서로 포개지는 모양처럼 문제가 될 것 같은 모양들을 테스트해보았을 때도 문제없이 작동하는 것을 확인했습니다.
 
 [참고] 정상적으로 충돌을 감지하는 모습 1
-<img width="100%" alt="최종 정상 충돌감지 1" src="https://github.com/user-attachments/assets/a9fa7284-a454-4b1e-999b-2560b7f14a54" />
+<img width="80%" alt="최종 정상 충돌감지 1" src="https://github.com/user-attachments/assets/a9fa7284-a454-4b1e-999b-2560b7f14a54" />
 
 [참고] 정상적으로 충돌을 감지하는 모습 2
-<img width="100%" alt="최종 정상 충돌감지 2" src="https://github.com/user-attachments/assets/193c82af-df9d-447b-bd16-808011311f30" />
+<img width="80%" alt="최종 정상 충돌감지 2" src="https://github.com/user-attachments/assets/193c82af-df9d-447b-bd16-808011311f30" />
 
 ## 협업 방식
 
