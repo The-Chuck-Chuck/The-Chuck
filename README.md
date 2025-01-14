@@ -66,7 +66,7 @@
 | 분류       | 기술                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 개발 언어  | <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| 클라이언트 | <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" /> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" /> <img src="https://img.shields.io/badge/zustand-54283c?style=for-the-badge&logo=zustand&logoColor=black" /> <img src="https://img.shields.io/badge/three.js-%23323330.svg?style=for-the-badge&logo=threedotjs&logoColor=white" /> <img src="https://img.shields.io/badge/React Three/fiber-f7f9ff?style=for-the-badge&logo=threedotjs&logoColor=black" /> <img src="https://img.shields.io/badge/React Three/drei-f7f9ff?style=for-the-badge&logo=threedotjs&logoColor=black" /> |
+| 클라이언트 | <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/three.js-%23323330.svg?style=for-the-badge&logo=threedotjs&logoColor=white" /> <img src="https://img.shields.io/badge/React Three/fiber-f7f9ff?style=for-the-badge&logo=threedotjs&logoColor=black" /> <img src="https://img.shields.io/badge/React Three/drei-f7f9ff?style=for-the-badge&logo=threedotjs&logoColor=black" /> <img src="https://img.shields.io/badge/zustand-54283c?style=for-the-badge&logo=zustand&logoColor=black" /> <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" /> <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" /> |
 | 배포       | <img src="https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7" />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 # 문제 해결
@@ -207,17 +207,32 @@ useRef를 사용한 이유를 살펴보기 전에, 회전 동작에 대해 간�
 
 ## 3. 어떻게 충돌을 감지할 수 있을까?
 
-Three.js에서는 충돌을 감지하는 라이브러리가 존재하지 않기 때문에 Ammo.js 또는 Cannon.js 같은 물리 엔진을 사용하거나 충돌 함수를 직접 구현해야 했습니다.  
-충돌 감지는 이 프로젝트에서 핵심적인 기능이라고 판단했기 때문에 물리 엔진을 사용해서 구현하는 것보다는 충돌 함수를 구현하는 것이 팀원들의 성장에도 도움이 되고 더욱 도전적인 요소라고 판단하여 직접 구현하기로 결정했습니다.
+Three.js에서 충돌을 구현하려면 생성된 도형들이 맞닿았을 때 충돌이라고 인식하도록 별도로 이벤트를 설정해 줘야 합니다.  
+Three.js에서는 별도로 충돌을 감지하는 라이브러리는 존재하지 않기 때문에, 물리 엔진인 Ammo.js나 Cannon.js를 통해 구현하거나 함수로 충돌을 직접 구현해야만 했습니다.
 
-Three.js에서는 크게 BoundingBox, Raycasting, Vertex(정점) 이 세 가지 방법을 통해서 두 물체 간의 거리를 감지하여 정해놓은 수치(충돌로 인식하는 수치)만큼 두 물체가 가까워지면 충돌이 되었다고 판단하게 할 수 있습니다.
+<img width="40%" alt="충돌 시각화" src="https://github.com/user-attachments/assets/5da77981-95a8-4cb8-a319-87615c103347" />
+
+충돌 감지는 이 프로젝트에서 핵심적인 기능이라고 판단했기 때문에 물리 엔진을 사용해서 구현하는 것보다는 함수로 충돌을 구현하는 것이  
+도전적인 요소라고 판단하여 직접 구현하기로 결정했습니다.
+
+<br>
+
+Three.js에서는 크게 `BoundingBox`, `Raycasting`, `Vertex(꼭짓점)` 이 세 가지 방법을 통해서 두 물체 간의 거리를 감지합니다.  
+정해놓은 수치만큼 두 물체가 가까워지면 충돌이 되었다고 판단하게 할 수 있습니다.
+
+> `BoundingBox` : 생성된 도형을 사각형으로 둘러싸고 사각형이 무언가에 닿았을 때 감지되는 방식
+>
+> `Raycasting` : 생성된 도형을 기준으로 모든 방향에 광선을 쏘아서 그 광선이 무언가에 닿았을 때 감지되는 방식
+>
+> `Vertex` : 도형을 생성할 때 정해 놓은 꼭짓점이 서로 닿았을 때 감지되는 방식
 
 ### 3-1. BoundingBox를 활용한 충돌 감지
 
-처음에는 많이 사용되는 방법인 BoundingBox를 선택했습니다. 먼저 회전하는 삼각 도형과 회전하지 않는 삼각 도형에 BoundingBox를 계산합니다. 그리고 회전하는 삼각 도형의 마지막 회전이 회전하지 않는 삼각 도형의 BoundingBox와 닿게 된다면 충돌로 인식하게 하였습니다.
+처음에는 BoundingBox를 선택했습니다. 먼저 회전하는 삼각 도형과 회전하지 않는 삼각 도형에 BoundingBox를 계산합니다.  
+그리고 회전하는 삼각 도형의 마지막 회전이 회전하지 않는 삼각 도형의 BoundingBox와 닿게 된다면 충돌로 인식하게 하였습니다.
 
 <details>
-<summary>삼각도형에 BoundingBox 계산</summary>
+<summary>삼각도형의 BoundingBox 계산</summary>
 <div markdown="1">
 
 ```jsx
@@ -244,11 +259,12 @@ const detectConflictBoundingBox = () => {
 </div>
 </details><br>
 
-BoundingBox만 계산할 경우 겹치는 경우에만 충돌을 감지할 수 있어서 임의의 수치로 거리 조절이 필요하다고 생각했습니다.  
-그래서 BoundingBox 위로 확장된 BoundingBox를 만들어서 임의의 수치를 통해 확장된 BoundingBox의 크기를 정하고, 임의의 수치(충돌로 인식하는 최소 거리) 조정을 통해 가까이 또는 멀리 감지하는 것을 조절할 수 있게 했습니다.
+BoundingBox만 계산할 경우 충돌로 인식하는 거리를 조절하지 못하기 때문에 거리를 조절할 수 있는 방법을 찾아야 했습니다.  
+그래서 BoundingBox 상위에 또다른 BoundingBox를 만들어서 임의의 수치(입력 값)를 통해 상위의 BoundingBox의 크기를 정하고,  
+임의의 수치(입력 값) 조정을 통해 가까이 또는 멀리 감지하는 것을 조절할 수 있게 했습니다.
 
 <details>
-<summary>BoundingBox 충돌 거리 조정 추가</summary>
+<summary>BoundingBox 충돌 거리 조정 추가 코드</summary>
 <div markdown="1">
 
 ```jsx
@@ -279,38 +295,42 @@ const detectConflictBoundingBox = () => {
 </div>
 </details><br>
 
-아래 이미지를 통해서 BoundingBox를 통해 충돌 감지가 어떻게 되는지 쉽게 파악할 수 있습니다.
+아래 이미지를 통해서 기존 BoundingBox가 상위에 생긴 BoundingBox가 어떻게 충돌을 감지하는지 알 수 있습니다.
+점선으로 이루어진 사각형이 BoundingBox 상위에 만들어진 또다른 BoundingBox입니다. 이것을 통해 충돌을 감지합니다.
 
-![바운딩박스 시각화](https://github.com/user-attachments/assets/bc24947a-c6bc-40d4-9def-e622741d1a32)
-
-BoundingBox가 충돌로 인식하는 최소 거리는 확장된 BoundingBox와 상관없이 기존 BoundingBox가 겹치면 발생합니다.  
-진행하고 있는 프로젝트 전체 도형은 여러 개의 삼각 도형들이 처음부터 붙어 있고, 또 회전하는 삼각 도형도 회전하지 않는 삼각 도형과 붙어 있는 상태에서  
-회전하기 때문에 어느 방향으로 회전을 시켜도 처음부터 BoundingBox가 겹쳐 있습니다. 그래서 어떤 방향으로 회전을 시켜도 충돌로 인식하게 됩니다.
-
-![바운딩박스 회전 충돌](https://github.com/user-attachments/assets/31955aa4-ed83-4bf7-9d53-bf14764ad932)
-![바운딩박스 충돌 콘솔 1](https://github.com/user-attachments/assets/54e319bc-1625-4eb6-95c3-0f312ceacbda)
+<img width="50%" alt="바운딩 박스 시각화" src="https://github.com/user-attachments/assets/bc24947a-c6bc-40d4-9def-e622741d1a32" />
 
 <br>
 
-전체적인 로직 순서가 회전이 끝나고 충돌 감지 함수가 실행되기 때문에, 삼각 도형을 한 바퀴 회전시켜 원래 모양을 그대로 유지해도 충돌을 감지하였습니다.  
+상위의 BoundingBox가 가장 민감하게 충돌을 감지하는 거리는 상위의 BoundingBox 크기와 상관없이 기존 BoundingBox가 겹치면 발생합니다.  
+진행하고 있는 프로젝트 전체 도형은 여러 개의 삼각 도형들이 처음부터 붙어 있고, 또 회전하는 삼각 도형도 회전하지 않는 삼각 도형과 붙어 있는 상태에서 회전하기 때문에  
+처음부터 BoundingBox가 겹쳐 있습니다. 그래서 어떤 방향으로 회전을 시켜도 충돌로 인식하게 됩니다.
+
+<img width="80%" alt="바운딩 박스 회전 충돌" src="https://github.com/user-attachments/assets/ebc514ad-bd4d-49c4-8845-ee1476fd2cb9" />
+<img width="70%" alt="바운딩 박스 회전 충돌 콘솔" src="https://github.com/user-attachments/assets/54e319bc-1625-4eb6-95c3-0f312ceacbda" />
+
+<br>
+
+회전 전에는 충돌 감지 함수가 실행되지 않기 때문에 BoundingBox가 겹쳐 있어도 충돌로 인식하지 않습니다.  
+그러나 회전이 완료된 후에는 충돌 감지 함수가 실행되기 때문에 삼각 도형을 한 바퀴 회전시켜 원래 모양을 그대로 유지해도 충돌을 감지하게 됩니다.
+
 이 또한 BoundingBox가 처음부터 겹쳐 있기 때문에 발생하는 문제입니다.
 
 해당 문제를 인식한 후 BoundingBox로 충돌을 인식하는 것은 이 프로젝트에 적합하지 않다고 판단하여 Raycaster 방식으로 방법을 전환하여 진행하였습니다.
 
-![바운딩박스 제자리 회전 충돌.gif](https://github.com/user-attachments/assets/998ba73f-e00b-42c3-8a6c-b56a54c5822b)
-![바운딩박스 충돌 콘솔 2](https://github.com/user-attachments/assets/f48e856f-9aa2-4a89-b258-b8f5c7fe0cf6)
-" />
+<img width="80%" alt="바운딩 제자리 회전 충돌" src="https://github.com/user-attachments/assets/a278469a-212d-4c4b-a32c-224ed461bee8" />
+<img width="70%" alt="바운딩 충돌 콘솔 2" src="https://github.com/user-attachments/assets/f48e856f-9aa2-4a89-b258-b8f5c7fe0cf6" />
 
 ### 3-2. Raycaster를 활용한 충돌 감지
 
-두 번째로 시도한 방법은 Raycaster입니다. 이전에는 삼각 도형 겉으로 박스 또는 구체를 생성해 감지했다면, Raycaster는 회전하는 삼각 도형에서 여러 방향으로 광선을 발사합니다.  
+두 번째로 시도한 방법은 Raycaster입니다. 이전 BoundingBox는 삼각 도형 겉으로 박스를 생성해 감지했다면, Raycaster는 회전하는 삼각 도형에서 여러 방향으로 광선을 발사합니다.  
 그 광선이 회전하지 않는 삼각 도형에 닿게 되었을 때 충돌을 감지하도록 설정하였습니다.
 
-`intersects[0].distance`는 회전하는 삼각 도형에서 발사한 광선이 회전하지 않는 삼각 도형에 처음 닿는 지점까지의 거리를 나타냅니다.  
-이 거리가 임의의 수치(충돌로 인식하는 최소 거리)보다 작다면 충돌로 인식하게 됩니다.
+`intersects[0].distance`는 회전하는 삼각 도형에서 발사한 광선이 회전하지 않는 삼각 도형에 처음으로 닿는 지점까지의 거리를 나타냅니다.  
+이 거리가 충돌로 인식하는 거리보다 작다면 충돌로 인식하게 됩니다.
 
 <details>
-<summary>Raycaster 충돌 감지</summary>
+<summary>Raycaster 충돌 감지 코드</summary>
 <div markdown="1">
 
 ```jsx
@@ -365,30 +385,34 @@ const detectConflictRaycaster = () => {
 
 아래 이미지를 통해 Raycaster가 어떤 식으로 광선을 발사해 충돌을 감지하는지 알 수 있습니다.
 
-![레이케스터 시각화](https://github.com/user-attachments/assets/3a9a5c6c-7cdf-49a9-96cb-075ea68b0ae9)
+<img width="50%" alt="레이케스터 시각화" src="https://github.com/user-attachments/assets/3a9a5c6c-7cdf-49a9-96cb-075ea68b0ae9" />
+
 <br>
 
 Raycaster에서 이전에 발생하던 문제들은 나타나지 않았으나, 가장 중요한 부분에서 문제가 발생했습니다.  
 전체 도형의 구조 특성상 서로 포개지는 모양을 만들 수 있는데, 이 모양을 만들게 되면 충돌로 인식하게 되었습니다.  
-이는 서로 포개지는 모양이 되었을 때 면과 면이 닿는 순간 충돌로 인식하기 때문입니다.
+이는 서로 포개지는 모양이 되었을 때 면과 면이 닿는 순간 광선이 닿기 때문에 그렇습니다.
 
-임의의 수치(충돌로 인식하는 최소 거리)를 조절 해봤지만, 면과 면이 닿았을 때는 이미 임의의 수치(충돌로 인식하는 최소 거리)보다 가까운 상태가 되기 때문에 수치 조정이 의미가 없는 상태가 되었습니다.
+충돌로 인식하는 거리를 조절 해봤지만, 면과 면이 닿았을 때는 이미 충돌로 인식하는 거리보다 가까운 상태가 되기 때문에 수치 조정은 의미가 없었습니다.
 
 [참고] 서로 포개지는 모양  
-![서로 포개지는 모양 사진](https://github.com/user-attachments/assets/936b729e-a628-4004-ab29-f80f8abf829b)
+아래 빨간색으로 강조된 원을 본다면 레이케스터가 어떻게 광선을 발사해 충돌을 감지하는지 알기 쉽습니다.  
+<img width="60%" alt="서로 포개지는 모양" src="https://github.com/user-attachments/assets/c0f3cbcb-8a41-437c-bb48-a42ec3efaa78" />
 
-![레이케스터 충돌 오류.gif](https://github.com/user-attachments/assets/fa6889db-ccf6-4f36-b7c5-e7da9643ebc4)
-![레이케스터 콘솔](https://github.com/user-attachments/assets/c5b50820-6d13-4589-a8f8-221635b18a23)
+<img width="80%" alt="레이케스터 충돌 오류" src="https://github.com/user-attachments/assets/23cf3e86-c549-4d39-96c0-1bdca9a08071" />
+<img width="40%" alt="레이케스터 충돌 콘솔" src="https://github.com/user-attachments/assets/c5b50820-6d13-4589-a8f8-221635b18a23" />
 
-Raycaster를 사용하면 서로 포개지는 부분을 계속 충돌로 인식하기 때문에 이 프로젝트에는 적합하지 않다고 판단하여, Vertex를 통해 중심점을 구하고 중심점의 거리 간격을 통해 충돌을 감지하는 방법으로 전환하였습니다.
+<br>
 
-### 3-3. Vertex(정점)와 Center를 활용한 충돌 감지
+Raycaster를 사용하면 서로 포개지는 부분을 계속 충돌로 인식하기 때문에 이 프로젝트에는 적합하지 않다고 판단하여,  
+Vertex를 통해 중심점을 구하고 중심점의 거리 간격을 통해 충돌을 감지하는 방법으로 전환하였습니다.
 
-처음에는 삼각 도형을 이루는 Vertex(정점)들을 구하여 Vertex(정점)들이 닿는 거리를 기준으로 충돌을 구현하려고 했습니다.  
-하지만 위 방법도 서로 포개지는 모양에서는 계속 충돌로 인식할 것이라 판단하여, Vertex(정점)만으로는 정확한 충돌을 감지하기 힘들다고 생각했습니다.
+### 3-3. Vertex(꼭짓점)와 Center를 활용한 충돌 감지
+
+Vertex(꼭짓점)들을 구하여 Vertex(꼭짓점)들이 닿는 거리를 기준으로 충돌을 인식하게 됩니다. 더욱 세밀하게 충돌 거리를 조절할 수 있는 방법입니다.
 
 <details>
-<summary>삼각도형의 Vertex 계산</summary>
+<summary>삼각도형의 Vertex 계산 코드</summary>
 <div markdown="1">
 
 ```jsx
@@ -407,14 +431,17 @@ for (let v1 = 0; v1 < vertices1.length; v1 += 3) {
 </div>
 </details><br>
 
-아래 이미지를 통해 Vertex(정점)이 어떤 식으로 충돌을 감지하는지 알 수 있습니다.
+아래 이미지를 통해 Vertex가 어떤 식으로 충돌을 감지하는지 알 수 있습니다.
 
-![버텍스 시각화](https://github.com/user-attachments/assets/6c3418fb-1799-4864-8b48-38c85d66b2d6)
+<img width="50%" alt="버텍스 시각화" src="https://github.com/user-attachments/assets/6c3418fb-1799-4864-8b48-38c85d66b2d6" />
 
-서로 포개지는 모양처럼 선 또는 면들이 닿았을 때도 충돌로 인식하지 않는 방법이 무엇이 있을까 고민했을 때, Vertex(정점)들의 위치를 모두 더하여 Vertex(정점)의 수만큼 나누고 Vertex(정점)의 평균 위치를 구하면 될 것이라 판단했습니다. 즉, 이 방법은 삼각 도형의 중심점을 구하는 방법입니다.
+Vertex도 처음에는 문제가 없을 거라 판단했으나 BoundingBox처럼 Vertex이 이미 닿아 있는 도형들이 있기 때문에 정상적으로 충돌을 감지하기는 불가능했습니다.
+
+서로 포개지는 모양처럼 선 또는 면들이 닿았을 때도 충돌로 인식하지 않는 방법이 무엇이 있을까 고민했을 때, Vertex들의 위치를 모두 더하여 Vertex의 수만큼 나누고  
+Vertex의 평균 위치를 구하면 될 것이라 판단했습니다. 즉, 이 방법은 삼각 도형의 중심점을 구하는 방법입니다.
 
 <details>
-<summary>Vertex를 통해 중심점 계산</summary>
+<summary>Vertex를 통해 중심점 계산 코드</summary>
 <div markdown="1">
 
 ```jsx
@@ -461,24 +488,28 @@ const getCenterPosition = (mesh) => {
 </div>
 </details><br>
 
-아래 이미지를 통해 Vertex(정점)으로 구한 중심점의 위치가 어디에 있는지 알 수 있습니다.
+아래 이미지를 통해 Vertex로 구한 중심점의 위치가 어디에 있는지 알 수 있습니다.
 
-![버텍스센터 시각화](https://github.com/user-attachments/assets/120df54a-f3d3-4789-9f31-ef961e2d0d84)
+<img width="50%" alt="버텍스 센터 시각화" src="https://github.com/user-attachments/assets/120df54a-f3d3-4789-9f31-ef961e2d0d84" />
 
-회전하는 삼각 도형의 중심점과 회전하지 않는 삼각 도형의 중심점의 거리가 임의의 수치(충돌로 인식하는 최소 거리)보다 작게 되면 충돌로 인식하도록 설정했습니다.  
-그리고 임의의 수치는 테스트를 통해 삼각 도형이 서로 겹치면 충돌로 인식하지만 선 또는 면이 닿았을 때는 충돌로 인식하지 않도록 수치를 설정했습니다.
+회전하는 삼각 도형의 중심점과 회전하지 않는 삼각 도형의 중심점의 거리가 충돌로 인식하는 거리보다 작게 되면 충돌로 인식하도록 설정했습니다.  
+그리고 충돌로 인식하는 거리는 테스트를 통해 삼각 도형이 서로 겹치면 충돌로 인식하지만 선 또는 면이 닿았을 때는 충돌로 인식하지 않도록 수치를 설정했습니다.
 
 최종적으로 위 방법을 통해 충돌 감지 함수를 구현했을 때, 서로 포개지는 모양에서도 충돌로 인식하지 않고 잘 작동하는 것을 확인했습니다.
 
-![최종코드 포개짐 모양.gif](https://github.com/user-attachments/assets/4fcba8f0-91b0-490e-97d2-03e5614aab43)
-![정상작동 콘솔](https://github.com/user-attachments/assets/e66f229e-82dd-4fcd-a65b-9db228622261)
+<img width="80%" alt="최종 정상 작동" src="https://github.com/user-attachments/assets/1760a914-a292-4a27-a393-cff3350f522a" />
+<img width="50%" alt="최종 정상 작동 콘솔" src="https://github.com/user-attachments/assets/e66f229e-82dd-4fcd-a65b-9db228622261" />
 
-서로 포개지는 모양이 되었을 때, 거리가 임의의 수치(1.55)보다 크기 때문에 충돌로 인식하지 않고 정상적으로 작동하고 있습니다.  
+<br>
+
+서로 포개지는 모양이 되었을 때, 거리가 충돌로 인식하는 거리(1.55)보다 크기 때문에 충돌로 인식하지 않고 정상적으로 작동하고 있습니다.  
 또 서로 포개지는 모양처럼 문제가 될 것 같은 모양들을 테스트해보았을 때도 문제없이 작동하는 것을 확인했습니다.
 
-![최종 정상 충돌감지 1.gif](https://github.com/user-attachments/assets/84acf4a0-e1ae-4811-9c05-1fa95c97aace)
+[참고] 정상적으로 충돌을 감지하는 모습 1
+<img width="80%" alt="최종 정상 충돌감지 1" src="https://github.com/user-attachments/assets/a9fa7284-a454-4b1e-999b-2560b7f14a54" />
 
-![최종 정상 작동 모양.gif](https://github.com/user-attachments/assets/0f124155-284c-4951-90c5-beeac5969aa3)
+[참고] 정상적으로 충돌을 감지하는 모습 2
+<img width="80%" alt="최종 정상 충돌감지 2" src="https://github.com/user-attachments/assets/193c82af-df9d-447b-bd16-808011311f30" />
 
 # 프로젝트 문서화 및 공통 용어 정의를 통한 협업 개선
 
