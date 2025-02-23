@@ -38,7 +38,7 @@
   * [4. 어떻게 충돌을 감지할 수 있을까?](#4-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B6%A9%EB%8F%8C%EC%9D%84-%EA%B0%90%EC%A7%80%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
     + [4-1. BoundingBox를 활용한 충돌 감지](#4-1-boundingbox%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
     + [4-2. Raycaster를 활용한 충돌 감지](#4-2-raycaster%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
-    + [3-3. Vertex(꼭짓점)와 Center를 활용한 충돌 감지](#3-3-vertex%EA%BC%AD%EC%A7%93%EC%A0%90%EC%99%80-center%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
+    + [4-3. Vertex(꼭짓점)와 Center를 활용한 충돌 감지](#4-3-vertex%EA%BC%AD%EC%A7%93%EC%A0%90%EC%99%80-center%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
   * [5. 이미지 저장 기능 구현하기](#5-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%A0%80%EC%9E%A5-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
     + [5-1. 캔버스 정보 가져오기](#5-1-%EC%BA%94%EB%B2%84%EC%8A%A4-%EC%A0%95%EB%B3%B4-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0)
     + [5-2. Blob 객체를 활용한 이미지 저장](#5-2-blob-%EA%B0%9D%EC%B2%B4%EB%A5%BC--%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%A0%80%EC%9E%A5)
@@ -550,15 +550,11 @@ const getCenterPosition = (mesh) => {
 
 [참고] 정상적으로 충돌을 감지하는 모습 1
 
-<img width="60%" alt="최종 정상 충돌감지 1" src="
-https://github.com/user-attachments/assets/a9fa7284-a454-4b1e-999b-2560b7f14a54
-" />
+<img width="60%" alt="최종 정상 충돌감지 1" src="https://github.com/user-attachments/assets/a9fa7284-a454-4b1e-999b-2560b7f14a54" />
 
 [참고] 정상적으로 충돌을 감지하는 모습 2
 
-<img width="60%" alt="최종 정상 충돌감지 2" src="
-https://github.com/user-attachments/assets/193c82af-df9d-447b-bd16-808011311f30
-" />
+<img width="60%" alt="최종 정상 충돌감지 2" src="https://github.com/user-attachments/assets/193c82af-df9d-447b-bd16-808011311f30" />
 
 ## 5. 이미지 저장 기능 구현하기
 사용자가 만든 척척이를 다른 사람에게 공유할 수 있는 기능을 구현하려고 했습니다. 고려한 방식엔 두 가지가 있었습니다.
