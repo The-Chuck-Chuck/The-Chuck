@@ -25,17 +25,23 @@
 - [프로젝트 동기](#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%8F%99%EA%B8%B0)
 - [개발 환경](#%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD)
 - [문제 해결](#%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0)
-  * [1. 여러 도형을 한번에 회전시키는 방법](#1-%EC%97%AC%EB%9F%AC-%EB%8F%84%ED%98%95%EC%9D%84-%ED%95%9C%EB%B2%88%EC%97%90-%ED%9A%8C%EC%A0%84%EC%8B%9C%ED%82%A4%EB%8A%94-%EB%B0%A9%EB%B2%95)
-    + [1-1. 여러 도형을 하나의 묶음으로 관리하기](#1-1-%EC%97%AC%EB%9F%AC-%EB%8F%84%ED%98%95%EC%9D%84-%ED%95%98%EB%82%98%EC%9D%98-%EB%AC%B6%EC%9D%8C%EC%9C%BC%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0)
-    + [1-2. 회전하는 도형들의 값을 관리하는 방법](#1-2-%ED%9A%8C%EC%A0%84%ED%95%98%EB%8A%94-%EB%8F%84%ED%98%95%EB%93%A4%EC%9D%98-%EA%B0%92%EC%9D%84-%EA%B4%80%EB%A6%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)
-  * [2. 회전의 시작점을 바꾸는 방법](#2-%ED%9A%8C%EC%A0%84%EC%9D%98-%EC%8B%9C%EC%9E%91%EC%A0%90%EC%9D%84-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95)
-    + [2-1. 고정된 그룹 회전의 시작점](#2-1-%EA%B3%A0%EC%A0%95%EB%90%9C-%EA%B7%B8%EB%A3%B9-%ED%9A%8C%EC%A0%84%EC%9D%98-%EC%8B%9C%EC%9E%91%EC%A0%90)
-    + [2-2. 어떻게 그룹의 회전 시작점을 변경할 수 있을까?](#2-2-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B7%B8%EB%A3%B9%EC%9D%98-%ED%9A%8C%EC%A0%84-%EC%8B%9C%EC%9E%91%EC%A0%90%EC%9D%84-%EB%B3%80%EA%B2%BD%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
-    + [2-3. 이중 그룹을 통한 시작점 문제 해결](#2-3-%EC%9D%B4%EC%A4%91-%EA%B7%B8%EB%A3%B9%EC%9D%84-%ED%86%B5%ED%95%9C-%EC%8B%9C%EC%9E%91%EC%A0%90-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0)
-  * [3. 어떻게 충돌을 감지할 수 있을까?](#3-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B6%A9%EB%8F%8C%EC%9D%84-%EA%B0%90%EC%A7%80%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
-    + [3-1. BoundingBox를 활용한 충돌 감지](#3-1-boundingbox%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
-    + [3-2. Raycaster를 활용한 충돌 감지](#3-2-raycaster%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
-    + [3-3. Vertex(정점)와 Center를 활용한 충돌 감지](#3-3-vertex%EC%A0%95%EC%A0%90%EC%99%80-center%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
+  * [1. 도형의 마우스 클릭 감지](#1-%EB%8F%84%ED%98%95%EC%9D%98-%EB%A7%88%EC%9A%B0%EC%8A%A4-%ED%81%B4%EB%A6%AD-%EA%B0%90%EC%A7%80)
+    + [1-1. x, y 가 아닌 x, y, z 좌표계 : z 좌표 감지를 위한 Raycaster 도입](#1-1-x-y-%EA%B0%80-%EC%95%84%EB%8B%8C-x-y-z-%EC%A2%8C%ED%91%9C%EA%B3%84--z-%EC%A2%8C%ED%91%9C-%EA%B0%90%EC%A7%80%EB%A5%BC-%EC%9C%84%ED%95%9C-raycaster-%EB%8F%84%EC%9E%85)
+    + [1-2. 화면에 렌더링되는 3D 영역 공간의 크기 : 클릭 원점의 차이점](#1-2-%ED%99%94%EB%A9%B4%EC%97%90-%EB%A0%8C%EB%8D%94%EB%A7%81%EB%90%98%EB%8A%94-3d-%EC%98%81%EC%97%AD-%EA%B3%B5%EA%B0%84%EC%9D%98-%ED%81%AC%EA%B8%B0--%ED%81%B4%EB%A6%AD-%EC%9B%90%EC%A0%90%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90)
+    + [1-3. 수많은 반환값과 필터링](#1-3-%EC%88%98%EB%A7%8E%EC%9D%80-%EB%B0%98%ED%99%98%EA%B0%92%EA%B3%BC-%ED%95%84%ED%84%B0%EB%A7%81)
+  * [2. 여러 도형을 한번에 회전시키는 방법](#2-%EC%97%AC%EB%9F%AC-%EB%8F%84%ED%98%95%EC%9D%84-%ED%95%9C%EB%B2%88%EC%97%90-%ED%9A%8C%EC%A0%84%EC%8B%9C%ED%82%A4%EB%8A%94-%EB%B0%A9%EB%B2%95)
+    + [2-1. 여러 도형을 하나의 묶음으로 관리하기](#2-1-%EC%97%AC%EB%9F%AC-%EB%8F%84%ED%98%95%EC%9D%84-%ED%95%98%EB%82%98%EC%9D%98-%EB%AC%B6%EC%9D%8C%EC%9C%BC%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0)
+    + [2-2. 회전하는 도형들의 값을 관리하는 방법](#2-2-%ED%9A%8C%EC%A0%84%ED%95%98%EB%8A%94-%EB%8F%84%ED%98%95%EB%93%A4%EC%9D%98-%EA%B0%92%EC%9D%84-%EA%B4%80%EB%A6%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)
+  * [3. 회전의 시작점을 바꾸는 방법](#3-%ED%9A%8C%EC%A0%84%EC%9D%98-%EC%8B%9C%EC%9E%91%EC%A0%90%EC%9D%84-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95)
+    + [3-1. 고정된 그룹 회전의 시작점](#3-1-%EA%B3%A0%EC%A0%95%EB%90%9C-%EA%B7%B8%EB%A3%B9-%ED%9A%8C%EC%A0%84%EC%9D%98-%EC%8B%9C%EC%9E%91%EC%A0%90)
+    + [3-2. 이중 그룹을 통한 시작점 문제 해결](#3-2-%EC%9D%B4%EC%A4%91-%EA%B7%B8%EB%A3%B9%EC%9D%84-%ED%86%B5%ED%95%9C-%EC%8B%9C%EC%9E%91%EC%A0%90-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0)
+  * [4. 어떻게 충돌을 감지할 수 있을까?](#4-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B6%A9%EB%8F%8C%EC%9D%84-%EA%B0%90%EC%A7%80%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C)
+    + [4-1. BoundingBox를 활용한 충돌 감지](#4-1-boundingbox%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
+    + [4-2. Raycaster를 활용한 충돌 감지](#4-2-raycaster%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
+    + [3-3. Vertex(꼭짓점)와 Center를 활용한 충돌 감지](#3-3-vertex%EA%BC%AD%EC%A7%93%EC%A0%90%EC%99%80-center%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%B6%A9%EB%8F%8C-%EA%B0%90%EC%A7%80)
+  * [5. 이미지 저장 기능 구현하기](#5-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%A0%80%EC%9E%A5-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
+    + [5-1. 캔버스 정보 가져오기](#5-1-%EC%BA%94%EB%B2%84%EC%8A%A4-%EC%A0%95%EB%B3%B4-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0)
+    + [5-2. Blob 객체를 활용한 이미지 저장](#5-2-blob-%EA%B0%9D%EC%B2%B4%EB%A5%BC--%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%A0%80%EC%9E%A5)
 - [프로젝트 문서화 및 공통 용어 정의를 통한 협업 개선](#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%AC%B8%EC%84%9C%ED%99%94-%EB%B0%8F-%EA%B3%B5%ED%86%B5-%EC%9A%A9%EC%96%B4-%EC%A0%95%EC%9D%98%EB%A5%BC-%ED%86%B5%ED%95%9C-%ED%98%91%EC%97%85-%EA%B0%9C%EC%84%A0)
   * [1. 주기적인 회의 진행 및 기록](#1-%EC%A3%BC%EA%B8%B0%EC%A0%81%EC%9D%B8-%ED%9A%8C%EC%9D%98-%EC%A7%84%ED%96%89-%EB%B0%8F-%EA%B8%B0%EB%A1%9D)
   * [2. 문서 작성 템플릿 생성](#2-%EB%AC%B8%EC%84%9C-%EC%9E%91%EC%84%B1-%ED%85%9C%ED%94%8C%EB%A6%BF-%EC%83%9D%EC%84%B1)
@@ -71,13 +77,89 @@
 
 # 문제 해결
 
-## 1. 여러 도형을 한번에 회전시키는 방법
+## 1. 도형의 마우스 클릭 감지
 
-<img width="100%" src="https://github.com/user-attachments/assets/3e7bc3c9-c018-4fa5-8ae5-04c38468fb3a" />
+척척이는 회전을 통해 원하는 모양을 만들어가고, 이를 위해서는 회전할 도형들이 정해져야 합니다. 사용자로부터 어떠한 입력을 받아 회전 도형을 정하는 가장 직관적인 방법은 화면 클릭을 통한 상호작용이라 판단했습니다.
+그동안 사용자로부터 클릭에 대한 입력값을 감지할 때는 onClick 이벤트를 사용해 왔습니다. 이번에도 해당 이벤트를 사용한다면 별다름 어려움 없이 클릭 된 도형의 정보를 얻을 수 있을 것으로 생각하고 로직을 구성했습니다.
+하지만 예상과는 다르게 클릭하지 않은 도형의 값이 반환되었고, 이 값에 대해 어떠한 규칙성도 찾지 못했습니다.
+
+### 1-1. x, y 가 아닌 x, y, z 좌표계 : z 좌표 감지를 위한 Raycaster 도입
+
+이 프로젝트는 3D 환경에서 구성한 시뮬레이터입니다. 화면에 보이는 모든 도형 역시 2D가 아닌 3D 환경 위에서 존재하는 요소들입니다. 따라서 모든 요소는 2차원 좌표계를 구성하는 x, y 좌표에 추가로 z 좌표를 갖고 있었습니다.
+기존과 같이 단순히 onClick 이벤트 핸들러를 사용한 방식만으로는 원하는 정보를 정확히 얻을 수 없었고, z 좌표를 포함한 값을 얻기 위해서 Three.js 의 Raycaster를 사용했습니다.
+
+> Raycaster = 3D 좌표계에서 레이저 광선을 발사해 경로상 존재하는 모든 요소를 감지하기 위한 클래스
+
+Raycaster는 레이저 광선을 발사해 요소를 감지합니다. 그렇다면 레이저가 발사되는 시작점을 설정해야 하고, 그 시작점은 마우스 클릭이 발생한 지점이어야 합니다. 이를 위해서 setFromCamera 메서드를 사용했습니다.
+해당 메서드는 사용자가 설정한 지점에 카메라 시점을 고정하여 레이저가 발사되는 광원이 되게 해주는 메서드입니다. 이러한 방식을 통해 기존에는 감지할 수 없었던 z 좌표를 포함한 클린된 도형의 정보를 얻을 수 있었지만
+여전히 그 값은 사용자가 클릭한 도형과는 다른 값이 반환됐습니다.
+
+---
+
+### 1-2. 화면에 렌더링되는 3D 영역 공간의 크기 : 클릭 원점의 차이점
+
+z 좌표 값이 포함된 데이터가 반환되는 시점부터, 어느 정도 저희의 의도대로 동작하는 로직이었지만 그 값이 사용자가 클릭한 도형과 다르다는 점은 어딘가에 놓친 부분이 있다는 의미였습니다.
+저희가 놓친 부분은 화면에 렌더링되는 3D 영역의 크기였습니다. 3D 영역은 Canvas 라는 컴포넌트 위에 그려집니다. 이 영역의 크기 속성을 넓이, 높이 모두 100% 로 할당했기에 당연히 3D 영역이 화면의 모든 부분을 차지할 것으로 생각했지만, 실제로는 그러지 않았습니다.
+
+<img width="60%" src="https://github.com/user-attachments/assets/caf4794f-eafd-42d5-a7e3-440c9b957c07" />
+</br>
+</br>
+
+위 그림은 웹 브라우저상에서 실제로 화면에 렌더링 되는 3D 영역을 표현한 그림입니다. Canvas의 3D 영역은 위와 같이 화면의 모든 부분을 차지하지 않습니다. 더하여 마우스 클릭 시 그 원점은 그림 좌측 상단에 표시한 검은 동그라미 부분 즉, 브라우저의 원점을 클릭의 원점으로 인식합니다.  
+이 문제를 해결하기 위해 클릭의 원점을 브라우저의 원점에서 Canvas 영역의 중앙으로 변경하는 과정이 필요했고, 다음과 같은 흐름으로 클릭의 원점을 수정했습니다.  
+> 1. 3D 영역의 마우스 클릭 지점 x, y 좌표 사용
+> 2. 해당 x, y 좌표 값을 3D 영역 전체 너비와 높이로 나누기 연산
+> 3. 연산 결과를 3D 중앙으로 설정하기 위한 -1 ~ 1 사이의 범위 지정
+> 4. Y축의 방향은 브라우저와 3D 영역의 좌표계가 반대이기에 - 연산자를 사용
+
+변환을 통해서 사용자가 클릭한 도형에 대한 정확한 데이터를 확보할수 있었지만, 여전히 남은 예외사항이 있었습니다.
+
+---
+
+### 1-3. 수많은 반환값과 필터링
+
+도형에 대하여 원하는 데이터가 반환되었음에도 남아있는 문제는 바로 무수히 많은 반환 값이었습니다. 저희에게 필요한 데이터는 도형의 위치정보였지만, 도형과 관련된 수많은 데이터가 반환됨은 물론이고, 도형의 위치가 중첩되어 있을 때는 중첩된 도형을 포함한 모든 데이터가 반환되었습니다. 이에 대해 저희가 인식한 원인은 2가지였습니다.  
+
+1. 저희가 만들어낸 도형입니다.  
+Three.js 는 기본적으로 완성된 도형을 여러 종류의 모양으로 제공합니다. 하지만 해당 도형 중 저희가 원하는 형태와 완벽히 일치하는 도형은 없었습니다. 따라서 저희는 점, 선, 면을 직접 생성하고 조합하여 원하는 형태의 도형을 만들어냈습니다. 이런 도형의 특성에 의해 무수히 많은 반환 값이 생겨났습니다.  
+
+2. Raycaster의 특성입니다.  
+Raycaster는 광선의 경로상에 감지되는 모든 값을 반환합니다. 도형이 일자로 나열되어 있을 때는 문제 되지 않았지만, 도형이 회전하여 모양이 바뀔 경우에는 광선의 경로상 중첩되는 도형들이 존재했기에 여러 개의 도형값이 반환됐습니다.
+
+저희가 만들어낸 도형의 모양을 유지하면서도 문제를 해결한 방식은 데이터의 필터링입니다.  
+필요한 도형의 정보는 Mesh 객체의 속성에 포함되어 있었습니다. 따라서 반환된 데이터가 Mesh 객체에 해당하는지를 확인하여 많은 데이터 중 필요한 값만 필터링하여 사용했습니다.  
+더하여, Raycaster의 intersectObjects 메서드를 사용했습니다. 해당 메서드는 경로상 마주하는 모든 도형의 데이터를 배열의 형태로 저장합니다. 이때, 저장되는 값들은 광원으로부터 거리가 가까운 순서대로 저장이 됩니다. 따라서, 배열의 0번째 인덱스에 해당하는 데이터가 사용자가 클릭한 도형의 데이터이기에 해당 인덱스의 데이터만을 사용하여 해결했습니다.  
+
+이러한 문제해결 과정들을 통해서 도형에 대한 마우스 클릭을 감지하고, 도형에 대한 데이터를 확보할 수 있었습니다.
+
+
+## 2. 여러 도형을 한번에 회전시키는 방법
+
+<!-- <img width="100%" src="https://github.com/user-attachments/assets/3e7bc3c9-c018-4fa5-8ae5-04c38468fb3a" />   -->
+
+
+<table width="100%">
+  <tr>
+    <td>
+      <img width="100%" alt="Image" src="https://github.com/user-attachments/assets/43d5d475-4aaf-49fc-91ba-cb3c1a52b8fe" />
+    </td>
+    <td>
+      <img width="100%" alt="Image" src="https://github.com/user-attachments/assets/1eb5680b-a538-404f-bb4d-dea1769d457d" />
+    </td>
+  </tr>
+  <tr align="center">
+    <td>회전 전</td>
+    <td>회전 후</td>
+  </tr>
+</table>
+
+
+
+
 
 이 프로젝트는 여러 삼각 도형이 하나의 묶음처럼 동시에 회전합니다.  이러한 움직임이 초기 구현 단계의 핵심이라 판단했으며, 어떻게 여러 도형을 묶고, 회전시키는 게 효율적일지에 대한 고민을 시작했습니다.
 
-### 1-1. 여러 도형을 하나의 묶음으로 관리하기
+### 2-1. 여러 도형을 하나의 묶음으로 관리하기
 > Mesh = 3D 도형을 만들기 위한 최소 단위의 객체  
 > Group = 3D 객체(mesh)를 묶음으로 관리 해주는 객체
 
@@ -95,7 +177,7 @@ mesh 객체는 화면에 렌더링이 되는 요소입니다. 반대로 group �
 
 **이렇듯 화면에 보이는 도형들을 보다 더 효율적으로 관리하기 위해 Group 객체를 사용하여 여러 도형들의 그룹화를 구현했습니다.**
 
-### 1-2. 회전하는 도형들의 값을 관리하는 방법
+### 2-2. 회전하는 도형들의 값을 관리하는 방법
 > Scene = 3D 물체가 존재하는 공간 객체
 
 회전 동작을 구현할 때 이 도형들이 갖는 위치(position), 회전(quaternion) 값을 더 효율적으로 관리하기 위하여 useRef를 사용했습니다.
@@ -105,21 +187,8 @@ useRef를 사용한 이유를 살펴보기 전에, 회전 동작에 대해 간�
 사용자에게 부드러운 UI를 제공하기 위해 전체 도형이 회전하는 과정을 애니메이션으로 보여 주기 위해 React Three Fiber의 `useFrame` 메서드를 사용했습니다.
 `useRef`는 `useFrame`을 활용한 애니메이션 동작을 원활하게 진행하기 위해 사용했습니다.
 
-1. useFrame의 동작 방식과 렌더링
-
-   ```jsx
-   useFrame(() => {
-     if (currentRotationAngle !== rotationAngle) {
-       currentRotationAngle.current = THREE.MathUtils.lerp(
-         currentRotationAngle.current,
-         rotationAngle,
-         0.02
-       );
-     }
-   });
-   ```
-
-   이 코드는 현재 각도와 목표 각도를 비교하며 목표 각도까지 회전하게 됩니다.  
+1. useFrame의 동작 방식과 렌더링  
+    도형은 현재 각도 변화시 매 프라임마다 목표 각도와 비교를 하는 방식으로 회전을 진행합니다.
     이 과정에서 매 프레임마다 변화하는 각도를 상태로 관리하면 너무 잦은 렌더링을 유발해 성능에 큰 무리를 준다고 판단했습니다.  
     이러한 문제를 해결하기 위해 Three.js 렌더링 루프와 직접적으로 동기화되어 React의 렌더링과 무관하게 scene을 업데이트 해 줄 수 있는 useRef를 사용했습니다.
 
@@ -129,35 +198,41 @@ useRef를 사용한 이유를 살펴보기 전에, 회전 동작에 대해 간�
 
 **이를 통하여 저희는 도형의 회전 동작을 부드럽게 화면에 보여줄 수 있게 되었고, 이 과정에서 발생할 수 있는 과도한 렌더링을 막을 수 있게 되었습니다.**
 
-## 2. 회전의 시작점을 바꾸는 방법
+## 3. 회전의 시작점을 바꾸는 방법
 
 여러 도형을 회전시키는 방법에 대한 고민을 끝마친 후, 코드를 작성하고 처음 마주한 구현 화면은 저희의 예상과는 다른 모습이었습니다.  
 일반적으로 척척이가 움직이는 회전 그룹과 고정 그룹이 맞물린 형태가 아닌, 영점 (화면상 도형의 왼쪽 하단)을 기준으로 도형이 회전하는 모습이었습니다.
 
-<img width="50%" src="https://github.com/user-attachments/assets/fdffef21-75c8-4122-8728-8e3df8706b99"/><img width="50%" src="https://github.com/user-attachments/assets/4f678c1f-07a3-48c7-bfed-0dcf05535afa"/>
+<table width="100%">
+  <tr>
+    <td>
+      <img width="100%" src="https://github.com/user-attachments/assets/fdffef21-75c8-4122-8728-8e3df8706b99"/>
+    </td>
+    <td>
+      <img width="100%" src="https://github.com/user-attachments/assets/4f678c1f-07a3-48c7-bfed-0dcf05535afa"/>
+    </td>
+  </tr>
+</table>
 
-### 2-1. 고정된 그룹 회전의 시작점
+### 3-1. 고정된 그룹 회전의 시작점
 
 사진과 같이 그룹으로 묶인 삼각 도형들의 회전 축이 고정된 채로 회전하는 문제가 있었습니다. 모든 도형 (mesh 객체)는 하나의 부모 group 객체로 묶여서 관리되고 있었습니다. 이때, 회전할 도형들이 정해지면 동적으로 새로운 그룹이 생성되며 이 새로운 그룹이 기존 부모 그룹의 자리를 대체합니다. 이 과정에서 새로운 그룹에 속하는 도형들이 회전할 때, 기존 부모 그룹의 기준 위치인 (0, 0, 0)을 축으로 회전하는 문제가 발생했던 것이었습니다.
 
 <details>
-<summary>2-1. 관련 내용 첨부 사진</summary>
-<img width="100%" src="https://github.com/user-attachments/assets/5189bc4a-29d2-4ff2-8772-e9ef2a1bf948" />
-<img width="100%" src="https://github.com/user-attachments/assets/11486d93-fd65-453b-9e57-cbe481e407f4" />
+<summary>3-1. 관련 내용 첨부 사진</summary>
+<table width="100%">
+  <tr>
+    <td>
+      <img width="100%" height="225px" src="https://github.com/user-attachments/assets/5189bc4a-29d2-4ff2-8772-e9ef2a1bf948" />
+    </td>
+    <td>
+      <img width="100%" src="https://github.com/user-attachments/assets/11486d93-fd65-453b-9e57-cbe481e407f4" />
+    </td>
+  </tr>
+</table>
 </details>
 
-### 2-2. 어떻게 그룹의 회전 시작점을 변경할 수 있을까?
-
-이러한 이슈를 해결하기 위해 팀원 모두 서로 다른 방법으로 해결을 시도했으며, 해당 날짜의 의사코드 및 코드 일부를 기록으로 남겼습니다.
-
-<a href="https://balsam-ceramic-da1.notion.site/22363d0b809e4453970e7fa40eef965c?v=f3260fb42e0640bdb28e6f75fc8cf949&pvs=4">
-  <img width="100%" src="https://github.com/user-attachments/assets/86bc3e61-cd62-4c03-b814-9ec095258110" />
-</a>
-
-의사코드를 통해 당일 팀원이 시도한 내용을 쉽게 이해할 수 있었고, 이후 중복되지 않도록 추가적인 아이디어를 고민할 수 있었습니다.  
-이와 같은 시행착오 끝에, 원하는 동작을 구현하는 해결 방법을 찾게 되었습니다.
-
-### 2-3. 이중 그룹을 통한 시작점 문제 해결
+### 3-2. 이중 그룹을 통한 시작점 문제 해결
 
 다양한 시행착오 끝에, 다음과 같은 단계를 통해 문제를 해결하고 회전의 시작점을 원하는 대로 변화시킬 수 있었습니다.
 
@@ -205,19 +280,15 @@ useRef를 사용한 이유를 살펴보기 전에, 회전 동작에 대해 간�
   </table>
 </details>
 
-## 3. 어떻게 충돌을 감지할 수 있을까?
+## 4. 어떻게 충돌을 감지할 수 있을까?
 
-Three.js에서 충돌을 구현하려면 생성된 도형들이 맞닿았을 때 충돌이라고 인식하도록 별도로 이벤트를 설정해 줘야 합니다.  
-Three.js에서는 별도로 충돌을 감지하는 라이브러리는 존재하지 않기 때문에, 물리 엔진인 Ammo.js나 Cannon.js를 통해 구현하거나 함수로 충돌을 직접 구현해야만 했습니다.
+Three.js에서 충돌을 구현하려면 생성된 도형들이 맞닿았을 때 충돌이라고 인식하도록 별도로 이벤트를 설정해 줘야 합니다.
+Three.js에서는 별도로 충돌을 감지하는 라이브러리는 존재하지 않기 때문에, 물리 엔진인 Ammo.js나 Cannon.js를 통해 구현하거나 함수로 충돌을 직접 구현해야만 했습니다.  
 
-<img width="40%" alt="충돌 시각화" src="https://github.com/user-attachments/assets/5da77981-95a8-4cb8-a319-87615c103347" />
+<img width="60%" alt="충돌 시각화" src="https://github.com/user-attachments/assets/5da77981-95a8-4cb8-a319-87615c103347" />  
 
-충돌 감지는 이 프로젝트에서 핵심적인 기능이라고 판단했기 때문에 물리 엔진을 사용해서 구현하는 것보다는 함수로 충돌을 구현하는 것이  
-도전적인 요소라고 판단하여 직접 구현하기로 결정했습니다.
-
-<br>
-
-Three.js에서는 크게 `BoundingBox`, `Raycasting`, `Vertex(꼭짓점)` 이 세 가지 방법을 통해서 두 물체 간의 거리를 감지합니다.  
+충돌 감지는 이 프로젝트에서 핵심적인 기능이라고 판단했기 때문에 물리 엔진을 사용해서 구현하는 것보다는 함수로 충돌을 구현하는 것이 도전적인 요소라고 판단하여 직접 구현하기로 결정했습니다.  
+Three.js에서는 크게 `BoundingBox`, `Raycasting`, `Vertex(꼭짓점)` 이 세 가지 방법을 통해서 두 물체 간의 거리를 감지합니다.
 정해놓은 수치만큼 두 물체가 가까워지면 충돌이 되었다고 판단하게 할 수 있습니다.
 
 > `BoundingBox` : 생성된 도형을 사각형으로 둘러싸고 사각형이 무언가에 닿았을 때 감지되는 방식
@@ -226,27 +297,24 @@ Three.js에서는 크게 `BoundingBox`, `Raycasting`, `Vertex(꼭짓점)` 이 �
 >
 > `Vertex` : 도형을 생성할 때 정해 놓은 꼭짓점이 서로 닿았을 때 감지되는 방식
 
-### 3-1. BoundingBox를 활용한 충돌 감지
+### 4-1. BoundingBox를 활용한 충돌 감지
 
-처음에는 BoundingBox를 선택했습니다. 먼저 회전하는 삼각 도형과 회전하지 않는 삼각 도형에 BoundingBox를 계산합니다.  
+처음에는 BoundingBox를 선택했습니다. 먼저 회전하는 삼각 도형과 회전하지 않는 삼각 도형에 BoundingBox를 계산합니다.
 그리고 회전하는 삼각 도형의 마지막 회전이 회전하지 않는 삼각 도형의 BoundingBox와 닿게 된다면 충돌로 인식하게 하였습니다.
 
 <details>
-<summary>삼각도형의 BoundingBox 계산</summary>
+<summary>[코드] 삼각도형의 BoundingBox 계산</summary>
 <div markdown="1">
 
-```jsx
+```javascript
 const detectConflictBoundingBox = () => {
   const rotateMeshes = rotateGroupRef.current.children;
   const nonRotateMeshes = nonRotateGroupRef.current.children;
   const allMeshes = [...rotateMeshes, ...nonRotateMeshes];
-
   for (let i = 0; i < allMeshes.length; i++) {
     const box1 = new THREE.Box3().setFromObject(allMeshes[i]);
-
     for (let j = i + 1; j < allMeshes.length; j++) {
       const box2 = new THREE.Box3().setFromObject(allMeshes[j]);
-
       if (box1.intersectsBox(box2)) {
         return true;
       }
@@ -255,35 +323,29 @@ const detectConflictBoundingBox = () => {
   return false;
 };
 ```
-
 </div>
-</details><br>
+</details>
+</br>
 
-BoundingBox만 계산할 경우 충돌로 인식하는 거리를 조절하지 못하기 때문에 거리를 조절할 수 있는 방법을 찾아야 했습니다.  
-그래서 BoundingBox 상위에 또다른 BoundingBox를 만들어서 임의의 수치(입력 값)를 통해 상위의 BoundingBox의 크기를 정하고,  
-임의의 수치(입력 값) 조정을 통해 가까이 또는 멀리 감지하는 것을 조절할 수 있게 했습니다.
+BoundingBox만 계산할 경우 충돌로 인식하는 거리를 조절하지 못하기 때문에 거리를 조절할 수 있는 방법을 찾아야 했습니다.
+그래서 BoundingBox 상위에 또다른 BoundingBox를 만들어서 임의의 수치(입력 값)를 통해 상위의 BoundingBox의 크기를 정하고, 임의의 수치(입력 값) 조정을 통해 가까이 또는 멀리 감지하는 것을 조절할 수 있게 했습니다.
 
 <details>
-<summary>BoundingBox 충돌 거리 조정 추가 코드</summary>
+<summary>[코드] BoundingBox 충돌 거리 조정 추가 코드</summary>
 <div markdown="1">
 
-```jsx
+```javascript
 const detectConflictBoundingBox = () => {
   const rotateMeshes = rotateGroupRef.current.children;
   const nonRotateMeshes = nonRotateGroupRef.current.children;
   const collisionValue = 1.55;
-
   for (let i = 0; i < rotateMeshes.length; i++) {
     const box1 = new THREE.Box3().setFromObject(rotateMeshes[i]);
-
     for (let j = 0; j < nonRotateMeshes.length; j++) {
       const box2 = new THREE.Box3().setFromObject(nonRotateMeshes[j]);
-
       const expandedBox1 = box1.clone().expandByScalar(collisionValue / 2);
       const expandedBox2 = box2.clone().expandByScalar(collisionValue / 2);
-
       if (expandedBox1.intersectsBox(expandedBox2)) {
-        console.log(`충돌 발생! 회전 척 ${i}과 비회전 척 ${j} 박스 교차`);
         return true;
       }
     }
@@ -291,46 +353,38 @@ const detectConflictBoundingBox = () => {
   return false;
 };
 ```
-
 </div>
-</details><br>
+</details>
+</br>
 
 아래 이미지를 통해서 기존 BoundingBox가 상위에 생긴 BoundingBox가 어떻게 충돌을 감지하는지 알 수 있습니다.
 점선으로 이루어진 사각형이 BoundingBox 상위에 만들어진 또다른 BoundingBox입니다. 이것을 통해 충돌을 감지합니다.
 
-<img width="50%" alt="바운딩 박스 시각화" src="https://github.com/user-attachments/assets/bc24947a-c6bc-40d4-9def-e622741d1a32" />
-
+<img width="60%" alt="바운딩 박스 시각화" src="https://github.com/user-attachments/assets/e36bc81d-6579-4936-9c0f-728344651433" />
+<br>
 <br>
 
-상위의 BoundingBox가 가장 민감하게 충돌을 감지하는 거리는 상위의 BoundingBox 크기와 상관없이 기존 BoundingBox가 겹치면 발생합니다.  
-진행하고 있는 프로젝트 전체 도형은 여러 개의 삼각 도형들이 처음부터 붙어 있고, 또 회전하는 삼각 도형도 회전하지 않는 삼각 도형과 붙어 있는 상태에서 회전하기 때문에  
-처음부터 BoundingBox가 겹쳐 있습니다. 그래서 어떤 방향으로 회전을 시켜도 충돌로 인식하게 됩니다.
+상위의 BoundingBox가 가장 민감하게 충돌을 감지하는 거리는 상위의 BoundingBox 크기와 상관없이 기존 BoundingBox가 겹치면 발생합니다.
+진행하고 있는 프로젝트 전체 도형은 여러 개의 삼각 도형들이 처음부터 붙어 있고, 또 회전하는 삼각 도형도 회전하지 않는 삼각 도형과 붙어 있는 상태에서 회전하기 때문에 처음부터 BoundingBox가 겹쳐 있습니다. 그래서 어떤 방향으로 회전을 시켜도 충돌로 인식하게 됩니다.
 
-<img width="80%" alt="바운딩 박스 회전 충돌" src="https://github.com/user-attachments/assets/ebc514ad-bd4d-49c4-8845-ee1476fd2cb9" />
-<img width="70%" alt="바운딩 박스 회전 충돌 콘솔" src="https://github.com/user-attachments/assets/54e319bc-1625-4eb6-95c3-0f312ceacbda" />
-
+<img width="60%" alt="바운딩 박스 회전 충돌" src="https://github.com/user-attachments/assets/84a5f6a8-a318-47f0-a75d-aaa785606000" />
 <br>
 
-회전 전에는 충돌 감지 함수가 실행되지 않기 때문에 BoundingBox가 겹쳐 있어도 충돌로 인식하지 않습니다.  
+회전 전에는 충돌 감지 함수가 실행되지 않기 때문에 BoundingBox가 겹쳐 있어도 충돌로 인식하지 않습니다.
 그러나 회전이 완료된 후에는 충돌 감지 함수가 실행되기 때문에 삼각 도형을 한 바퀴 회전시켜 원래 모양을 그대로 유지해도 충돌을 감지하게 됩니다.
-
 이 또한 BoundingBox가 처음부터 겹쳐 있기 때문에 발생하는 문제입니다.
-
 해당 문제를 인식한 후 BoundingBox로 충돌을 인식하는 것은 이 프로젝트에 적합하지 않다고 판단하여 Raycaster 방식으로 방법을 전환하여 진행하였습니다.
 
-<img width="80%" alt="바운딩 제자리 회전 충돌" src="https://github.com/user-attachments/assets/a278469a-212d-4c4b-a32c-224ed461bee8" />
-<img width="70%" alt="바운딩 충돌 콘솔 2" src="https://github.com/user-attachments/assets/f48e856f-9aa2-4a89-b258-b8f5c7fe0cf6" />
+<img width="60%" alt="바운딩 제자리 회전 충돌" src="https://github.com/user-attachments/assets/e23a8ad2-3d7e-4ff3-92a0-9eced4bb4677" />
 
-### 3-2. Raycaster를 활용한 충돌 감지
+### 4-2. Raycaster를 활용한 충돌 감지
 
-두 번째로 시도한 방법은 Raycaster입니다. 이전 BoundingBox는 삼각 도형 겉으로 박스를 생성해 감지했다면, Raycaster는 회전하는 삼각 도형에서 여러 방향으로 광선을 발사합니다.  
+두 번째로 시도한 방법은 Raycaster입니다. 이전 BoundingBox는 삼각 도형 겉으로 박스를 생성해 감지했다면, Raycaster는 회전하는 삼각 도형에서 여러 방향으로 광선을 발사합니다.
 그 광선이 회전하지 않는 삼각 도형에 닿게 되었을 때 충돌을 감지하도록 설정하였습니다.
-
-`intersects[0].distance`는 회전하는 삼각 도형에서 발사한 광선이 회전하지 않는 삼각 도형에 처음으로 닿는 지점까지의 거리를 나타냅니다.  
-이 거리가 충돌로 인식하는 거리보다 작다면 충돌로 인식하게 됩니다.
+`intersects[0].distance`는 회전하는 삼각 도형에서 발사한 광선이 회전하지 않는 삼각 도형에 처음으로 닿는 지점까지의 거리를 나타냅니다. 이 거리가 충돌로 인식하는 거리보다 작다면 충돌로 인식하게 됩니다.
 
 <details>
-<summary>Raycaster 충돌 감지 코드</summary>
+<summary>[코드] Raycaster 충돌 감지 코드</summary>
 <div markdown="1">
 
 ```jsx
@@ -338,7 +392,6 @@ const detectConflictRaycaster = () => {
   const rotateMeshes = rotateGroupRef.current.children;
   const nonRotateMeshes = nonRotateGroupRef.current.children;
   const collisionDistance = 1.55;
-
   const raycaster = new THREE.Raycaster();
   const directions = [
     new THREE.Vector3(1, 0, 0),
@@ -348,26 +401,18 @@ const detectConflictRaycaster = () => {
     new THREE.Vector3(0, 0, 1),
     new THREE.Vector3(0, 0, -1),
   ];
-
   for (let i = 0; i < rotateMeshes.length; i++) {
     const mesh = rotateMeshes[i];
     const position = new THREE.Vector3();
     mesh.getWorldPosition(position);
-
     for (let j = 0; j < nonRotateMeshes.length; j++) {
       for (const checkDirection of directions) {
         raycaster.set(position, checkDirection.normalize());
         const intersects = raycaster.intersectObject(nonRotateMeshes[j]);
-
         if (intersects.length > 0) {
-          console.log(
-            `회전 척 ${i}과 비회전 척 ${j} 사이 레이 거리`,
             intersects[0].distance
           );
-
           if (intersects[0].distance < collisionDistance) {
-            console.log(
-              `충돌 발생한 회전 척 ${i}과 비회전 척 ${j} 사이 레이 거리`,
               intersects[0].distance
             );
             return true;
@@ -379,46 +424,42 @@ const detectConflictRaycaster = () => {
   return false;
 };
 ```
-
 </div>
 </details><br>
 
 아래 이미지를 통해 Raycaster가 어떤 식으로 광선을 발사해 충돌을 감지하는지 알 수 있습니다.
 
-<img width="50%" alt="레이케스터 시각화" src="https://github.com/user-attachments/assets/3a9a5c6c-7cdf-49a9-96cb-075ea68b0ae9" />
-
+<img width="60%" alt="레이케스터 시각화" src="https://github.com/user-attachments/assets/732fa53a-6149-44d0-8251-2cc1bce8b2c0" />
 <br>
 
-Raycaster에서 이전에 발생하던 문제들은 나타나지 않았으나, 가장 중요한 부분에서 문제가 발생했습니다.  
-전체 도형의 구조 특성상 서로 포개지는 모양을 만들 수 있는데, 이 모양을 만들게 되면 충돌로 인식하게 되었습니다.  
+Raycaster에서 이전에 발생하던 문제들은 나타나지 않았으나, 가장 중요한 부분에서 문제가 발생했습니다.
+전체 도형의 구조 특성상 서로 포개지는 모양을 만들 수 있는데, 이 모양을 만들게 되면 충돌로 인식하게 되었습니다.
 이는 서로 포개지는 모양이 되었을 때 면과 면이 닿는 순간 광선이 닿기 때문에 그렇습니다.
-
 충돌로 인식하는 거리를 조절 해봤지만, 면과 면이 닿았을 때는 이미 충돌로 인식하는 거리보다 가까운 상태가 되기 때문에 수치 조정은 의미가 없었습니다.
 
-[참고] 서로 포개지는 모양  
-아래 빨간색으로 강조된 원을 본다면 레이케스터가 어떻게 광선을 발사해 충돌을 감지하는지 알기 쉽습니다.  
-<img width="60%" alt="서로 포개지는 모양" src="https://github.com/user-attachments/assets/c0f3cbcb-8a41-437c-bb48-a42ec3efaa78" />
+[참고] 서로 포개지는 모양
+아래 빨간색으로 강조된 원을 본다면 레이케스터가 어떻게 광선을 발사해 충돌을 감지하는지 알기 쉽습니다.
 
-<img width="80%" alt="레이케스터 충돌 오류" src="https://github.com/user-attachments/assets/23cf3e86-c549-4d39-96c0-1bdca9a08071" />
-<img width="40%" alt="레이케스터 충돌 콘솔" src="https://github.com/user-attachments/assets/c5b50820-6d13-4589-a8f8-221635b18a23" />
+<img width="60%" alt="서로 포개지는 모양" src="https://github.com/user-attachments/assets/d9493303-e105-4199-a621-5065e478664a" />
+
+<img width="60%" alt="레이케스터 충돌 오류" src="https://github.com/user-attachments/assets/fafdfa71-3614-43d7-aa58-a436a07fcd87" />
 
 <br>
-
-Raycaster를 사용하면 서로 포개지는 부분을 계속 충돌로 인식하기 때문에 이 프로젝트에는 적합하지 않다고 판단하여,  
+Raycaster를 사용하면 서로 포개지는 부분을 계속 충돌로 인식하기 때문에 이 프로젝트에는 적합하지 않다고 판단하여,
 Vertex를 통해 중심점을 구하고 중심점의 거리 간격을 통해 충돌을 감지하는 방법으로 전환하였습니다.
 
 ### 3-3. Vertex(꼭짓점)와 Center를 활용한 충돌 감지
-
 Vertex(꼭짓점)들을 구하여 Vertex(꼭짓점)들이 닿는 거리를 기준으로 충돌을 인식하게 됩니다. 더욱 세밀하게 충돌 거리를 조절할 수 있는 방법입니다.
 
+<br>
+
 <details>
-<summary>삼각도형의 Vertex 계산 코드</summary>
+<summary>[코드] 삼각도형의 Vertex 계산 코드</summary>
 <div markdown="1">
 
 ```jsx
 const vertices = mesh.geometry.attributes.position.array;
 const matrix = mesh.matrixWorld;
-
 for (let v1 = 0; v1 < vertices1.length; v1 += 3) {
   const vertex = new THREE.Vector3(
     vertices[v1],
@@ -427,89 +468,154 @@ for (let v1 = 0; v1 < vertices1.length; v1 += 3) {
   ).applyMatrix4(matrix);
 }
 ```
-
 </div>
 </details><br>
 
 아래 이미지를 통해 Vertex가 어떤 식으로 충돌을 감지하는지 알 수 있습니다.
 
-<img width="50%" alt="버텍스 시각화" src="https://github.com/user-attachments/assets/6c3418fb-1799-4864-8b48-38c85d66b2d6" />
+<img width="60%" alt="버텍스 시각화" src="https://github.com/user-attachments/assets/7b1c0dea-79d0-4060-a094-e14a362e22fb" />
+<br>
 
 Vertex도 처음에는 문제가 없을 거라 판단했으나 BoundingBox처럼 Vertex이 이미 닿아 있는 도형들이 있기 때문에 정상적으로 충돌을 감지하기는 불가능했습니다.
-
-서로 포개지는 모양처럼 선 또는 면들이 닿았을 때도 충돌로 인식하지 않는 방법이 무엇이 있을까 고민했을 때, Vertex들의 위치를 모두 더하여 Vertex의 수만큼 나누고  
-Vertex의 평균 위치를 구하면 될 것이라 판단했습니다. 즉, 이 방법은 삼각 도형의 중심점을 구하는 방법입니다.
+서로 포개지는 모양처럼 선 또는 면들이 닿았을 때도 충돌로 인식하지 않는 방법이 무엇이 있을까 고민했을 때, Vertex들의 위치를 모두 더하여 Vertex의 수만큼 나누고 Vertex의 평균 위치를 구하면 될 것이라 판단했습니다. 즉, 이 방법은 삼각 도형의 중심점을 구하는 방법입니다.
 
 <details>
-<summary>Vertex를 통해 중심점 계산 코드</summary>
+<summary>[코드] Vertex를 통해 중심점 계산 코드</summary>
 <div markdown="1">
 
 ```jsx
 const detectConflict = () => {
   const rotateMeshes = rotateGroupRef.current.children;
   const nonRotateMeshes = nonRotateGroupRef.current.children;
-
   const allMeshes = [...rotateMeshes, ...nonRotateMeshes];
   const centerMap = allMeshes.map((mesh) => getCenterPosition(mesh));
-
   for (let i = 0; i < centerMap.length; i++) {
     for (let j = i + 1; j < centerMap.length; j++) {
       const distance = centerMap[i].distanceTo(centerMap[j]);
-      console.log(`회전 척 ${i}와 척 ${j} 사이 거리:`, distance);
       if (distance < 1.55) {
-        console.log(`충돌 발생! 회전 척 ${i}와 척 ${j} 사이 거리:`, distance);
         return true;
       }
     }
   }
   return false;
 };
-
 const getCenterPosition = (mesh) => {
   const vertex = mesh.geometry.attributes.position.array;
   const center = new THREE.Vector3();
   const tempVertex = new THREE.Vector3();
-
   let vertexCount = 0;
-
   for (let i = 0; i < vertex.length; i += 3) {
     tempVertex.set(vertex[i], vertex[i + 1], vertex[i + 2]);
     tempVertex.applyMatrix4(mesh.matrixWorld);
     center.add(tempVertex);
     vertexCount++;
   }
-
   center.divideScalar(vertexCount);
-
   return center;
 };
 ```
-
 </div>
-</details><br>
+</details>
+<br>
 
 아래 이미지를 통해 Vertex로 구한 중심점의 위치가 어디에 있는지 알 수 있습니다.
 
-<img width="50%" alt="버텍스 센터 시각화" src="https://github.com/user-attachments/assets/120df54a-f3d3-4789-9f31-ef961e2d0d84" />
+<img width="60%" alt="버텍스 센터 시각화" src="https://github.com/user-attachments/assets/120df54a-f3d3-4789-9f31-ef961e2d0d84" />
 
-회전하는 삼각 도형의 중심점과 회전하지 않는 삼각 도형의 중심점의 거리가 충돌로 인식하는 거리보다 작게 되면 충돌로 인식하도록 설정했습니다.  
+회전하는 삼각 도형의 중심점과 회전하지 않는 삼각 도형의 중심점의 거리가 충돌로 인식하는 거리보다 작게 되면 충돌로 인식하도록 설정했습니다.
 그리고 충돌로 인식하는 거리는 테스트를 통해 삼각 도형이 서로 겹치면 충돌로 인식하지만 선 또는 면이 닿았을 때는 충돌로 인식하지 않도록 수치를 설정했습니다.
-
 최종적으로 위 방법을 통해 충돌 감지 함수를 구현했을 때, 서로 포개지는 모양에서도 충돌로 인식하지 않고 잘 작동하는 것을 확인했습니다.
 
-<img width="80%" alt="최종 정상 작동" src="https://github.com/user-attachments/assets/1760a914-a292-4a27-a393-cff3350f522a" />
-<img width="50%" alt="최종 정상 작동 콘솔" src="https://github.com/user-attachments/assets/e66f229e-82dd-4fcd-a65b-9db228622261" />
-
+<img width="60%" alt="최종 정상 작동" src="https://github.com/user-attachments/assets/b22ff484-95ce-43da-9d9f-eda6b33ddb8d" />
 <br>
 
-서로 포개지는 모양이 되었을 때, 거리가 충돌로 인식하는 거리(1.55)보다 크기 때문에 충돌로 인식하지 않고 정상적으로 작동하고 있습니다.  
+서로 포개지는 모양이 되었을 때, 거리가 충돌로 인식하는 거리(1.55)보다 크기 때문에 충돌로 인식하지 않고 정상적으로 작동하고 있습니다.
 또 서로 포개지는 모양처럼 문제가 될 것 같은 모양들을 테스트해보았을 때도 문제없이 작동하는 것을 확인했습니다.
 
 [참고] 정상적으로 충돌을 감지하는 모습 1
-<img width="80%" alt="최종 정상 충돌감지 1" src="https://github.com/user-attachments/assets/a9fa7284-a454-4b1e-999b-2560b7f14a54" />
+
+<img width="60%" alt="최종 정상 충돌감지 1" src="
+https://github.com/user-attachments/assets/a9fa7284-a454-4b1e-999b-2560b7f14a54
+" />
 
 [참고] 정상적으로 충돌을 감지하는 모습 2
-<img width="80%" alt="최종 정상 충돌감지 2" src="https://github.com/user-attachments/assets/193c82af-df9d-447b-bd16-808011311f30" />
+
+<img width="60%" alt="최종 정상 충돌감지 2" src="
+https://github.com/user-attachments/assets/193c82af-df9d-447b-bd16-808011311f30
+" />
+
+## 5. 이미지 저장 기능 구현하기
+사용자가 만든 척척이를 다른 사람에게 공유할 수 있는 기능을 구현하려고 했습니다. 고려한 방식엔 두 가지가 있었습니다.
+
+**1. 링크로 공유하기**
+
+현재 이 프로젝트에는 별도의 데이터 베이스가 존재하지 않기 때문에 링크 자체에 데이터를 포함하는 방식을 선택했습니다. 전역 상태에 저장되는 척척이의 좌표를 링크 데이터에 저장했습니다.
+
+하지만 캔버스에 있는 도형들의 좌표 데이터는 정수로 떨어지지 않고 매우 긴 소수점을 가지는 경우도 있었습니다. 이러다 보니 링크가 지나치게 길어져 웹에서 로딩되지 않는 문제가 발생했습니다. 링크 길이를 줄이기 위해 여러 가지 방법을 시도해 봤지만, 명확하게 해결되지 않아 다른 방법을 고려하기로 했습니다.
+
+**2. 이미지를 저장하여 공유하기**
+
+이미지로 저장하면 링크 없이도 사용자가 원하는 곳에 바로 업로드 하고 공유할 수 있어, 시각적으로 즉시 확인할 수 있다는 장점이 있습니다. 또한 링크를 공유하는 방식처럼 환경이 한정되지 않기 때문에 더 좋은 접근이 될 수 있을 것이라 생각했습니다.
+
+### 5-1. 캔버스 정보 가져오기
+캔버스에 그려진 내용을 이미지로 저장하려면 현재 캔버스와 그 위에 그려진 도형들의 정보를 가져와야 합니다. 하지만 단순히 `<canvas>` 요소 자체를 가지고 오는 것만으로는 해결되지 않았습니다.
+
+만약 캔버스 자체만 가지고 오게 된다면 아무것도 뜨지 않는 흰 화면을 보게 됩니다. 그렇기 때문에 캔버스 안에 `camera`나 `scene`과 같은 요소를 강제적으로 렌더링 해야 한다고 판단했습니다.
+
+<!-- | ![Image](https://github.com/user-attachments/assets/3f0f3ff5-8518-4c87-b2ac-2a43ad8cb97e) | ![Image](https://github.com/user-attachments/assets/2a10aaeb-4323-4f6b-9275-da9b932146e6) |
+| --- | --- |
+| 렌더링 전 이미지: 빈 화면만 출력 | 렌더링 후 이미지: 캔버스 위 도형 출력 | -->
+
+<table>
+  <tr align="center">
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/5bb144b9-ee39-4fe2-b7fe-a7e8199bb68a">
+    </td>
+    <td width="50%">
+      <img src="https://github.com/user-attachments/assets/2a10aaeb-4323-4f6b-9275-da9b932146e6">
+    </td>
+  </tr>
+  <tr align="center">
+    <td width="50%">
+      랜더링 전 이미지 : 빈 화면 출력
+    </td>
+    <td width="50%">
+      랜더링 후 이미지 : 캔버스 위 도형 출력
+    </td>
+  </tr>
+</table>
+<br>
+
+사용자가 저장 버튼을 클릭하면 최신 상태의 캔버스를 렌더링한 후 이미지로 변환할 수 있도록 설계했습니다.
+
+### 5-2. Blob 객체를  활용한 이미지 저장
+
+HTML5의 `canvas` 요소는 캔버스 데이터를 이미지로 변환할 수 있도록 메서드를 지원합니다. `toDataURL()`과 `toBlob()` 두 가지 방식이 있습니다.
+
+**📌 toDataURL() vs toBlob() 비교**
+
+
+| 기능          | `toDataURL()`     | `toBlob()`                         |
+| ----------- | ----------------- | ---------------------------------- |
+| **출력 형식**   | Base64 문자열        | Blob 객체 (바이너리)                     |
+| **파일 크기**   | 원본보다 커짐       | 원본 크기 그대로                          |
+| **속도**      | 느림 (동기 실행)        | 빠름 (비동기 실행)                        |
+| **메모리 사용량** | 높음 (Base64 변환 필요) | 낮음 (원본 유지)                         |
+| **UI 반응성**  | 크기가 클수록 UI 멈춤     | 비동기 처리로 UI 영향 없음                   |
+| **다운로드**    | 별도 변환 필요          | `URL.createObjectURL(blob)`로 바로 가능 |
+
+
+`toDataURL()` 형식의 경우 Base64 인코딩 방식이기 때문에 바이너리 데이터를 문자열로 변환하며 3바이트 데이터를 4바이트 문자열로 변환하게 됩니다. 이때 실제 파일 크기보다 커지는 상황이 발생합니다. 이떄문에 만약 파일이 커지게 된다면 UI가 멈추는 문제가 발생할 수 있습니다.
+
+반면 `toBlob()`의 경우 이진(Binary) 데이터를 저장하는 객체이며, 원본 크기가 그대로 유지됩니다. 또한 비동기로 동작하기 때문에 UI가 멈추는 문제를 예방할 수 있습니다. 이러한 이유로 `toBlob()` 형태를 활용해 데이터를 URL로 변환시켰습니다.
+
+> **Blob(Binary Large Object) 객체란?**
+> 
+> 텍스트나 이미지, 오디오, 비디오 같은 대용량의 바이너리 데이터를 저장할 수 있는 객체로, 서버에 업로드할 때 데이터는 문자열(String)이 아니라 이진(Binary) 데이터로 다뤄진다.
+
+이미지를 저장하기 위해서 `a` 태그의 `download` 속성을 활용했습니다. `download` 속성은 별도의 추가 작업 없이 파일을 저장할 수 있습니다. 브라우저는 href 속성에 지정된 Blob URL을 확인한 후, 메모리에서 해당 데이터를 불러오고 운영체제의 파일 시스템 API를 호출하여 파일을 다운로드 폴더에 저장합니다.
+
+이러한 과정을 통해 이미지 저장 기능을 구현했습니다.
 
 # 프로젝트 문서화 및 공통 용어 정의를 통한 협업 개선
 
